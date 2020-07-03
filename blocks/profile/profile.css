@@ -1,0 +1,14 @@
+@import url('./__title/profile__title.css');
+@import url('./__edit/profile__edit.css');
+@import url('./__edit-img/profile__edit-img.css');
+@import url('./__info/profile__info.css');
+@import url('./__add/profile__add.css');
+
+.profile {
+  outline: 1px solid white;
+  display: flex;
+  color: #FFFFFF; 
+  font-family: Inter;
+  max-width: 882px;
+  margin: 0 auto 51px;
+}
