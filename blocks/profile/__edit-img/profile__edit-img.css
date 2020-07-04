@@ -1,6 +1,7 @@
 .profile__edit-img {
   width: 10px;
   height: 10px;
+  border: 1px solid #FFFFFF;
   padding: 6px;
-  border: 1px solid #FFFFFF
+  margin: 37px 0 0;
 }
