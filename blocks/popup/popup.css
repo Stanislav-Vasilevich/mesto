@@ -4,10 +4,11 @@
 @import url('./__form/popup__form.css');
 @import url('./__title/popup__title.css');
 @import url('./__name/popup__name.css');
-@import url('./__description/popup__description.css');
+@import url('./__job/popup__job.css');
 @import url('./__submit/popup__submit.css');
 
 .popup {
+  display: none;
   position: fixed;
   overflow: auto;
   left: 0;
