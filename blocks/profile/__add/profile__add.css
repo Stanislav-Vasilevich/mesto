@@ -4,3 +4,10 @@
   height: 22px;
   padding: 14px 64px;
 }
+
+@media screen and (max-width: 677px) {
+  .profile__add {
+    text-align: center;
+    padding: 14px 129px;
+  }
+}

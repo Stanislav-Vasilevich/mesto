@@ -1,4 +1,5 @@
 @import url('./__avatar/profile__avatar.css');
+@import url('./__title-edit/profile__title-edit.css');
 @import url('./__title/profile__title.css');
 @import url('./__subtitle/profile__subtitle.css');
 @import url('./__edit/profile__edit.css');
@@ -14,4 +15,18 @@
   font-family: Inter;
   max-width: 882px;
   margin: 0 auto 51px;
+  padding: 0;
+}
+
+@media screen and (max-width: 881px) {
+  .profile {
+    padding: 0 19px;
+  }
+}
+
+@media screen and (max-width: 677px) {
+  .profile {
+    flex-direction: column;
+    margin: 0 auto 36px;
+  }
 }

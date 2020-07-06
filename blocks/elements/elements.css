@@ -1,10 +1,16 @@
 .elements {
   max-width: 882px;
-  max-height: 744px;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(282px, 1fr));
-  grid-template-rows: repeat(3, 1fr);
+  grid-template-rows: repeat(auto-fit, 1fr);
   grid-gap: 21px 18px;
+  justify-items: center;
   padding: 0;
   margin: 0 auto;
+}
+
+@media screen and (max-width: 677px) {
+  .elements {
+    grid-gap: 20px 18px;
+  }
 }

@@ -6,3 +6,11 @@
   margin: 18px 17px 16px 0;
   padding: 0;
 }
+
+@media screen and (max-width: 677px) {
+  .profile__title {
+    width: 201px;
+    font-size: 27px;
+    margin: 10px auto 14px; 
+  }
+}
