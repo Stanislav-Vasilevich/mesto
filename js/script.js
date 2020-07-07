@@ -4,6 +4,7 @@ let popup = document.querySelector('.popup');
 let popupForm = document.querySelector('.popup__form');
 let formInputName = document.querySelector('.popup__name');
 let formInputJob = document.querySelector('.popup__job');
+let popupSubmitClose = document.querySelector('.popup__submit');
 let profileTitle = document.querySelector('.profile__title');
 let profileSubtitle = document.querySelector('.profile__subtitle');
 
@@ -23,3 +24,7 @@ popupForm.addEventListener('submit', (evt) => {
   profileTitle.textContent = formInputName.value;
   profileSubtitle.textContent = formInputJob.value;
 });
+
+popupSubmitClose.addEventListener('click', function () {
+  popup.classList.add('popup_opened');
+})
