@@ -1,33 +1,25 @@
-let popupOpened = document.querySelector('popup_opened');
+let popupButtonOpen = document.querySelector('.profile__edit-img');
+let popupButtonClose = document.querySelector('.popup__close-icon');
+let popup = document.querySelector('.popup');
+let popupForm = document.querySelector('.popup__form');
+let formInputName = document.querySelector('.popup__name');
+let formInputJob = document.querySelector('.popup__job');
+let profileTitle = document.querySelector('.profile__title');
+let profileSubtitle = document.querySelector('.profile__subtitle');
 
-popupOpened.addEventListener('click', function openEditPopup() {
-  console.log(openEditPopup);
-  // popupOpened.classList('popup_opened');
+popupButtonClose.addEventListener('click', function () {
+  popup.classList.add('popup_opened');
+  formInputName.value.textContent = profileTitle;
+  formInputJob.value.textContent = profileSubtitle;
 });
 
-// Находим форму в DOM
-let formElement = document.querySelector('.popup__form');
+popupButtonOpen.addEventListener('click', function () {
+  popup.classList.remove('popup_opened');
+});
 
-// Обработчик «отправки» формы, хотя пока
-// она никуда отправляться не будет
-function formSubmitHandler (evt) {
-    evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
-                        // Так мы можем определить свою логику отправки.
-                        // О том, как это делать, расскажем позже.
+popupForm.addEventListener('submit', (evt) => {
+  evt.preventDefault();
 
-    // Находим поля формы в DOM
-    let nameInput = document.querySelector('.popup__name');
-    let jobInput = document.querySelector('.popup__job');
-
-    // Получите значение полей из свойства value
-    nameInput.getAttribute('value');
-    // Выберите элементы, куда должны быть вставлены значения полей
-    jobInput.getAttribute('value');
-    // Вставьте новые значения с помощью textContent
-    nameInput.textContent = 'Жак-Ив Кусто';
-
-}
-
-// Прикрепляем обработчик к форме:
-// он будет следить за событием “submit” - «отправка»
-formElement.addEventListener('submit', formSubmitHandler);
+  profileTitle.textContent = formInputName.value;
+  profileSubtitle.textContent = formInputJob.value;
+});

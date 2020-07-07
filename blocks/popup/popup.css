@@ -8,7 +8,7 @@
 @import url('./__submit/popup__submit.css');
 
 .popup {
-  display: none;
+  display: flex;
   position: fixed;
   overflow: auto;
   left: 0;
