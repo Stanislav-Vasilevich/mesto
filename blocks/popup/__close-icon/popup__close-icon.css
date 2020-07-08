@@ -3,9 +3,9 @@
   height: 60px;
   background-image: url('../../../images/popup/close-Icon.svg');
   background-color: transparent;
-  position: relative;
+  position: absolute;
   top: -44px;
-  right: -418px;
+  right: -44px;
   border: none;
   transition: .4s linear;
 }
@@ -26,6 +26,6 @@
     height: 40px;
     background-color: #000;
     top: -1px;
-    right: -242px;
+    right: 15px;
   }
 }

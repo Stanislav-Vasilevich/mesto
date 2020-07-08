@@ -3,7 +3,7 @@
 @import url('./__title/profile__title.css');
 @import url('./__subtitle/profile__subtitle.css');
 @import url('./__edit/profile__edit.css');
-@import url('./__edit-img/profile__edit-img.css');
+@import url('./__edit-button/profile__edit-button.css');
 @import url('./__info/profile__info.css');
 @import url('./__add/profile__add.css');
 
@@ -12,7 +12,6 @@
   align-items: center;
   justify-content: space-between;
   color: #FFFFFF; 
-  font-family: Inter;
   max-width: 882px;
   margin: 0 auto 51px;
   padding: 0;

@@ -18,7 +18,7 @@
           <div class="profile__edit">
             <div class="profile__title-edit">
               <h1 class="profile__title">Жак-Ив Кусто</h1>
-              <img src="./images/profile/__edit-img/edit.svg" class="profile__edit-img" alt="">
+              <button type="button" class="profile__edit-button"></button>
             </div>
             <p class="profile__subtitle">Исследователь океана</p>
           </div>
@@ -30,46 +30,58 @@
       <section class="grid">
         <ul class="elements">
           <li class="element">
-            <img src="./images/element/picture-1.jpg" class="element__img" alt="Карачаево-Черкессия">
-            <div class="element__group">
-              <h2 class="element__title">Карачаевск</h2>
-              <img src="./images/element/heart.svg" alt="">
-            </div>
+            <figure class="element__figure">
+              <img src="./images/element/picture-1.jpg" class="element__img" alt="Карачаево-Черкессия">
+              <figcaption class="element__group">
+                <h2 class="element__title">Карачаевск</h2>
+                <button type="button" class="element__button"></button>
+              </figcaption>
+            </figure>
           </li>
           <li class="element">
-            <img src="./images/element/picture-2.jpg" class="element__img" alt="Гора Эльбрус">
-            <div class="element__group">
+            <figure class="element__figure">
+              <img src="./images/element/picture-2.jpg" class="element__img" alt="Гора Эльбрус">
+            </figure>
+            <figcaption class="element__group">
               <h2 class="element__title">Гора Эльбрус</h2>
-              <img src="./images/element/heart.svg" alt="">
-            </div>
+              <button type="button" class="element__button"></button>
+            </figcaption>  
           </li>
           <li class="element">
-            <img src="./images/element/picture-3.jpg" class="element__img" alt="Домбай">
-            <div class="element__group">
+            <figure class="element__figure">
+              <img src="./images/element/picture-3.jpg" class="element__img" alt="Домбай">
+            </figure>
+            <figcaption class="element__group">
               <h2 class="element__title">Домбай</h2>
-              <img src="./images/element/heart.svg" alt="">
-            </div>
+              <button type="button" class="element__button"></button>
+            </figcaption>
           </li>
           <li class="element">
-            <img src="./images/element/picture-4.jpg" class="element__img" alt="Гора Эльбрус">
-            <div class="element__group">
+            <figure class="element__figure">
+              <img src="./images/element/picture-4.jpg" class="element__img" alt="Гора Эльбрус">
+            </figure>
+            <figcaption class="element__group">
               <h2 class="element__title">Гора Эльбрус</h2>
-              <img src="./images/element/heart.svg" alt="">
-            </div>
+              <button type="button" class="element__button"></button>
+            </figcaption>
           </li>
           <li class="element">
-            <img src="./images/element/picture-5.jpg" class="element__img" alt="Домбай">
-            <div class="element__group">
+            <figure class="element__figure">
+              <img src="./images/element/picture-5.jpg" class="element__img" alt="Домбай">
+            </figure>
+            <figcaption class="element__group">
               <h2 class="element__title">Домбай</h2>
-              <img src="./images/element/heart.svg" alt="">
-            </div>
+              <button type="button" class="element__button"></button>
+            </figcaption>
           </li>
           <li class="element">
-            <img src="./images/element/picture-6.jpg" class="element__img" alt="Карачаево-Черкесск">
-            <div class="element__group">
+            <figure class="element__figure">
+              <img src="./images/element/picture-6.jpg" class="element__img" alt="Карачаево-Черкесск">
+            </figure>
+            <figcaption class="element__group">
               <h2 class="element__title">Карачаево-Черкессия</h2>
-              <img src="./images/element/heart.svg" alt="">
-            </div>
+              <button type="button" class="element__button"></button>
+            </figcaption>
           </li>
         </ul>
       </section>
@@ -79,15 +91,13 @@
     </footer>
     <div class="popup popup_opened">
       <div class="popup__container">
-        <div class="popup__window">
-          <button class="popup__close-icon"></button>
-          <h3 class="popup__title">Редактировать профиль</h3>
-          <form action="#" class="popup__form">
-            <input type="text" name="form-title" class="popup__name" value="Жак-Ив Кусто">
-            <input type="text" name="form-subtitle" class="popup__job" value="Исследователь океана">
-            <input type="submit" class="popup__submit" value="Сохранить">
-          </form>
-        </div>
+        <button type="button" class="popup__close-icon"></button>
+        <h3 class="popup__title">Редактировать профиль</h3>
+        <form action="#" class="popup__form">
+          <input type="text" name="form-title" class="popup__input" value="Жак-Ив Кусто">
+          <input type="text" name="form-subtitle" class="popup__input" value="Исследователь океана">
+          <button type="button" class="popup__submit">Сохранить</button>
+        </form>
       </div>
     </div>
   </div>
