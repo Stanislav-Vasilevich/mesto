@@ -5,7 +5,7 @@
 
 @media screen and (max-width: 677px) {
   .logo {
-    width: 103px;
+    max-width: 103px;
     margin: 0 0 31px 0;
   }
 }
