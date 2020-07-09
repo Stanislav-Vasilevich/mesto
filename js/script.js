@@ -1,27 +1,32 @@
-const popupButtonOpen = document.querySelector('.profile__edit-button');
-const popupButtonClose = document.querySelector('.popup__close-icon');
-const popup = document.querySelector('.popup');
-const popupForm = document.querySelector('.popup__form');
-const formInputName = document.querySelector('.popup__input_name');
-const formInputJob = document.querySelector('.popup__input_job');
-const popupSubmitClose = document.querySelector('.popup__submit');
-const profileTitle = document.querySelector('.profile__title');
-const profileSubtitle = document.querySelector('.profile__subtitle');
+let popupButtonOpen = document.querySelector('.profile__edit-button');
+let popupButtonClose = document.querySelector('.popup__close-icon');
+let popup = document.querySelector('.popup');
+let form = document.querySelector('.form');
+let formInputName = document.querySelector('.form__input_name');
+let formInputJob = document.querySelector('.form__input_job');
+let popupSubmitSave = document.querySelector('.form__submit');
+let profileTitle = document.querySelector('.profile__title');
+let profileSubtitle = document.querySelector('.profile__subtitle');
+
+popupButtonOpen.addEventListener('click', togglePopup);
+popupButtonClose.addEventListener('click', togglePopup);
+popupSubmitSave.addEventListener('click', togglePopup);
 
 function togglePopup() {
   popup.classList.toggle('popup_opened');
 }
 
-popupButtonOpen.addEventListener('click', togglePopup);
-popupButtonClose.addEventListener('click', togglePopup);
-popupSubmitClose.addEventListener('click', togglePopup);
+popupButtonOpen.addEventListener('click', togglePopupButton);
 
-popupForm.addEventListener('submit', (event) => {
+function togglePopupButton() {
+  formInputName.value = profileTitle.textContent;
+  formInputJob.value = profileSubtitle.textContent;
+  console.log('привет мир');
+}
+
+form.addEventListener('submit', (event) => {
   event.preventDefault();
-
-  formInputName.value.textContent = profileTitle;
-  formInputJob.value.textContent = profileSubtitle;
-
+  console.log('а тут вставляются текстовые значения полей в тело функции!');
   profileTitle.textContent = formInputName.value;
   profileSubtitle.textContent = formInputJob.value;
 });

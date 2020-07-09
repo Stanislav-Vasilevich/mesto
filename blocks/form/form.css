@@ -1,4 +1,7 @@
-.popup__form {
+@import url('./__input/form__input.css');
+@import url('./__submit/form__submit.css');
+
+.form {
   display: flex;
   flex-direction: column;
   max-width: 358px;
@@ -7,7 +10,7 @@
 }
 
 @media screen and (max-width: 677px) {
-  .popup__form {
+  .form {
     max-width: 260px;
   }
 }
