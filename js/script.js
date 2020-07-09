@@ -21,12 +21,10 @@ popupButtonOpen.addEventListener('click', togglePopupButton);
 function togglePopupButton() {
   formInputName.value = profileTitle.textContent;
   formInputJob.value = profileSubtitle.textContent;
-  console.log('привет мир');
 }
 
 form.addEventListener('submit', (event) => {
   event.preventDefault();
-  console.log('а тут вставляются текстовые значения полей в тело функции!');
   profileTitle.textContent = formInputName.value;
   profileSubtitle.textContent = formInputJob.value;
 });
