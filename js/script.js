@@ -28,3 +28,5 @@ form.addEventListener('submit', (event) => {
   profileTitle.textContent = formInputName.value;
   profileSubtitle.textContent = formInputJob.value;
 });
+
+addCard.addEventListener('click', () => {})
