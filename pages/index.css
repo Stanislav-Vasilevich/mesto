@@ -10,6 +10,8 @@
 @import url('./../blocks/footer/footer.css');
 @import url('./../blocks/popup/popup.css');
 @import url('./../blocks/form/form.css');
+@import url('../blocks/modal/modal.css');
+@import url('../blocks/signboard/signboard.css');
 
 /* Комментарии ревьюера:
 Данная БЭМ сущность это модификатор.
@@ -21,3 +23,4 @@
 в slack-чате коллеги задавали подобный вопрос и нам разрешили пока оставить как есть:
 https://yandex-students.slack.com/archives/G0135552JCB/p1594055895132100 */
 @import url('./../blocks/popup/_opened/popup_opened.css');
+@import url('./../blocks/modal/_opened/modal_opened.css');
