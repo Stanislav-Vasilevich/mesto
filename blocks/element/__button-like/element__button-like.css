@@ -1,4 +1,4 @@
-.element__button {
+.element__button-like {
   background-image: url('../../../images/element/heart.svg');
   background-repeat: no-repeat;
   border: none;
@@ -9,6 +9,6 @@
   margin: 0;
 }
 
-.element__button:hover {
+.element__button-like:hover {
   opacity: .4;
 }

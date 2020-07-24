@@ -27,67 +27,15 @@
       </section>
       <section class="grid">
         <ul class="elements">
-          <li class="element">
-            <figure class="element__figure">
-              <img src="./images/element/picture-1.jpg" class="element__img" alt="Карачаево-Черкессия">
-              <figcaption class="element__group">
-                <h2 class="element__title">Карачаевск</h2>
-                <button type="button" class="element__button"></button>
-              </figcaption>
-            </figure>
-          </li>
-          <li class="element">
-            <figure class="element__figure">
-              <img src="./images/element/picture-2.jpg" class="element__img" alt="Гора Эльбрус">
-            </figure>
-            <figcaption class="element__group">
-              <h2 class="element__title">Гора Эльбрус</h2>
-              <button type="button" class="element__button"></button>
-            </figcaption>  
-          </li>
-          <li class="element">
-            <figure class="element__figure">
-              <img src="./images/element/picture-3.jpg" class="element__img" alt="Домбай">
-            </figure>
-            <figcaption class="element__group">
-              <h2 class="element__title">Домбай</h2>
-              <button type="button" class="element__button"></button>
-            </figcaption>
-          </li>
-          <li class="element">
-            <figure class="element__figure">
-              <img src="./images/element/picture-4.jpg" class="element__img" alt="Гора Эльбрус">
-            </figure>
-            <figcaption class="element__group">
-              <h2 class="element__title">Гора Эльбрус</h2>
-              <button type="button" class="element__button"></button>
-            </figcaption>
-          </li>
-          <li class="element">
-            <figure class="element__figure">
-              <img src="./images/element/picture-5.jpg" class="element__img" alt="Домбай">
-            </figure>
-            <figcaption class="element__group">
-              <h2 class="element__title">Домбай</h2>
-              <button type="button" class="element__button"></button>
-            </figcaption>
-          </li>
-          <li class="element">
-            <figure class="element__figure">
-              <img src="./images/element/picture-6.jpg" class="element__img" alt="Карачаево-Черкесск">
-            </figure>
-            <figcaption class="element__group">
-              <h2 class="element__title">Карачаево-Черкессия</h2>
-              <button type="button" class="element__button"></button>
-            </figcaption>
-          </li>
+          <!-- содержимое в конце документа, и в файле ./js/script.js-->
         </ul>
       </section>
     </main>
     <footer class="footer">
       <p class="footer__copyright">&#169; 2020 Mesto Russia</p>
     </footer>
-    <div class="popup popup_opened">
+    <!-- Edit form -->
+    <div class="popup popup_type_edit-profile popup_delete">
       <div class="popup__container">
         <button type="button" class="popup__close-icon"></button>
         <h3 class="popup__title">Редактировать профиль</h3>
@@ -98,18 +46,48 @@
         </form>
       </div>
     </div>
-    <div class="modal modal_opened">
-      <div class="modal__container">
-        <button type="button" class="modal__close-icon"></button>
-        <h3 class="modal__title">Новое место</h3>
-        <form action="#" class="signboard">
-          <input type="text" name="signboard-title" class="signboard__input signboard__input_name" value="Название">
-          <input type="text" name="signboard-subtitle" class="signboard__input signboard__input_job" value="Ссылка на картинку">
-          <button type="submit" class="signboard__submit">Создать</button>
+    <!-- Add form -->
+    <div class="popup popup_type_add-cards popup_delete">
+      <div class="popup__container">
+        <button type="button" class="popup__close-icon"></button>
+        <h3 class="popup__title">Новое место</h3>
+        <form action="#" class="form">
+          <input type="text" name="form-title" class="form__input form__input_place" value="Название">
+          <input type="text" name="form-subtitle" class="form__input form__input_url" value="Ссылка на картинку">
+          <button type="submit" class="form__submit">Сохранить</button>
         </form>
       </div>
     </div>
+    <!-- Img form -->
+    <div class="popup popup_type_img popup_delete">
+      <div class="popup__container">
+        <button type="button" class="popup__close-icon"></button>
+        <figure class="element__figure">
+          <img class="element__img" src="" alt="">
+          <button type="button" class="element__button-delete"></button>
+        </figure>
+        <figcaption class="element__group">
+          <h2 class="element__title"></h2>
+          <button type="button" class="element__button-like"></button>
+        </figcaption>
+      </div>
+    </div>
   </div>
+
+<!-- Card item -->
+<template class="grid__elements">
+  <li class="element">
+    <figure class="element__figure">
+      <img class="element__img" src="" alt="">
+      <button type="button" class="element__button-delete"></button>
+    </figure>
+    <figcaption class="element__group">
+      <h2 class="element__title"></h2>
+      <button type="button" class="element__button-like"></button>
+    </figcaption>
+  </li>
+</template>
+
   <script src="./js/script.js"></script>
 </body>
 </html>

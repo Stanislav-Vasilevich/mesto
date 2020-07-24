@@ -1,4 +1,7 @@
 .element__figure {
+  position: relative;
+  max-width: 282px;
+  max-height: 282px;
   padding: 0;
   margin: 0;
 }

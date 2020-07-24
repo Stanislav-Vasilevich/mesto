@@ -10,17 +10,3 @@
 @import url('./../blocks/footer/footer.css');
 @import url('./../blocks/popup/popup.css');
 @import url('./../blocks/form/form.css');
-@import url('../blocks/modal/modal.css');
-@import url('../blocks/signboard/signboard.css');
-
-/* Комментарии ревьюера:
-Данная БЭМ сущность это модификатор.
-Тут в index.css мы подключаем только блоки.
-Данный модификатор нужно подключить к тому блоку к которому он относиться. */
-
-/* Пытался всеми методами которыми обучили, но модификатор не может перекрыть элемент и не срабатыает,
-остается либо переопределять др методами, которые мы не учили, либо использовать неразрешенные типа !important и тд.
-в slack-чате коллеги задавали подобный вопрос и нам разрешили пока оставить как есть:
-https://yandex-students.slack.com/archives/G0135552JCB/p1594055895132100 */
-@import url('./../blocks/popup/_opened/popup_opened.css');
-@import url('./../blocks/modal/_opened/modal_opened.css');

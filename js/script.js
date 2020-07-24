@@ -1,61 +1,172 @@
-//4-я практическая работа
-const popupButtonOpen = document.querySelector('.profile__edit-button');
-const popupButtonClose = document.querySelector('.popup__close-icon');
-const popup = document.querySelector('.popup');
-const form = document.querySelector('.form');
-const formInputName = document.querySelector('.form__input_name');
-const formInputJob = document.querySelector('.form__input_job');
-const popupSubmitSave = document.querySelector('.form__submit');
+//HTML block with section profile
 const profileTitle = document.querySelector('.profile__title');
 const profileSubtitle = document.querySelector('.profile__subtitle');
 
-popupButtonOpen.addEventListener('click', togglePopup);
-popupButtonClose.addEventListener('click', togglePopup);
-popupSubmitSave.addEventListener('click', togglePopup);
+//Popups
+const editProfileModal = document.querySelector('.popup_type_edit-profile');
+const addCardModal = document.querySelector('.popup_type_add-cards');
+const imageModal = document.querySelector('.popup_type_img');
 
-function togglePopup() {
-  popup.classList.toggle('popup_opened');
-}
+//Form
+  //__форма 1-й модалки
+const editForm = editProfileModal.querySelector('.form');
+  //__форма 2-й модалки
+const addForm = addCardModal.querySelector('.form');
 
-popupButtonOpen.addEventListener('click', togglePopupButton);
+  //__inputs edit
+    //_1-е поле ввода 1-й popup
+const formInputName = editForm.querySelector('.form__input_name');
+    //_2-е поле ввода 1-й popup
+const formInputJob = editForm.querySelector('.form__input_job');
+  //__inputs add
+    //_1-е поле ввода 2-го popup
+const formInputPlace = addForm.querySelector('.form__input_place');
+    //_2-е поле ввода 2-го popup
+const formInputUrl = addForm.querySelector('.form__input_url');
+  //__buttons
+    //_кнопка сохранить 1-й popup
+const editPopupButtonSave = editProfileModal.querySelector('.form__submit');
+    //_кнопка сохранить 2-й popup
+const addPopupButtonSave = addCardModal.querySelector('.form__submit');
 
-function togglePopupButton() {
+//Buttons
+  //__open
+    //_кнопка редакировать 1-й popup
+const profileEditButton = document.querySelector('.profile__edit-button');
+    //_кнопка открыть 2-й popup
+const addPopupButtonOpen = document.querySelector('.profile__add');
+
+  //__close
+    //_кнопка закрыть 1-й popup
+const modalCloseButton = editProfileModal.querySelector('.popup__close-icon');
+    //_кнопка закрыть 2-й popup
+const addPopupButtonClose = addCardModal.querySelector('.popup__close-icon');
+
+//Image
+const imageModalTitle = imageModal.querySelector('.element__title');
+const imageModalImg = imageModal.querySelector('.element__img');
+
+function toggleModalWindow(modalWindow) {
   formInputName.value = profileTitle.textContent;
-  formInputJob.value = profileSubtitle.textContent;
-}
+    formInputJob.value = profileSubtitle.textContent;
+  modalWindow.classList.toggle('popup_opened');
+};
 
-form.addEventListener('submit', (event) => {
-  event.preventDefault();
+function formSubmitHandler(evt) {
+  evt.preventDefault();
   profileTitle.textContent = formInputName.value;
   profileSubtitle.textContent = formInputJob.value;
-});
-
-
-//5-я проектная работа
-//Сначала необходимо создать модальное окно по заданию из терминала, основные действия: 
-// 1. копирую модальное окно в html и меняю классы, также прописываю их в файлах css
-// 2. подключаю класс модального окна в js для поиска и отслеживания добавления и удаления класса открытия popup
-// 3. подключаю класс кнопки открытия модального окна для добавления новых карточек к js и записываю в константу
-// 4. подключаю класс кнопки закрытия модального окна для добавления новых карточек к js и записываю в константу
-// 5. подключаю класс кнопки создания новых карточек в popup к js и записываю в константу
-// 6. ставлю прослушку на константы кнопки открытия, закрытия модального окна и создания новых карточек из popup
-// 7. создаю функцию открытия и закрытия модального окна с методом toggle
-const modal = document.querySelector('.modal');
-const modalButtonOpen = document.querySelector('.profile__add');
-const modalButtonClose = document.querySelector('.modal__close-icon');
-const modalSubmitCreate = document.querySelector('.signboard__submit');
-modalButtonOpen.addEventListener('click', toggleModalEdit);
-modalButtonClose.addEventListener('click', toggleModalEdit);
-modalSubmitCreate.addEventListener('click', toggleModalEdit);
-function toggleModalEdit() {
-  modal.classList.toggle('modal_opened');
+  toggleModalWindow(editProfileModal);
 }
 
+function addCardSubmitHandler(evt) {
+  evt.preventDefault();
+  renderCard({name: formInputPlace.value, link: formInputUrl.value})
+  toggleModalWindow(addCardModal);
+}
 
+editForm.addEventListener('submit', formSubmitHandler);
+addForm.addEventListener('submit', addCardSubmitHandler);
 
+profileEditButton.addEventListener('click', () => {
+  toggleModalWindow(editProfileModal);
+});
 
+// editPopupButtonSave.addEventListener('click', () => {
+//   toggleModalWindow(editProfileModal);
+// });
 
+modalCloseButton.addEventListener('click', () => {
+  toggleModalWindow(editProfileModal);
+});
 
+addPopupButtonOpen.addEventListener('click', () => {
+  toggleModalWindow(addCardModal);
+});
 
+addPopupButtonClose.addEventListener('click', () => {
+  toggleModalWindow(addCardModal);
+});
 
+  const initialCards = [
+    {
+        name: 'Архыз',
+        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+    },
+    {
+        name: 'Челябинская область',
+        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+    },
+    {
+        name: 'Иваново',
+        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+    },
+    {
+        name: 'Камчатка',
+        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+    },
+    {
+        name: 'Холмогорский район',
+        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+    },
+    {
+        name: 'Байкал',
+        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+    }
+];
+
+const gridElementCard = document.querySelector('.grid__elements').content.querySelector('.element');
+const gridElements = document.querySelector('.elements');
+
+// function handleLikeClick() {
+//   //сделать функцию, которая внутри себя будет находить сердечко и менять ей класс, который будет менять ей какие-то стили
+// };
+
+// function handleDeleteClick() {
+//   /* внутри себя используем e.target, в него попадает тот кусочек, по которому я в данный момнет кликнул, мне надо найти ближайшего родителя
+//   с каким-то селектором, а потом его удалить, это можно сделать через .clones, в скобочках указать селектор родителя, которого хочу найти
+//   и удалить через .remove */
+// };
+
+// function handleImageClick() {
+//   imageModalTitle = .textContent
+//   toggleModalWindow(imageModal);
+//   /* он внутри себя должен открывать модалку, чтобы открыть модалку сначала ее создаем, а потом найти по новому классу, внутри не будет формы, только 
+//   popup__container и popup__close-icon и прописываю что туда нужно вставить figure*/
+// };
+
+function createCard(element) {
+  const elementCard = gridElementCard.cloneNode(true);
+
+  const elementCardImg = elementCard.querySelector('.element__img');
+  const elementCardTitle = elementCard.querySelector('.element__title');
+  const elementCardButtonLike = elementCard.querySelector('.element__button-like');
+  const elementCardButtonDelete = elementCard.querySelector('.element__button-delete');
+
+  elementCardButtonLike.addEventListener('click', () => {
+    //handleLikeClick()
+  });
+
+  elementCardButtonDelete.addEventListener('click', () => {
+    //handleDeleteClick()
+  });
+
+  elementCardImg.addEventListener('click', () => {
+    //handleImageClick()
+  });
+
+  elementCardTitle.textContent = element.name;
+  elementCardImg.src = element.link;
+  elementCardImg.alt = element.name;
+
+  return elementCard;
+};
+
+function renderCard(element) {
+  gridElements.prepend(createCard(element));
+};
+
+initialCards.forEach((element) => {
+  renderCard(element)
+});
 
