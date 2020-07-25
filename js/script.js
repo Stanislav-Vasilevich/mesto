@@ -118,12 +118,6 @@ addPopupButtonClose.addEventListener('click', () => {
 const gridElementCard = document.querySelector('.grid__elements').content.querySelector('.element');
 const gridElements = document.querySelector('.elements');
 
-// function handleDeleteClick() {
-//   /* внутри себя используем e.target, в него попадает тот кусочек, по которому я в данный момнет кликнул, мне надо найти ближайшего родителя
-//   с каким-то селектором, а потом его удалить, это можно сделать через .clones, в скобочках указать селектор родителя, которого хочу найти
-//   и удалить через .remove */
-// };
-
 // function handleImageClick() {
 //   imageModalTitle = .textContent
 //   toggleModalWindow(imageModal);
@@ -143,13 +137,14 @@ function createCard(element) {
     elementCardButtonLike.classList.toggle('element__button-like_focus');
   });
 
-  // elementCardButtonDelete.addEventListener('click', () => {
-  //   //handleDeleteClick()
-  // });
+  elementCardButtonDelete.addEventListener('click', () => {
+    const listItem = elementCardButtonDelete.closest('.element');
+    listItem.remove();
+  });
 
-  // elementCardImg.addEventListener('click', () => {
-  //   //handleImageClick()
-  // });
+  elementCardImg.addEventListener('click', () => {
+    
+  });
 
   elementCardTitle.textContent = element.name;
   elementCardImg.src = element.link;
