@@ -48,7 +48,7 @@ const imageModalImg = imageModal.querySelector('.element__img');
 
 function toggleModalWindow(modalWindow) {
   formInputName.value = profileTitle.textContent;
-    formInputJob.value = profileSubtitle.textContent;
+  formInputJob.value = profileSubtitle.textContent;
   modalWindow.classList.toggle('popup_opened');
 };
 
@@ -118,10 +118,6 @@ addPopupButtonClose.addEventListener('click', () => {
 const gridElementCard = document.querySelector('.grid__elements').content.querySelector('.element');
 const gridElements = document.querySelector('.elements');
 
-// function handleLikeClick() {
-//   //сделать функцию, которая внутри себя будет находить сердечко и менять ей класс, который будет менять ей какие-то стили
-// };
-
 // function handleDeleteClick() {
 //   /* внутри себя используем e.target, в него попадает тот кусочек, по которому я в данный момнет кликнул, мне надо найти ближайшего родителя
 //   с каким-то селектором, а потом его удалить, это можно сделать через .clones, в скобочках указать селектор родителя, которого хочу найти
@@ -144,16 +140,16 @@ function createCard(element) {
   const elementCardButtonDelete = elementCard.querySelector('.element__button-delete');
 
   elementCardButtonLike.addEventListener('click', () => {
-    //handleLikeClick()
+    elementCardButtonLike.classList.toggle('element__button-like_focus');
   });
 
-  elementCardButtonDelete.addEventListener('click', () => {
-    //handleDeleteClick()
-  });
+  // elementCardButtonDelete.addEventListener('click', () => {
+  //   //handleDeleteClick()
+  // });
 
-  elementCardImg.addEventListener('click', () => {
-    //handleImageClick()
-  });
+  // elementCardImg.addEventListener('click', () => {
+  //   //handleImageClick()
+  // });
 
   elementCardTitle.textContent = element.name;
   elementCardImg.src = element.link;
@@ -169,4 +165,3 @@ function renderCard(element) {
 initialCards.forEach((element) => {
   renderCard(element)
 });
-

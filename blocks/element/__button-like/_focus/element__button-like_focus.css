@@ -1,0 +1,4 @@
+.element__button-like_focus {
+  background-image: url('../../../../images/element/heart-active.svg');
+  z-index: 1;
+}
