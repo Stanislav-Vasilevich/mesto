@@ -149,7 +149,6 @@ function createCard(element) {
   elementCardImg.addEventListener('click', () => {
     imgModalTitle.textContent = elementCardTitle.textContent;
     imgModalImg.src = elementCardImg.src;
-    imgModalImg.alt = elementCardImg.name;
     toggleModalWindow(imageModal);
     console.log('открыл');
   });
