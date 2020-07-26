@@ -35,22 +35,30 @@ const addPopupButtonSave = addCardModal.querySelector('.form__submit');
 const profileEditButton = document.querySelector('.profile__edit-button');
     //_кнопка открыть 2-й popup
 const addPopupButtonOpen = document.querySelector('.profile__add');
+    //_кнопка открыть 3-й popup
+const imgPopupButtonOpen = document.querySelector('.element__img');
 
   //__close
     //_кнопка закрыть 1-й popup
 const modalCloseButton = editProfileModal.querySelector('.popup__close-icon');
     //_кнопка закрыть 2-й popup
 const addPopupButtonClose = addCardModal.querySelector('.popup__close-icon');
+    //_кнопка закрыть 3-й popup
+const imgPopupButtonClose = imageModal.querySelector('.popup__close-icon');
 
-//Image
-const imageModalTitle = imageModal.querySelector('.element__title');
-const imageModalImg = imageModal.querySelector('.element__img');
+const imgModalTitle = imageModal.querySelector('.popup__title-img');
+const imgModalImg = imageModal.querySelector('.popup__img');
 
 function toggleModalWindow(modalWindow) {
-  formInputName.value = profileTitle.textContent;
-  formInputJob.value = profileSubtitle.textContent;
+  if (!modalWindow.classList.contains('.popup')) {
+    formInputName.value = profileTitle.textContent;
+    formInputJob.value = profileSubtitle.textContent;
+  }
   modalWindow.classList.toggle('popup_opened');
 };
+
+editForm.addEventListener('submit', formSubmitHandler);
+addForm.addEventListener('submit', addCardSubmitHandler);
 
 function formSubmitHandler(evt) {
   evt.preventDefault();
@@ -63,18 +71,13 @@ function addCardSubmitHandler(evt) {
   evt.preventDefault();
   renderCard({name: formInputPlace.value, link: formInputUrl.value})
   toggleModalWindow(addCardModal);
+  formInputPlace.value = '';
+  formInputUrl.value = '';
 }
-
-editForm.addEventListener('submit', formSubmitHandler);
-addForm.addEventListener('submit', addCardSubmitHandler);
 
 profileEditButton.addEventListener('click', () => {
   toggleModalWindow(editProfileModal);
 });
-
-// editPopupButtonSave.addEventListener('click', () => {
-//   toggleModalWindow(editProfileModal);
-// });
 
 modalCloseButton.addEventListener('click', () => {
   toggleModalWindow(editProfileModal);
@@ -86,6 +89,11 @@ addPopupButtonOpen.addEventListener('click', () => {
 
 addPopupButtonClose.addEventListener('click', () => {
   toggleModalWindow(addCardModal);
+});
+
+imgPopupButtonClose.addEventListener('click', () => {
+  toggleModalWindow(imageModal);
+  console.log('закрыл');
 });
 
   const initialCards = [
@@ -118,18 +126,10 @@ addPopupButtonClose.addEventListener('click', () => {
 const gridElementCard = document.querySelector('.grid__elements').content.querySelector('.element');
 const gridElements = document.querySelector('.elements');
 
-// function handleImageClick() {
-//   imageModalTitle = .textContent
-//   toggleModalWindow(imageModal);
-//   /* он внутри себя должен открывать модалку, чтобы открыть модалку сначала ее создаем, а потом найти по новому классу, внутри не будет формы, только 
-//   popup__container и popup__close-icon и прописываю что туда нужно вставить figure*/
-// };
-
 function createCard(element) {
   const elementCard = gridElementCard.cloneNode(true);
-
-  const elementCardImg = elementCard.querySelector('.element__img');
   const elementCardTitle = elementCard.querySelector('.element__title');
+  const elementCardImg = elementCard.querySelector('.element__img');
   const elementCardButtonLike = elementCard.querySelector('.element__button-like');
   const elementCardButtonDelete = elementCard.querySelector('.element__button-delete');
 
@@ -142,14 +142,17 @@ function createCard(element) {
     listItem.remove();
   });
 
-  elementCardImg.addEventListener('click', () => {
-    
-  });
-
   elementCardTitle.textContent = element.name;
   elementCardImg.src = element.link;
   elementCardImg.alt = element.name;
 
+  elementCardImg.addEventListener('click', () => {
+    imgModalTitle.textContent = elementCardTitle.textContent;
+    imgModalImg.src = elementCardImg.src;
+    imgModalImg.alt = elementCardImg.name;
+    toggleModalWindow(imageModal);
+    console.log('открыл');
+  });
   return elementCard;
 };
 
@@ -158,5 +161,5 @@ function renderCard(element) {
 };
 
 initialCards.forEach((element) => {
-  renderCard(element)
+  renderCard(element);
 });

@@ -1,5 +1,5 @@
-.popup-img__figure {
+.popup__figure {
   position: relative;
   padding: 0;
-  margin: 0;
+  margin: auto;
 }

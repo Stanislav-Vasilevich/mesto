@@ -36,7 +36,7 @@
     </footer>
     <!-- Edit form -->
     <div class="popup popup_type_edit-profile popup_delete">
-      <div class="popup__container">
+      <div class="popup__container popup__container_form">
         <button type="button" class="popup__close-icon"></button>
         <h3 class="popup__title">Редактировать профиль</h3>
         <form action="#" class="form">
@@ -48,26 +48,28 @@
     </div>
     <!-- Add form -->
     <div class="popup popup_type_add-cards popup_delete">
-      <div class="popup__container">
+      <div class="popup__container popup__container_form">
         <button type="button" class="popup__close-icon"></button>
         <h3 class="popup__title">Новое место</h3>
         <form action="#" class="form">
-          <input type="text" name="form-title" class="form__input form__input_place" value="Название">
-          <input type="text" name="form-subtitle" class="form__input form__input_url" value="Ссылка на картинку">
-          <button type="submit" class="form__submit">Сохранить</button>
+          <input type="text" name="form-title" class="form__input form__input_place" value="" placeholder="Название">
+          <input type="text" name="form-subtitle" class="form__input form__input_url" value="" placeholder="Ссылка на картинку">
+          <button type="submit" class="form__submit">Создать</button>
         </form>
       </div>
     </div>
     <!-- Img form -->
-    <div class="popup popup_type_img popup_opened">
-      <div class="popup-img__container">
-        <figure class="popup-img__figure">
-          <button type="button" class="popup-img__close-icon"></button>
-          <img class="popup-img__img" src="https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg" alt="">
-        </figure>
-        <figcaption class="popup-img__group">
-          <h2 class="popup-img__title">Привет, Мир!</h2>
-        </figcaption>
+    <div class="popup popup_type_img popup_delete">
+      <div class="popup__container popup__container_img">
+        <div class="popup__wrapper">
+          <figure class="popup__figure">
+            <button type="button" class="popup__close-icon"></button>
+            <img class="popup__img" src="" alt="">
+          </figure>
+          <figcaption class="popup__figcaption">
+            <h2 class="popup__title-img"></h2>
+          </figcaption>
+        </div>
       </div>
     </div>
   </div>
@@ -85,7 +87,6 @@
     </figcaption>
   </li>
 </template>
-
   <script src="./js/script.js"></script>
 </body>
 </html>
