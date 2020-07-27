@@ -23,11 +23,6 @@ const formInputJob = editForm.querySelector('.form__input_job');
 const formInputPlace = addForm.querySelector('.form__input_place');
     //_2-е поле ввода 2-го popup
 const formInputUrl = addForm.querySelector('.form__input_url');
-  //__buttons
-    //_кнопка сохранить 1-й popup
-const editPopupButtonSave = editProfileModal.querySelector('.form__submit');
-    //_кнопка сохранить 2-й popup
-const addPopupButtonSave = addCardModal.querySelector('.form__submit');
 
 //Buttons
   //__open
@@ -49,16 +44,46 @@ const imgPopupButtonClose = imageModal.querySelector('.popup__close-icon');
 const imgModalTitle = imageModal.querySelector('.popup__title-img');
 const imgModalImg = imageModal.querySelector('.popup__img');
 
-function toggleModalWindow(modalWindow) {
-  if (!modalWindow.classList.contains('.popup')) {
-    formInputName.value = profileTitle.textContent;
-    formInputJob.value = profileSubtitle.textContent;
-  }
-  modalWindow.classList.toggle('popup_opened');
-};
+const gridElementCard = document.querySelector('.grid__elements').content.querySelector('.element');
+const gridElements = document.querySelector('.elements');
 
-editForm.addEventListener('submit', formSubmitHandler);
-addForm.addEventListener('submit', addCardSubmitHandler);
+const initialCards = [
+  {
+      name: 'Архыз',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+  },
+  {
+      name: 'Челябинская область',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+  },
+  {
+      name: 'Иваново',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+  },
+  {
+      name: 'Камчатка',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+  },
+  {
+      name: 'Холмогорский район',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+  },
+  {
+      name: 'Байкал',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+  }
+];
+
+function toggleModalWindow(modalWindow) { 
+  modalWindow.classList.toggle('popup_opened'); 
+} 
+ 
+profileEditButton.addEventListener('click', togglePopupButton); 
+ 
+function togglePopupButton() { 
+  formInputName.value = profileTitle.textContent; 
+  formInputJob.value = profileSubtitle.textContent; 
+} 
 
 function formSubmitHandler(evt) {
   evt.preventDefault();
@@ -74,6 +99,47 @@ function addCardSubmitHandler(evt) {
   formInputPlace.value = '';
   formInputUrl.value = '';
 }
+
+function createCard(element) {
+  const elementCard = gridElementCard.cloneNode(true);
+  const elementCardTitle = elementCard.querySelector('.element__title');
+  const elementCardImg = elementCard.querySelector('.element__img');
+  const elementCardButtonLike = elementCard.querySelector('.element__button-like');
+  const elementCardButtonDelete = elementCard.querySelector('.element__button-delete');
+
+  function imgCardOpenCloseBigImg() {
+    imgModalTitle.textContent = elementCardTitle.textContent;
+    imgModalImg.src = elementCardImg.src;
+    imgModalImg.alt = elementCardTitle.textContent;
+    toggleModalWindow(imageModal);
+  }
+
+  function imgCardLike() {
+    elementCardButtonLike.classList.toggle('element__button-like_focus');
+  }
+
+  function imgCardDelete() {
+    const listItem = elementCardButtonDelete.closest('.element');
+    listItem.remove();
+  }
+
+  elementCardImg.addEventListener('click', imgCardOpenCloseBigImg);
+  elementCardButtonLike.addEventListener('click', imgCardLike);
+  elementCardButtonDelete.addEventListener('click', imgCardDelete);
+
+  elementCardTitle.textContent = element.name;
+  elementCardImg.src = element.link;
+  elementCardImg.alt = element.name;
+
+  return elementCard;
+};
+
+function renderCard(element) {
+  gridElements.prepend(createCard(element));
+}
+
+editForm.addEventListener('submit', formSubmitHandler);
+addForm.addEventListener('submit', addCardSubmitHandler);
 
 profileEditButton.addEventListener('click', () => {
   toggleModalWindow(editProfileModal);
@@ -93,71 +159,7 @@ addPopupButtonClose.addEventListener('click', () => {
 
 imgPopupButtonClose.addEventListener('click', () => {
   toggleModalWindow(imageModal);
-  console.log('закрыл');
 });
-
-  const initialCards = [
-    {
-        name: 'Архыз',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-    },
-    {
-        name: 'Челябинская область',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-    },
-    {
-        name: 'Иваново',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-    },
-    {
-        name: 'Камчатка',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-    },
-    {
-        name: 'Холмогорский район',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-    },
-    {
-        name: 'Байкал',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-    }
-];
-
-const gridElementCard = document.querySelector('.grid__elements').content.querySelector('.element');
-const gridElements = document.querySelector('.elements');
-
-function createCard(element) {
-  const elementCard = gridElementCard.cloneNode(true);
-  const elementCardTitle = elementCard.querySelector('.element__title');
-  const elementCardImg = elementCard.querySelector('.element__img');
-  const elementCardButtonLike = elementCard.querySelector('.element__button-like');
-  const elementCardButtonDelete = elementCard.querySelector('.element__button-delete');
-
-  elementCardButtonLike.addEventListener('click', () => {
-    elementCardButtonLike.classList.toggle('element__button-like_focus');
-  });
-
-  elementCardButtonDelete.addEventListener('click', () => {
-    const listItem = elementCardButtonDelete.closest('.element');
-    listItem.remove();
-  });
-
-  elementCardTitle.textContent = element.name;
-  elementCardImg.src = element.link;
-  elementCardImg.alt = element.name;
-
-  elementCardImg.addEventListener('click', () => {
-    imgModalTitle.textContent = elementCardTitle.textContent;
-    imgModalImg.src = elementCardImg.src;
-    toggleModalWindow(imageModal);
-    console.log('открыл');
-  });
-  return elementCard;
-};
-
-function renderCard(element) {
-  gridElements.prepend(createCard(element));
-};
 
 initialCards.forEach((element) => {
   renderCard(element);
