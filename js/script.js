@@ -1,4 +1,4 @@
-//HTML block with section profile
+//HTML block with data from section profile
 const profileTitle = document.querySelector('.profile__title');
 const profileSubtitle = document.querySelector('.profile__subtitle');
 
@@ -7,46 +7,53 @@ const editProfileModal = document.querySelector('.popup_type_edit-profile');
 const addCardModal = document.querySelector('.popup_type_add-cards');
 const imageModal = document.querySelector('.popup_type_img');
 
-//Form
-  //__форма 1-й модалки
+//Forms
+  //__popup edit
 const editForm = editProfileModal.querySelector('.form');
-  //__форма 2-й модалки
+  //__popup add
 const addForm = addCardModal.querySelector('.form');
 
   //__inputs edit
-    //_1-е поле ввода 1-й popup
+    //_1-й input
 const formInputName = editForm.querySelector('.form__input_name');
-    //_2-е поле ввода 1-й popup
+    //_2-й input
 const formInputJob = editForm.querySelector('.form__input_job');
+
   //__inputs add
-    //_1-е поле ввода 2-го popup
+    //_1-й input
 const formInputPlace = addForm.querySelector('.form__input_place');
-    //_2-е поле ввода 2-го popup
+    //_2-й input
 const formInputUrl = addForm.querySelector('.form__input_url');
 
 //Buttons
   //__open
-    //_кнопка редакировать 1-й popup
+    //_popup edit
 const profileEditButton = document.querySelector('.profile__edit-button');
-    //_кнопка открыть 2-й popup
+    //_popup add
 const addPopupButtonOpen = document.querySelector('.profile__add');
-    //_кнопка открыть 3-й popup
+    //_popup img
 const imgPopupButtonOpen = document.querySelector('.element__img');
 
   //__close
-    //_кнопка закрыть 1-й popup
+    //_1-й popup
 const modalCloseButton = editProfileModal.querySelector('.popup__close-icon');
-    //_кнопка закрыть 2-й popup
+    //_2-й popup
 const addPopupButtonClose = addCardModal.querySelector('.popup__close-icon');
-    //_кнопка закрыть 3-й popup
+    //_3-й popup
 const imgPopupButtonClose = imageModal.querySelector('.popup__close-icon');
 
+//Popup img with data
+  //__заголовок
 const imgModalTitle = imageModal.querySelector('.popup__title-img');
+  //__большая картинка
 const imgModalImg = imageModal.querySelector('.popup__img');
 
+//Card items
+  //__card item in template for section grid 
 const gridElementCard = document.querySelector('.grid__elements').content.querySelector('.element');
+  //__section grid for Card item
 const gridElements = document.querySelector('.elements');
-
+  //__object with images
 const initialCards = [
   {
       name: 'Архыз',
@@ -74,15 +81,16 @@ const initialCards = [
   }
 ];
 
+//open and close popup путем добавления класса popup_opened 
 function toggleModalWindow(modalWindow) { 
   modalWindow.classList.toggle('popup_opened'); 
 } 
- 
-profileEditButton.addEventListener('click', togglePopupButton); 
- 
-function togglePopupButton() { 
+  
+ //подставляю данные из section profile в поле ввода формы edit и добавляю метод toggle for open and close popup
+function dataFromProfileInInputFormEdit() { 
   formInputName.value = profileTitle.textContent; 
-  formInputJob.value = profileSubtitle.textContent; 
+  formInputJob.value = profileSubtitle.textContent;
+  toggleModalWindow(editProfileModal); 
 } 
 
 function formSubmitHandler(evt) {
@@ -100,6 +108,13 @@ function addCardSubmitHandler(evt) {
   formInputUrl.value = '';
 }
 
+function imgCardOpenCloseBigImg() {
+  imgModalTitle.textContent = elementCardTitle.textContent;
+  imgModalImg.src = elementCardImg.src;
+  imgModalImg.alt = elementCardTitle.textContent;
+  toggleModalWindow(imageModal);
+}
+
 function createCard(element) {
   const elementCard = gridElementCard.cloneNode(true);
   const elementCardTitle = elementCard.querySelector('.element__title');
@@ -107,20 +122,13 @@ function createCard(element) {
   const elementCardButtonLike = elementCard.querySelector('.element__button-like');
   const elementCardButtonDelete = elementCard.querySelector('.element__button-delete');
 
-  function imgCardOpenCloseBigImg() {
-    imgModalTitle.textContent = elementCardTitle.textContent;
-    imgModalImg.src = elementCardImg.src;
-    imgModalImg.alt = elementCardTitle.textContent;
-    toggleModalWindow(imageModal);
+  function imgCardDelete() {
+    const listItem = elementCardButtonDelete.closest('.element');
+    listItem.remove();
   }
 
   function imgCardLike() {
     elementCardButtonLike.classList.toggle('element__button-like_focus');
-  }
-
-  function imgCardDelete() {
-    const listItem = elementCardButtonDelete.closest('.element');
-    listItem.remove();
   }
 
   elementCardImg.addEventListener('click', imgCardOpenCloseBigImg);
@@ -132,7 +140,7 @@ function createCard(element) {
   elementCardImg.alt = element.name;
 
   return elementCard;
-};
+}
 
 function renderCard(element) {
   gridElements.prepend(createCard(element));
@@ -140,10 +148,6 @@ function renderCard(element) {
 
 editForm.addEventListener('submit', formSubmitHandler);
 addForm.addEventListener('submit', addCardSubmitHandler);
-
-profileEditButton.addEventListener('click', () => {
-  toggleModalWindow(editProfileModal);
-});
 
 modalCloseButton.addEventListener('click', () => {
   toggleModalWindow(editProfileModal);
@@ -164,3 +168,5 @@ imgPopupButtonClose.addEventListener('click', () => {
 initialCards.forEach((element) => {
   renderCard(element);
 });
+
+profileEditButton.addEventListener('click', dataFromProfileInInputFormEdit);
