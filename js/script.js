@@ -87,7 +87,7 @@ function toggleModalWindow(modalWindow) {
 } 
   
  //подставляю данные из section profile в поле ввода формы edit и добавляю метод toggle for open and close popup
-function dataFromProfileInInputFormEdit() { 
+function substitutingDataInInputFormEdit() { 
   formInputName.value = profileTitle.textContent; 
   formInputJob.value = profileSubtitle.textContent;
   toggleModalWindow(editProfileModal); 
@@ -108,13 +108,6 @@ function addCardSubmitHandler(evt) {
   formInputUrl.value = '';
 }
 
-function imgCardOpenCloseBigImg() {
-  imgModalTitle.textContent = elementCardTitle.textContent;
-  imgModalImg.src = elementCardImg.src;
-  imgModalImg.alt = elementCardTitle.textContent;
-  toggleModalWindow(imageModal);
-}
-
 function createCard(element) {
   const elementCard = gridElementCard.cloneNode(true);
   const elementCardTitle = elementCard.querySelector('.element__title');
@@ -129,6 +122,13 @@ function createCard(element) {
 
   function imgCardLike() {
     elementCardButtonLike.classList.toggle('element__button-like_focus');
+  }
+
+  function imgCardOpenCloseBigImg() {
+    imgModalTitle.textContent = elementCardTitle.textContent;
+    imgModalImg.src = elementCardImg.src;
+    imgModalImg.alt = elementCardTitle.textContent;
+    toggleModalWindow(imageModal);
   }
 
   elementCardImg.addEventListener('click', imgCardOpenCloseBigImg);
@@ -169,4 +169,4 @@ initialCards.forEach((element) => {
   renderCard(element);
 });
 
-profileEditButton.addEventListener('click', dataFromProfileInInputFormEdit);
+profileEditButton.addEventListener('click', substitutingDataInInputFormEdit);
