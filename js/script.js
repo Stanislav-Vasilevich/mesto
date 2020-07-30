@@ -121,12 +121,10 @@ function createCard(element) {
   const deleteElementCardButton = elementCard.querySelector('.element__button-delete');
 
 //при клике на картинку функция открывает popup и добавляет в него данные
-  elementCardImg.addEventListener('click', () => { 
-    toggleModalWindow(imageModal);
-    imgModalTitle.textContent = elementCardTitle.textContent;
-    imgModalImg.src = elementCardImg.src;
-    imgModalImg.alt = elementCardTitle.textContent;
-  });
+elementCardImg.addEventListener('click', () => { 
+  fillCard(/* здесь данные к которым есть доступ из функции createCard */)
+  toggleModalWindow(imageModal);
+});
 
   //ставит лайк
   likeButtonElementCard.addEventListener('click', () => {
@@ -145,6 +143,12 @@ function createCard(element) {
   elementCardImg.alt = element.name;
 
   return elementCard;
+}
+//data card
+const fillCard = data => {  
+  imgModalTitle.textContent = elementCardTitle.textContent;
+  imgModalImg.src = elementCardImg.src;
+  imgModalImg.alt = elementCardTitle.textContent;
 }
 
 //open and close popup путем добавления класса popup_opened 
