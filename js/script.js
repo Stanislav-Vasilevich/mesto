@@ -28,19 +28,19 @@ const formInputUrl = addForm.querySelector('.form__input_url');
 //Buttons
   //__open
     //_popup edit
-const profileEditButton = document.querySelector('.profile__edit-button');
+const buttonProfileEdit = document.querySelector('.profile__edit-button');
     //_popup add
-const addPopupButtonOpen = document.querySelector('.profile__add');
+const buttonOpenAddPopup = document.querySelector('.profile__add');
     //_popup img
 const imgPopupButtonOpen = document.querySelector('.element__img');
 
   //__close
     //_1-й popup
-const modalCloseButton = editProfileModal.querySelector('.popup__close-icon');
+const buttonCloseModal = editProfileModal.querySelector('.popup__close-icon');
     //_2-й popup
-const addPopupButtonClose = addCardModal.querySelector('.popup__close-icon');
+const buttonClosePopupAdd = addCardModal.querySelector('.popup__close-icon');
     //_3-й popup
-const imgPopupButtonClose = imageModal.querySelector('.popup__close-icon');
+const buttonClosePopupImg = imageModal.querySelector('.popup__close-icon');
 
 //Popup img with data
   //__заголовок
@@ -79,28 +79,23 @@ const initialCards = [
       name: 'Байкал',
       link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
   }
-];
-
-//open and close popup путем добавления класса popup_opened 
-function toggleModalWindow(modalWindow) { 
-  modalWindow.classList.toggle('popup_opened'); 
-} 
+]; 
   
- //подставляю данные из section profile в поле ввода формы edit и добавляю метод toggle for open and close popup
+ //подставляет данные из section profile в поле ввода формы edit и добавляю метод toggle for open and close popup
 function substitutingDataInInputFormEdit() { 
   formInputName.value = profileTitle.textContent; 
   formInputJob.value = profileSubtitle.textContent;
   toggleModalWindow(editProfileModal); 
 } 
 
-function formSubmitHandler(evt) {
+function handlerSubmitForm(evt) {
   evt.preventDefault();
   profileTitle.textContent = formInputName.value;
   profileSubtitle.textContent = formInputJob.value;
   toggleModalWindow(editProfileModal);
 }
 
-function addCardSubmitHandler(evt) {
+function handlerSubmitAddCard(evt) {
   evt.preventDefault();
   renderCard({name: formInputPlace.value, link: formInputUrl.value})
   toggleModalWindow(addCardModal);
@@ -108,33 +103,43 @@ function addCardSubmitHandler(evt) {
   formInputUrl.value = '';
 }
 
+function renderCard(element) {
+  gridElements.prepend(createCard(element));
+}
+
+//добавляет карточки с изображениями, заголовками, лайками и кнопками удаления на страницу
 function createCard(element) {
+  //клонирую template
   const elementCard = gridElementCard.cloneNode(true);
+  //title из template
   const elementCardTitle = elementCard.querySelector('.element__title');
+  //img из template
   const elementCardImg = elementCard.querySelector('.element__img');
-  const elementCardButtonLike = elementCard.querySelector('.element__button-like');
-  const elementCardButtonDelete = elementCard.querySelector('.element__button-delete');
+  //like button из template
+  const likeButtonElementCard = elementCard.querySelector('.element__button-like');
+  //delete button из template
+  const deleteElementCardButton = elementCard.querySelector('.element__button-delete');
 
-  function imgCardDelete() {
-    const listItem = elementCardButtonDelete.closest('.element');
-    listItem.remove();
-  }
-
-  function imgCardLike() {
-    elementCardButtonLike.classList.toggle('element__button-like_focus');
-  }
-
-  function imgCardOpenCloseBigImg() {
+//при клике на картинку функция открывает popup и добавляет в него данные
+  elementCardImg.addEventListener('click', () => { 
+    toggleModalWindow(imageModal);
     imgModalTitle.textContent = elementCardTitle.textContent;
     imgModalImg.src = elementCardImg.src;
     imgModalImg.alt = elementCardTitle.textContent;
-    toggleModalWindow(imageModal);
-  }
+  });
 
-  elementCardImg.addEventListener('click', imgCardOpenCloseBigImg);
-  elementCardButtonLike.addEventListener('click', imgCardLike);
-  elementCardButtonDelete.addEventListener('click', imgCardDelete);
+  //ставим лайк
+  likeButtonElementCard.addEventListener('click', () => {
+    likeButtonElementCard.classList.toggle('element__button-like_focus');
+  });
 
+  //удаляем карточку
+  deleteElementCardButton.addEventListener('click', () => {
+    const listItem = deleteElementCardButton.closest('.element');
+    listItem.remove();
+  });
+
+  //подставляет данные в карточку
   elementCardTitle.textContent = element.name;
   elementCardImg.src = element.link;
   elementCardImg.alt = element.name;
@@ -142,26 +147,27 @@ function createCard(element) {
   return elementCard;
 }
 
-function renderCard(element) {
-  gridElements.prepend(createCard(element));
+//open and close popup путем добавления класса popup_opened 
+function toggleModalWindow(modalWindow) { 
+  modalWindow.classList.toggle('popup_opened'); 
 }
 
-editForm.addEventListener('submit', formSubmitHandler);
-addForm.addEventListener('submit', addCardSubmitHandler);
+editForm.addEventListener('submit', handlerSubmitForm);
+addForm.addEventListener('submit', handlerSubmitAddCard);
 
-modalCloseButton.addEventListener('click', () => {
+buttonCloseModal.addEventListener('click', () => {
   toggleModalWindow(editProfileModal);
 });
 
-addPopupButtonOpen.addEventListener('click', () => {
+buttonOpenAddPopup.addEventListener('click', () => {
   toggleModalWindow(addCardModal);
 });
 
-addPopupButtonClose.addEventListener('click', () => {
+buttonClosePopupAdd.addEventListener('click', () => {
   toggleModalWindow(addCardModal);
 });
 
-imgPopupButtonClose.addEventListener('click', () => {
+buttonClosePopupImg.addEventListener('click', () => {
   toggleModalWindow(imageModal);
 });
 
@@ -169,4 +175,4 @@ initialCards.forEach((element) => {
   renderCard(element);
 });
 
-profileEditButton.addEventListener('click', substitutingDataInInputFormEdit);
+buttonProfileEdit.addEventListener('click', substitutingDataInInputFormEdit);
