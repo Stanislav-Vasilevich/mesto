@@ -109,7 +109,7 @@ function renderCard(element) {
 
 //добавляет карточки с изображениями, заголовками, лайками и кнопками удаления на страницу
 function createCard(element) {
-  //клонирую template
+  //clone template
   const elementCard = gridElementCard.cloneNode(true);
   //title из template
   const elementCardTitle = elementCard.querySelector('.element__title');
