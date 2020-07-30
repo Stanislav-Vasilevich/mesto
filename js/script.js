@@ -128,12 +128,12 @@ function createCard(element) {
     imgModalImg.alt = elementCardTitle.textContent;
   });
 
-  //ставим лайк
+  //ставит лайк
   likeButtonElementCard.addEventListener('click', () => {
     likeButtonElementCard.classList.toggle('element__button-like_focus');
   });
 
-  //удаляем карточку
+  //удаляет карточку
   deleteElementCardButton.addEventListener('click', () => {
     const listItem = deleteElementCardButton.closest('.element');
     listItem.remove();
