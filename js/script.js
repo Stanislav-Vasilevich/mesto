@@ -120,40 +120,52 @@ function createCard(element) {
   //delete button из template
   const deleteElementCardButton = elementCard.querySelector('.element__button-delete');
 
-//при клике на картинку функция открывает popup и добавляет в него данные
-elementCardImg.addEventListener('click', () => { 
-  fillCard(/* здесь данные к которым есть доступ из функции createCard */)
-  toggleModalWindow(imageModal);
-});
+  //прослушивает картинки в card и при клике открывает popup и подставляет данные
+  elementCardImg.addEventListener('click', () => { 
+    toggleModalWindow(imageModal);
+    fillCardBigImg(elementCardTitle, elementCardImg, elementCardTitle);
+    // fillCard(/* здесь данные к которым есть доступ из функции createCard */)
+  });
 
   //ставит лайк
   likeButtonElementCard.addEventListener('click', () => {
-    likeButtonElementCard.classList.toggle('element__button-like_focus');
+    likeCard(likeButtonElementCard);
   });
 
   //удаляет карточку
   deleteElementCardButton.addEventListener('click', () => {
-    const listItem = deleteElementCardButton.closest('.element');
-    listItem.remove();
+    deleteCard(deleteElementCardButton);
   });
 
-  //подставляет данные в карточку
+  //fill data card
   elementCardTitle.textContent = element.name;
   elementCardImg.src = element.link;
   elementCardImg.alt = element.name;
 
   return elementCard;
 }
-//data card
-const fillCard = data => {  
-  imgModalTitle.textContent = elementCardTitle.textContent;
-  imgModalImg.src = elementCardImg.src;
-  imgModalImg.alt = elementCardTitle.textContent;
-}
 
 //open and close popup путем добавления класса popup_opened 
 function toggleModalWindow(modalWindow) { 
   modalWindow.classList.toggle('popup_opened'); 
+}
+
+//fill data card big img
+const fillCardBigImg = function(title, img, alt) {
+  imgModalTitle.textContent = title.textContent;
+  imgModalImg.src = img.src;
+  imgModalImg.alt = alt.textContent;
+}
+
+//like card
+const likeCard = function(like) {
+  like.classList.toggle('element__button-like_focus');
+}
+
+//delete card
+const deleteCard = function(element) {
+  const listItem = element.closest('.element');
+  listItem.remove();
 }
 
 editForm.addEventListener('submit', handlerSubmitForm);
