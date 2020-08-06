@@ -1,28 +1,29 @@
-.form__submit {
+.form__submit_active {
   position: absolute;
   bottom: 36px;
   left: 36px;
   width: 358px;
   height: 50px;
-  background: #000000;
   border-radius: 2px;
-  border-color: #FFF;
-  color: #FFF;
   font-weight: normal;
   font-size: 18px;
   line-height: 22px;
   transition: .4s linear;
-  cursor: pointer;
+  border: 1px solid #000000;
+  background-color: transparent;
+  color: #000000;
+  opacity: .2;
   padding: 0;
   margin: 0 auto;
 }
 
-.form__submit:hover {
-  background: rgba(0, 0, 0, 0.8);
+.form__submit_active:hover {
+  cursor: default;
+  background-color: transparent;
 }
 
 @media screen and (max-width: 677px) {
-  .form__submit {
+  .form__submit_active {
     margin: 23px auto;
     width: 260px;
     bottom: 0;

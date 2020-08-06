@@ -35,11 +35,11 @@ const buttonOpenAddPopup = document.querySelector('.profile__add');
 const imgPopupButtonOpen = document.querySelector('.element__img');
 
   //__close
-    //_1-й popup
+    //_popup edit
 const buttonCloseModal = editProfileModal.querySelector('.popup__close-icon');
-    //_2-й popup
+    //_popup add
 const buttonClosePopupAdd = addCardModal.querySelector('.popup__close-icon');
-    //_3-й popup
+    //_popup img
 const buttonClosePopupImg = imageModal.querySelector('.popup__close-icon');
 
 //Popup img with data
@@ -124,7 +124,6 @@ function createCard(element) {
   elementCardImg.addEventListener('click', () => { 
     toggleModalWindow(imageModal);
     fillCardBigImg(elementCardTitle, elementCardImg, elementCardTitle);
-    // fillCard(/* здесь данные к которым есть доступ из функции createCard */)
   });
 
   //ставит лайк
@@ -145,11 +144,6 @@ function createCard(element) {
   return elementCard;
 }
 
-//open and close popup путем добавления класса popup_opened 
-function toggleModalWindow(modalWindow) { 
-  modalWindow.classList.toggle('popup_opened'); 
-}
-
 //fill data card big img
 const fillCardBigImg = function(title, img, alt) {
   imgModalTitle.textContent = title.textContent;
@@ -167,6 +161,30 @@ const deleteCard = function(element) {
   const listItem = element.closest('.element');
   listItem.remove();
 }
+
+//open and close popup путем добавления класса popup_opened 
+function toggleModalWindow(modalWindow) { 
+  modalWindow.classList.toggle('popup_opened'); 
+}
+
+document.addEventListener('keydown', (evt) => {
+  if(evt.key === 'Escape') {
+    const clickEscape = document.querySelectorAll('.popup_opened');
+    for(let i = 0; i < clickEscape.length; i++) {
+      clickEscape[i].classList.remove('popup_opened');
+    }
+  }
+});
+
+const closePopup = () => {
+  const allPopup = Array.from(document.querySelectorAll('.popup__overlay'));
+  allPopup.forEach((element) => {
+    element.addEventListener('click', () => {
+      element.parentElement.classList.remove('popup_opened');
+    })
+  })
+}
+closePopup();
 
 editForm.addEventListener('submit', handlerSubmitForm);
 addForm.addEventListener('submit', handlerSubmitAddCard);

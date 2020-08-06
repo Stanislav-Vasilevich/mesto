@@ -36,31 +36,88 @@
     </footer>
     <!-- Edit popup form -->
     <div class="popup popup_type_edit-profile popup_delete">
+      <div class="popup__overlay"></div>
       <div class="popup__container popup__container_form">
         <button type="button" class="popup__close-icon"></button>
         <h3 class="popup__title">Редактировать профиль</h3>
-        <form action="#" class="form">
-          <input type="text" name="form-title" class="form__input form__input_name" value="Жак-Ив Кусто">
-          <input type="text" name="form-subtitle" class="form__input form__input_job" value="Исследователь океана">
-          <button type="submit" class="form__submit">Сохранить</button>
+        <form action="#" class="form" novalidate>
+          <label class="form__label">
+            <input
+              type="text"
+              name="form-title" 
+              id="title-input"
+              class="form__input form__input_name" 
+              value="" 
+              placeholder="Имя"
+              minlength="2" 
+              maxlength="40"
+              autocomplete="off"
+              required 
+          >
+          <span id="title-input-error" class="form__input-error form__input-error_name">Необходимо заполнить данное поле</span>
+          </label>
+          <label class="form__label">
+            <input
+              type="text" 
+              name="form-subtitle" 
+              id="subtitle-input"
+              class="form__input form__input_job" 
+              value="" 
+              placeholder="О себе"
+              minlength="2" 
+              maxlength="200" 
+              autocomplete="off"
+              required
+          >
+          <span id="subtitle-input-error" class="form__input-error form__input-error_job">Необходимо заполнить данное поле</span>
+          </label>
+          <button type="submit" class="form__submit form__submit_active">Сохранить</button>
         </form>
       </div>
     </div>
     <!-- Add popup form -->
     <div class="popup popup_type_add-cards popup_delete">
+      <div class="popup__overlay"></div>
       <div class="popup__container popup__container_form">
         <button type="button" class="popup__close-icon"></button>
         <h3 class="popup__title">Новое место</h3>
-        <form action="#" class="form">
-          <input type="text" name="form-title" class="form__input form__input_place" value="" placeholder="Название">
-          <input type="text" name="form-subtitle" class="form__input form__input_url" value="" placeholder="Ссылка на картинку">
-          <button type="submit" class="form__submit">Создать</button>
+        <form action="#" class="form" novalidate>
+          <label class="form__label">
+            <input
+              type="text" 
+              name="form-title" 
+              id="name-input"
+              class="form__input form__input_place" 
+              value="" 
+              placeholder="Название"
+              minlength="1" 
+              maxlength="30"
+              autocomplete="off"
+              required
+            >
+            <span id="name-input-error" class="form__input-error form__input-error_name">Необходимо заполнить данное поле</span>
+          </label>
+          <label class="form__label">
+            <input
+            type="url" 
+            name="form-subtitle" 
+            id="description-input"
+            class="form__input form__input_url" 
+            value="" 
+            placeholder="Ссылка на картинку"
+            autocomplete="off"
+            required
+            >
+            <span id="description-input-error" class="form__input-error form__input-error_job">Необходимо заполнить данное поле</span>
+          </label>
+          <button type="submit" class="form__submit form__submit_active">Создать</button>
         </form>
       </div>
     </div>
     <!-- Img popup -->
     <div class="popup popup_type_img popup_delete">
-      <div class="popup__container popup__container_img">
+      <div class="popup__overlay"></div>
+      <div class="popup__container-img">
         <div class="popup__wrapper">
           <figure class="popup__figure">
             <button type="button" class="popup__close-icon"></button>
@@ -87,6 +144,7 @@
     </figcaption>
   </li>
 </template>
-  <script src="./js/script.js"></script>
+  <script src="./js/index.js"></script>
+  <script src="./js/validate.js"></script>
 </body>
 </html>

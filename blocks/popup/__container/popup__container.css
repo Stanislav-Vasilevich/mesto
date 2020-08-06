@@ -1,5 +1,4 @@
 @import url('./_form/popup__container_form.css');
-@import url('./_img/popup__container_img.css');
 
 .popup__container {
   position: absolute;
