@@ -30,9 +30,11 @@ const formInputUrl = addForm.querySelector('.form__input_url');
     //_popup edit
 const buttonProfileEdit = document.querySelector('.profile__edit-button');
     //_popup add
-const buttonOpenAddPopup = document.querySelector('.profile__add');
-    //_popup img
-const imgPopupButtonOpen = document.querySelector('.element__img');
+const buttonOpenAddPopup = document.querySelector('.profile__add'); 
+
+  //__save
+    //_card add
+const submitAddCard = addCardModal.querySelector('.form__submit');
 
   //__close
     //_popup edit
@@ -43,9 +45,9 @@ const buttonClosePopupAdd = addCardModal.querySelector('.popup__close-icon');
 const buttonClosePopupImg = imageModal.querySelector('.popup__close-icon');
 
 //Popup img with data
-  //__заголовок
+  //__title
 const imgModalTitle = imageModal.querySelector('.popup__title-img');
-  //__большая картинка
+  //__big image
 const imgModalImg = imageModal.querySelector('.popup__img');
 
 //Card items
@@ -81,11 +83,13 @@ const initialCards = [
   }
 ]; 
   
- //подставляет данные из section profile в поле ввода формы edit и добавляю метод toggle for open and close popup
+ //data from section profile in fieldset form edit and add toggle for open and close popup
 function substitutingDataInInputFormEdit() { 
   formInputName.value = profileTitle.textContent; 
   formInputJob.value = profileSubtitle.textContent;
   toggleModalWindow(editProfileModal); 
+  closePopupByEscape(editProfileModal);
+  closePopupsByOverlay(editProfileModal);
 } 
 
 function handlerSubmitForm(evt) {
@@ -95,19 +99,22 @@ function handlerSubmitForm(evt) {
   toggleModalWindow(editProfileModal);
 }
 
+//add new card
 function handlerSubmitAddCard(evt) {
   evt.preventDefault();
   renderCard({name: formInputPlace.value, link: formInputUrl.value})
   toggleModalWindow(addCardModal);
   formInputPlace.value = '';
   formInputUrl.value = '';
+  submitAddCard.setAttribute('disabled', true);
+  submitAddCard.classList.add('form__submit_active');
 }
 
 function renderCard(element) {
   gridElements.prepend(createCard(element));
 }
 
-//добавляет карточки с изображениями, заголовками, лайками и кнопками удаления на страницу
+//add cards width images, titles, likes and delete buttons by page
 function createCard(element) {
   //clone template
   const elementCard = gridElementCard.cloneNode(true);
@@ -120,18 +127,20 @@ function createCard(element) {
   //delete button из template
   const deleteElementCardButton = elementCard.querySelector('.element__button-delete');
 
-  //прослушивает картинки в card и при клике открывает popup и подставляет данные
+  //listen cards, open popup and enters data
   elementCardImg.addEventListener('click', () => { 
     toggleModalWindow(imageModal);
+    closePopupByEscape(imageModal);
+    closePopupsByOverlay(imageModal);
     fillCardBigImg(elementCardTitle, elementCardImg, elementCardTitle);
   });
 
-  //ставит лайк
+  //listen cards, like card in grid Img
   likeButtonElementCard.addEventListener('click', () => {
     likeCard(likeButtonElementCard);
   });
 
-  //удаляет карточку
+  //listen cards, delete card in grid Img
   deleteElementCardButton.addEventListener('click', () => {
     deleteCard(deleteElementCardButton);
   });
@@ -144,6 +153,10 @@ function createCard(element) {
   return elementCard;
 }
 
+initialCards.forEach((element) => {
+  renderCard(element);
+});
+
 //fill data card big img
 const fillCardBigImg = function(title, img, alt) {
   imgModalTitle.textContent = title.textContent;
@@ -151,12 +164,12 @@ const fillCardBigImg = function(title, img, alt) {
   imgModalImg.alt = alt.textContent;
 }
 
-//like card
+//like card in grid Img
 const likeCard = function(like) {
   like.classList.toggle('element__button-like_focus');
 }
 
-//delete card
+//delete card in grid Img
 const deleteCard = function(element) {
   const listItem = element.closest('.element');
   listItem.remove();
@@ -167,46 +180,56 @@ function toggleModalWindow(modalWindow) {
   modalWindow.classList.toggle('popup_opened'); 
 }
 
-document.addEventListener('keydown', (evt) => {
-  if(evt.key === 'Escape') {
-    const clickEscape = document.querySelectorAll('.popup_opened');
-    for(let i = 0; i < clickEscape.length; i++) {
-      clickEscape[i].classList.remove('popup_opened');
-    }
-  }
-});
+//close popups by Escape and overlay
+function closeModal(popups) {
+  popups.classList.remove('popup_opened');
+}
 
-const closePopup = () => {
-  const allPopup = Array.from(document.querySelectorAll('.popup__overlay'));
-  allPopup.forEach((element) => {
-    element.addEventListener('click', () => {
-      element.parentElement.classList.remove('popup_opened');
-    })
+//listen cards, close popups by Escape
+function closePopupByEscape(popups) {
+  document.addEventListener('keydown', (evt) => {
+    if(evt.key === 'Escape') {
+      closeModal(popups);
+    }
+  });
+}
+
+//listen cards, close popups by overlay
+function closePopupsByOverlay(popups) {
+  popups.addEventListener('click', (evt) => {
+    if(evt.target.classList.contains('popup__overlay')) {
+      closeModal(popups);
+    }
   })
 }
-closePopup();
 
+//open popup Edit
+buttonProfileEdit.addEventListener('click', substitutingDataInInputFormEdit);
+
+//add data in profile Edit
 editForm.addEventListener('submit', handlerSubmitForm);
-addForm.addEventListener('submit', handlerSubmitAddCard);
 
+//close popup Edit
 buttonCloseModal.addEventListener('click', () => {
   toggleModalWindow(editProfileModal);
 });
 
+//open popup Add
 buttonOpenAddPopup.addEventListener('click', () => {
   toggleModalWindow(addCardModal);
+  closePopupByEscape(addCardModal);
+  closePopupsByOverlay(addCardModal);
 });
 
+//add data in new card Add
+addForm.addEventListener('submit', handlerSubmitAddCard);
+
+//close popup Add
 buttonClosePopupAdd.addEventListener('click', () => {
   toggleModalWindow(addCardModal);
 });
 
+//close popup Img
 buttonClosePopupImg.addEventListener('click', () => {
   toggleModalWindow(imageModal);
 });
-
-initialCards.forEach((element) => {
-  renderCard(element);
-});
-
-buttonProfileEdit.addEventListener('click', substitutingDataInInputFormEdit);
