@@ -87,27 +87,25 @@ const initialCards = [
 function substitutingDataInInputFormEdit() { 
   formInputName.value = profileTitle.textContent; 
   formInputJob.value = profileSubtitle.textContent;
-  toggleModalWindow(editProfileModal); 
-  closePopupByEscape(editProfileModal);
-  closePopupsByOverlay(editProfileModal);
+  openModal(editProfileModal);
 } 
 
 function handlerSubmitForm(evt) {
   evt.preventDefault();
   profileTitle.textContent = formInputName.value;
   profileSubtitle.textContent = formInputJob.value;
-  toggleModalWindow(editProfileModal);
+  closeModal(editProfileModal);
 }
 
 //add new card
 function handlerSubmitAddCard(evt) {
   evt.preventDefault();
-  renderCard({name: formInputPlace.value, link: formInputUrl.value})
-  toggleModalWindow(addCardModal);
+  renderCard({name: formInputPlace.value, link: formInputUrl.value});
   formInputPlace.value = '';
   formInputUrl.value = '';
-  submitAddCard.setAttribute('disabled', true);
+  activeButtonsPopups(submitAddCard);
   submitAddCard.classList.add('form__submit_active');
+  closeModal(addCardModal);
 }
 
 function renderCard(element) {
@@ -129,9 +127,7 @@ function createCard(element) {
 
   //listen cards, open popup and enters data
   elementCardImg.addEventListener('click', () => { 
-    toggleModalWindow(imageModal);
-    closePopupByEscape(imageModal);
-    closePopupsByOverlay(imageModal);
+    openModal(imageModal);
     fillCardBigImg(elementCardTitle, elementCardImg, elementCardTitle);
   });
 
@@ -175,32 +171,35 @@ const deleteCard = function(element) {
   listItem.remove();
 }
 
-//open and close popup путем добавления класса popup_opened 
-function toggleModalWindow(modalWindow) { 
-  modalWindow.classList.toggle('popup_opened'); 
+//open popups
+function openModal(popup) {
+  popup.classList.add('popup_opened');
+  document.addEventListener('keydown', closePopupByEscape);
+  popup.addEventListener('click', closePopupsByOverlay);
 }
 
-//close popups by Escape and overlay
-function closeModal(popups) {
-  popups.classList.remove('popup_opened');
+//close popups
+function closeModal(popup) {
+  popup.classList.remove('popup_opened');
+  document.removeEventListener('keydown', closePopupByEscape);
+  popup.removeEventListener('click', closePopupsByOverlay);
 }
 
-//listen cards, close popups by Escape
-function closePopupByEscape(popups) {
-  document.addEventListener('keydown', (evt) => {
-    if(evt.key === 'Escape') {
-      closeModal(popups);
-    }
-  });
+//close popups by overlay
+function closePopupsByOverlay(evt) {
+  const popup = document.querySelector('.popup_opened');
+  if(evt.target.classList.contains('popup__overlay')) {
+    closeModal(popup);
+  }
 }
 
-//listen cards, close popups by overlay
-function closePopupsByOverlay(popups) {
-  popups.addEventListener('click', (evt) => {
-    if(evt.target.classList.contains('popup__overlay')) {
-      closeModal(popups);
-    }
-  })
+//close popups by Escape
+function closePopupByEscape(evt) {
+  const popup = document.querySelector('.popup_opened');
+  if (evt.key === 'Escape') {
+    closeModal(popup);
+    console.log('нажал Esc');
+  }
 }
 
 //open popup Edit
@@ -211,14 +210,12 @@ editForm.addEventListener('submit', handlerSubmitForm);
 
 //close popup Edit
 buttonCloseModal.addEventListener('click', () => {
-  toggleModalWindow(editProfileModal);
+  closeModal(editProfileModal);
 });
 
 //open popup Add
 buttonOpenAddPopup.addEventListener('click', () => {
-  toggleModalWindow(addCardModal);
-  closePopupByEscape(addCardModal);
-  closePopupsByOverlay(addCardModal);
+  openModal(addCardModal);
 });
 
 //add data in new card Add
@@ -226,10 +223,10 @@ addForm.addEventListener('submit', handlerSubmitAddCard);
 
 //close popup Add
 buttonClosePopupAdd.addEventListener('click', () => {
-  toggleModalWindow(addCardModal);
+  closeModal(addCardModal);
 });
 
 //close popup Img
 buttonClosePopupImg.addEventListener('click', () => {
-  toggleModalWindow(imageModal);
+  closeModal(imageModal);
 });
