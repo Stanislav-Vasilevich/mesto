@@ -103,7 +103,7 @@ function handlerSubmitAddCard(evt) {
   renderCard({name: formInputPlace.value, link: formInputUrl.value});
   formInputPlace.value = '';
   formInputUrl.value = '';
-  activeButtonsPopups(submitAddCard);
+  activeButtonsPopups(submitAddCard, 'form__submit_active');
   closeModal(addCardModal);
 }
 

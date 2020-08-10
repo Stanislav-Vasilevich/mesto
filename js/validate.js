@@ -60,9 +60,9 @@ const hasInvalidInput = (inputList) => {
   })
 };
 
-const activeButtonsPopups = (button) => {
+const activeButtonsPopups = (button, inactive) => {
   button.setAttribute('disabled', true);
-  submitAddCard.classList.add('form__submit_active');
+  submitAddCard.classList.add(inactive);
 };
 
 const inactiveButtonsPopups = (button) => {
@@ -73,7 +73,7 @@ const inactiveButtonsPopups = (button) => {
 const toggleButtonState = (inputList, buttonElement, inactiveButtonClass) => {
   if (hasInvalidInput(inputList)) {
     buttonElement.classList.add(inactiveButtonClass);
-    activeButtonsPopups(buttonElement);
+    activeButtonsPopups(buttonElement, inactiveButtonClass);
   } else {
     buttonElement.classList.remove(inactiveButtonClass);
     inactiveButtonsPopups(buttonElement);
