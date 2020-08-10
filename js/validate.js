@@ -62,6 +62,7 @@ const hasInvalidInput = (inputList) => {
 
 const activeButtonsPopups = (button) => {
   button.setAttribute('disabled', true);
+  submitAddCard.classList.add('form__submit_active');
 };
 
 const inactiveButtonsPopups = (button) => {

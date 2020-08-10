@@ -104,7 +104,6 @@ function handlerSubmitAddCard(evt) {
   formInputPlace.value = '';
   formInputUrl.value = '';
   activeButtonsPopups(submitAddCard);
-  submitAddCard.classList.add('form__submit_active');
   closeModal(addCardModal);
 }
 
