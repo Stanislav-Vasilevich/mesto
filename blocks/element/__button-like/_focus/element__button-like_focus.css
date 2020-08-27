@@ -2,3 +2,11 @@
   background-image: url('../../../../images/element/heart-active.svg');
   z-index: 1;
 }
+
+.element__button-like_focus:hover {
+  opacity: 1;
+}
+
+.element__button-like_focus:focus {
+  outline: none;
+}

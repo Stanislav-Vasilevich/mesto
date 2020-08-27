@@ -1,3 +1,6 @@
+import Card from './Card.js';
+new Card();
+
 //HTML block with data from section profile
 const profileTitle = document.querySelector('.profile__title');
 const profileSubtitle = document.querySelector('.profile__subtitle');
@@ -5,7 +8,6 @@ const profileSubtitle = document.querySelector('.profile__subtitle');
 //Popups
 const editProfileModal = document.querySelector('.popup_type_edit-profile');
 const addCardModal = document.querySelector('.popup_type_add-cards');
-const imageModal = document.querySelector('.popup_type_img');
 
 //Forms
   //__popup edit
@@ -41,47 +43,6 @@ const submitAddCard = addCardModal.querySelector('.form__submit');
 const buttonCloseModal = editProfileModal.querySelector('.popup__close-icon');
     //_popup add
 const buttonClosePopupAdd = addCardModal.querySelector('.popup__close-icon');
-    //_popup img
-const buttonClosePopupImg = imageModal.querySelector('.popup__close-icon');
-
-//Popup img with data
-  //__title
-const imgModalTitle = imageModal.querySelector('.popup__title-img');
-  //__big image
-const imgModalImg = imageModal.querySelector('.popup__img');
-
-//Card items
-// нашел класс template_а в html разметке, далее нашел внутри его контента класс элемента и записал в константу
-const gridElementCard = document.querySelector('.grid__elements').content.querySelector('.element');
-  //__section grid for Card item
-const gridElements = document.querySelector('.elements');
-  //__object with images
-const initialCards = [
-  {
-      name: 'Архыз',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-      name: 'Челябинская область',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-      name: 'Иваново',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-      name: 'Камчатка',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-      name: 'Холмогорский район',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-      name: 'Байкал',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-]; 
   
  //data from section profile in fieldset form edit and add toggle for open and close popup
 function substitutingDataInInputFormEdit() { 
@@ -106,51 +67,6 @@ function handlerSubmitAddCard(evt) {
   activeButtonsPopups(submitAddCard, 'form__submit_active');
   closeModal(addCardModal);
 }
-
-function renderCard(element) {
-  gridElements.prepend(createCard(element));
-}
-
-//add cards width images, titles, likes and delete buttons by page
-function createCard(element) {
-  //clone template
-  const elementCard = gridElementCard.cloneNode(true);
-  //title из template
-  const elementCardTitle = elementCard.querySelector('.element__title');
-  //img из template
-  const elementCardImg = elementCard.querySelector('.element__img');
-  //like button из template
-  const likeButtonElementCard = elementCard.querySelector('.element__button-like');
-  //delete button из template
-  const deleteElementCardButton = elementCard.querySelector('.element__button-delete');
-
-  //listen cards, open popup and enters data
-  elementCardImg.addEventListener('click', () => { 
-    openModal(imageModal);
-    fillCardBigImg(elementCardTitle, elementCardImg, elementCardTitle);
-  });
-
-  //listen cards, like card in grid Img
-  likeButtonElementCard.addEventListener('click', () => {
-    likeCard(likeButtonElementCard);
-  });
-
-  //listen cards, delete card in grid Img
-  deleteElementCardButton.addEventListener('click', () => {
-    deleteCard(deleteElementCardButton);
-  });
-
-  //fill data card
-  elementCardTitle.textContent = element.name;
-  elementCardImg.src = element.link;
-  elementCardImg.alt = element.name;
-
-  return elementCard;
-}
-
-initialCards.forEach((element) => {
-  renderCard(element);
-});
 
 //fill data card big img
 const fillCardBigImg = function(title, img, alt) {
@@ -228,9 +144,4 @@ addForm.addEventListener('submit', handlerSubmitAddCard);
 //слушает кнопку-крестик закрытия модалки add и при клике вызывает функцию с определенной модалкой
 buttonClosePopupAdd.addEventListener('click', () => {
   closeModal(addCardModal);
-});
-
-//слушает кнопку-крестик закрытия модалки Img и при клике вызывает функцию с определенной модалкой
-buttonClosePopupImg.addEventListener('click', () => {
-  closeModal(imageModal);
 });

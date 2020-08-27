@@ -18,6 +18,10 @@
   opacity: 0.6;
 }
 
+.profile__add:focus {
+  outline: none;
+}
+
 @media screen and (max-width: 677px) {
   .profile__add {
     width: 282px;
