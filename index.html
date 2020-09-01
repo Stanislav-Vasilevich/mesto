@@ -40,7 +40,7 @@
       <div class="popup__container popup__container_form">
         <button type="button" class="popup__close-icon"></button>
         <h3 class="popup__title">Редактировать профиль</h3>
-        <form action="#" class="form" novalidate>
+        <form action="#" class="form form__edit" novalidate>
           <label class="form__label">
             <input
               type="text"
@@ -81,7 +81,7 @@
       <div class="popup__container popup__container_form">
         <button type="button" class="popup__close-icon"></button>
         <h3 class="popup__title">Новое место</h3>
-        <form action="#" class="form" novalidate>
+        <form action="#" class="form form__add" novalidate>
           <label class="form__label">
             <input
               type="text" 
@@ -110,7 +110,7 @@
             >
             <span id="description-input-error" class="form__input-error form__input-error_job">Необходимо заполнить данное поле</span>
           </label>
-          <button type="submit" class="form__submit form__submit_active" disabled>Создать</button>
+          <button type="submit" class="form__submit " disabled>Создать</button>
         </form>
       </div>
     </div>
@@ -144,9 +144,10 @@
     </figcaption>
   </li>
 </template>
-  <script type="module" src="./js/test.js"></script>
-  <script type="nomodule" src="./js/index.js"></script>
+  <script src="./js/index.js"></script>
   <!-- <script src="./js/validate.js"></script> -->
+  <!-- <script src="./js/FormValidator.js"></script> -->
+  <script src="./js/primer.js"></script>
   <!-- <script src="./js/Card.js"></script> -->
 </body>
 </html>

@@ -8,12 +8,13 @@ const dataForms = {
   inputError: 'form__input_type_error'
 }
 
-const enableValidation = ({ formSelector, inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass, errorClass, inputError }) => {
+const enableValidation = ({ formSelector, inactiveButtonClass, errorClass, inputError }) => {
   const formList = Array.from(document.querySelectorAll(formSelector));
-
+  console.log(formList);
   formList.forEach((formSelector) => {
     formSelector.addEventListener('submit', (evt) => {
       evt.preventDefault();
+      console.log('Hi!');
     });
     setEventListeners(formSelector, inactiveButtonClass, errorClass, inputError);
   });

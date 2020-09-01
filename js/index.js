@@ -1,3 +1,17 @@
+// import { 
+//   FormValidator, 
+//   setEventListeners, 
+//   isValid, 
+//   showInputError, 
+//   hideInputError, 
+//   hasInvalidInput, 
+//   activeButtonsPopups, 
+//   inactiveButtonsPopups, 
+//   toggleButtonState
+// } from './FormValidator.js';
+
+// import { dataForms, FormValidator } from './FormValidator.js';
+
 //HTML block with data from section profile
 const profileTitle = document.querySelector('.profile__title');
 const profileSubtitle = document.querySelector('.profile__subtitle');
@@ -107,6 +121,10 @@ function handlerSubmitAddCard(evt) {
   closeModal(addCardModal);
 }
 
+initialCards.forEach((element) => {
+  renderCard(element);
+});
+
 function renderCard(element) {
   gridElements.prepend(createCard(element));
 }
@@ -147,10 +165,6 @@ function createCard(element) {
 
   return elementCard;
 }
-
-initialCards.forEach((element) => {
-  renderCard(element);
-});
 
 //fill data card big img
 const fillCardBigImg = function(title, img, alt) {
