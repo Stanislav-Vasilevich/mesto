@@ -67,8 +67,8 @@ const hideInputError = (formSelector, inputSelector, errorClass, inputError) => 
   errorElement.textContent = '';			  //и убрали из него текст
 };
 
-const hasInvalidInput = (inputList) => {
-  return inputList.some((inputSelector) => {
+const hasInvalidInput = (inputList) => { // имеет недопустимый ввод
+  return inputList.some((inputSelector) => { // проверяет, есть ли в inputList хоть один элемент, который соответствует определенному правилу и возвращает
     return !inputSelector.validity.valid;
   })
 };

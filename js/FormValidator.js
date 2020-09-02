@@ -24,20 +24,16 @@ class FormValidator {
   } 
 
   // публичный метод включает проверку валидации
-  // 1) находит в документе все формы, преобразует их в массив и записывает в константу
-  // 2) обходит массив с формами
-  // 3) слушает кнопки всех форм 
-  // 4) по клику сбратывает дефолтное поведение браузера
-  // 2.2) вызывает функцию слушатель: с нужной формой, неактивной кнопкой отправки, красным текстом ошибки и красной рамкой
+  // 1) слушает кнопку конкретной формы
+  // 2) по клику сбратывает дефолтное поведение браузера
+  // 3) вызывает функцию слушатель: с нужной формой, неактивной кнопкой отправки, красным текстом ошибки и красной рамкой
   enableValidation() {
-    const formList = document.querySelectorAll(this._formSelector);
-    console.log(formList);
-    formList.forEach((form) => {
-      form.addEventListener('submit', (evt) => {
-        evt.preventDefault();
-      });
-      this._setEventListeners();
+    // console.log(this._formElement);
+    this._formElement.addEventListener('submit', () => {
+      // console.log('hq');
+      evt.preventDefault();
     });
+    this._setEventListeners();
   };
 
   // функция слушает элементы формы
@@ -47,10 +43,13 @@ class FormValidator {
   // 4) слушает, если кликнули по полю ввода, тогда вызывает функцию валидации со стилями ошибки текста и стилями рамки
   // 5) слушает, если кликнули по полю ввода, тогда вызывает функцию активной-неактивной кнопки с параметрами: проверки полей, нужной кнопки и ее активации
   _setEventListeners() {
-    const inputList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
+    const inputList = this._formElement.querySelectorAll(this._inputSelector);
     const buttonElement = this._formElement.querySelector(this._submitButtonSelector);
+    // console.log(inputList);
+    // console.log(buttonElement);
     inputList.forEach((inputs) => {
       inputs.addEventListener('input', () => {
+        // console.log('изменил поле ввода');
         this._isValid(this._inputSelector);
         this._toggleButtonState(buttonElement);
       });
@@ -62,12 +61,16 @@ class FormValidator {
   // 2) вызывает функцию: конкретной формы, ее полей ввода, сообщением ошибки, стилями ошибки текста, красной рамкой
   // 3) если не валидна
   // 4) вызывает функцию: конкретной формы, ее полей ввода, стилями ошибки текста, стилями рамки
-  _isValid() {
+  _isValid(inputSelector, errorClass, inputError) {
+    console.log('сработала функция _isValid');
     if (!this._inputSelector.validity.valid) {
-      this._showInputError(this._formSelector, this._inputSelector, this._inputSelector.validationMessage, this._errorClass, this._inputError);
+      console.log('невалидно, показать ошибку!');
+      // this._showInputError();
     } else {
-      this._hideInputError(this._formSelector, this._inputSelector, this._errorClass, this._inputError);
+      console.log('валидно, скрыть ошибку!');
+      // this._hideInputError();
     }
+    console.log(this._inputSelector);
   };
 
   // функция показывает текст ошибки поля ввода
@@ -84,11 +87,11 @@ class FormValidator {
   };
 
   // функция скрывает текст ошибки поля ввода
-  // 1) находит форму, внутри находит id текста ошибки
+  // 1) находит внутри нашей формы id текста ошибки и записывает в константу
   // 2) у этой формы удаляет класс ошибки
   // 3) у конкретного поля ввода удаляет текст дефолтной валидации
   // 4) конкретному полю ввода ставит пустую строку
-  _hideInputError(formSelector, inputSelector, errorClass, inputError) {
+  _hideInputError(formElement, formSelector, inputSelector, errorClass, inputError) {
     const errorElement = this._formElement.querySelector(`#${this._inputSelector.id}-error`);
   
     this._inputSelector.classList.remove(this._inputError);
@@ -136,6 +139,9 @@ class FormValidator {
 }
 
 const editFormNewClass = new FormValidator(dataForms, formEdit);
-const addFormNewClass = new FormValidator(dataForms, formAdd);
-const editValidate = editFormNewClass.enableValidation();
-const addValidate = editFormNewClass.enableValidation();
+editFormNewClass.enableValidation();
+
+// const editFormNewClass = new FormValidator(dataForms, formEdit);
+// const addFormNewClass = new FormValidator(dataForms, formAdd);
+// const editValidate = editFormNewClass.enableValidation();
+// const addValidate = editFormNewClass.enableValidation();
