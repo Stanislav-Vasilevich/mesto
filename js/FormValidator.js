@@ -135,8 +135,6 @@ class FormValidator {
   };
 }
 
-FormValidator;
-
 const editFormNewClass = new FormValidator(dataForms, formEdit);
 const addFormNewClass = new FormValidator(dataForms, formAdd);
 const editValidate = editFormNewClass.enableValidation();
