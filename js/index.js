@@ -12,6 +12,8 @@
 
 // import { dataForms, FormValidator } from './FormValidator.js';
 
+import FormValidator from './FormValidator.js';
+
 //HTML block with data from section profile
 const profileTitle = document.querySelector('.profile__title');
 const profileSubtitle = document.querySelector('.profile__subtitle');
@@ -96,6 +98,15 @@ const initialCards = [
       link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
   }
 ]; 
+const dataForms = {
+  form: '.form',
+  input: '.form__input',
+  submit: '.form__submit',
+  inactiveButton: '.form__submit_active',
+  errorMsg: '.form__input-error_active',
+  invalidInput: '.form__input_type_error'
+}
+
   
  //data from section profile in fieldset form edit and add toggle for open and close popup
 function substitutingDataInInputFormEdit() { 
@@ -117,7 +128,7 @@ function handlerSubmitAddCard(evt) {
   renderCard({name: formInputPlace.value, link: formInputUrl.value});
   formInputPlace.value = '';
   formInputUrl.value = '';
-  activeButtonsPopups(submitAddCard, 'form__submit_active');
+  //activeButtonsPopups(submitAddCard, 'form__submit_active');
   closeModal(addCardModal);
 }
 
@@ -248,3 +259,7 @@ buttonClosePopupAdd.addEventListener('click', () => {
 buttonClosePopupImg.addEventListener('click', () => {
   closeModal(imageModal);
 });
+
+document.querySelectorAll(dataForms.form).forEach(form => {
+	new FormValidator(dataForms, form).enableValidation();
+})
