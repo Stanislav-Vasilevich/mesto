@@ -1,51 +1,7 @@
 import Card from './Card.js';
 import FormValidator from './FormValidator.js';
 
-//HTML block with data from section profile
-const profileTitle = document.querySelector('.profile__title');
-const profileSubtitle = document.querySelector('.profile__subtitle');
-
-//Popups
-const editProfileModal = document.querySelector('.popup_type_edit-profile');
-const addCardModal = document.querySelector('.popup_type_add-cards');
-
-//Forms
-  //__popup edit
-const editForm = editProfileModal.querySelector('.form');
-  //__popup add
-const addForm = addCardModal.querySelector('.form');
-
-  //__inputs edit
-    //_1-й input
-const formInputName = editForm.querySelector('.form__input_name');
-    //_2-й input
-const formInputJob = editForm.querySelector('.form__input_job');
-
-// 1) первый input формы в модальном окне Add
-// 2) второй input формы в модальном окне Add
-const formInputPlace = addForm.querySelector('.form__input_place');
-const formInputUrl = addForm.querySelector('.form__input_url');
-
-//Buttons
-  //__open
-    //_popup edit
-const buttonProfileEdit = document.querySelector('.profile__edit-button');
-    //_popup add
-const buttonOpenAddPopup = document.querySelector('.profile__add'); 
-
-  //__save
-    //_card add
-const submitAddCard = addCardModal.querySelector('.form__submit');
-
-  //__close
-    //_popup edit
-const buttonCloseModal = editProfileModal.querySelector('.popup__close-icon');
-    //_popup add
-const buttonClosePopupAdd = addCardModal.querySelector('.popup__close-icon');
-
-// нашел в документе класс списка, в который будет помещена разметка из js и записал в константу
-// записал объект с новым содержимым для карточек в grid секцию в константу
-const gridElements = document.querySelector('.elements');
+// объект с содержимым для карточек в grid секцию
 const initialCards = [
   {
     name: 'Архыз',
@@ -73,6 +29,7 @@ const initialCards = [
   }
 ];
 
+// объект настроек для Card.js
 const dataForms = {
   form: '.form',
   input: '.form__input',
@@ -81,14 +38,79 @@ const dataForms = {
   errorMsg: 'form__input-error_active',
   invalidInput: 'form__input_type_error'
 }
-  
- //data from section profile in fieldset form edit and add toggle for open and close popup
-function substitutingDataInInputFormEdit() { 
+
+// блок разметки для вставки js кода карточек
+const gridElements = document.querySelector('.elements');
+
+// 1) заголовок из секции profile
+// 2) описание из секции profile
+const profileTitle = document.querySelector('.profile__title');
+const profileSubtitle = document.querySelector('.profile__subtitle');
+
+// 1) модальное окно edit
+// 2) модальное окно add
+const editProfileModal = document.querySelector('.popup_type_edit-profile');
+const addCardModal = document.querySelector('.popup_type_add-cards');
+
+// 1) нашли форму в модальном окне edit
+// 2) нашли форму в модальном окне add
+const editForm = editProfileModal.querySelector('.form');
+const addForm = addCardModal.querySelector('.form');
+
+// 1) нашли первое поле ввода в модальном окне edit
+// 2) нашли второе поле ввода в модальном окне edit
+const formInputName = editForm.querySelector('.form__input_name');
+const formInputJob = editForm.querySelector('.form__input_job');
+
+// 1) первый input формы в модальном окне Add
+// 2) второй input формы в модальном окне Add
+const formInputPlace = addForm.querySelector('.form__input_place');
+const formInputUrl = addForm.querySelector('.form__input_url');
+
+// 1) кнопка открытия модального окна edit
+// 2) кнопка открытия модального окна add
+const buttonProfileEdit = document.querySelector('.profile__edit-button');
+const buttonOpenAddPopup = document.querySelector('.profile__add'); 
+
+// 1) кнопка(крестик) в модальном окне edit
+// 2) кнопка(крестик) в модальном окне add
+const buttonCloseModal = editProfileModal.querySelector('.popup__close-icon');
+const buttonClosePopupAdd = addCardModal.querySelector('.popup__close-icon');
+
+//слушает модальное окно Edit и при клике вызывает функцию
+buttonProfileEdit.addEventListener('click', () => {
   formInputName.value = profileTitle.textContent; 
   formInputJob.value = profileSubtitle.textContent;
   openModal(editProfileModal);
-} 
+});
 
+//слушает кнопку в модальном окне Edit и при клике вызывает функцию
+editForm.addEventListener('submit', handlerSubmitForm);
+
+//слушает кнопку-крестик в модальном окне Edit и при клике вызывает функцию с определенной модалкой
+buttonCloseModal.addEventListener('click', () => {
+  closeModal(editProfileModal);
+});
+
+//слушает кнопку редактирования данных в profile и при клике вызывает функцию с определенной модалкой
+buttonOpenAddPopup.addEventListener('click', () => {
+  openModal(addCardModal);
+});
+
+//слушает кнопку сохранения в модалке add и при клике вызывает функцию
+addForm.addEventListener('submit', handlerSubmitAddCard);
+
+//слушает кнопку-крестик закрытия модалки add и при клике вызывает функцию с определенной модалкой
+buttonClosePopupAdd.addEventListener('click', () => {
+  closeModal(addCardModal);
+});
+
+// находит все наши формы и вызывает метод валидации
+document.querySelectorAll(dataForms.form).forEach(form => {
+	new FormValidator(dataForms, form).enableValidation();
+})
+
+// обработчик отправки формы edit
 function handlerSubmitForm(evt) {
   evt.preventDefault();
   profileTitle.textContent = formInputName.value;
@@ -107,7 +129,7 @@ initialCards.forEach(({name, link}) => {
 // 3) берет константу card с данными объекта и добавляет к ней новую сгенерированную карточку из класса Card
 // 4) в блок grid из html-DOM, в который необходимо вставить карточки добавляет в начало списка сгенерированную в методе generateCard
 function renderCard(name, link) {
-  const card = new Card(name, link);
+  const card = new Card(name, link, '.grid__elements');
   const cardElement = card.generateCard();
 
   gridElements.prepend(cardElement);
@@ -117,8 +139,7 @@ function renderCard(name, link) {
 function handlerSubmitAddCard(evt) {
   evt.preventDefault();
   renderCard(formInputPlace.value, formInputUrl.value);
-  formInputPlace.value = '';
-  formInputUrl.value = '';
+  addForm.reset();
   closeModal(addCardModal);
 };
 
@@ -158,31 +179,3 @@ function closePopupByEscape(evt) {
   }
 }
 
-//слушает модальное окно Edit и при клике вызывает функцию
-buttonProfileEdit.addEventListener('click', substitutingDataInInputFormEdit);
-
-//слушает кнопку в модальном окне Edit и при клике вызывает функцию
-editForm.addEventListener('submit', handlerSubmitForm);
-
-//слушает кнопку-крестик в модальном окне Edit и при клике вызывает функцию с определенной модалкой
-buttonCloseModal.addEventListener('click', () => {
-  closeModal(editProfileModal);
-});
-
-//слушает кнопку редактирования данных в profile и при клике вызывает функцию с определенной модалкой
-buttonOpenAddPopup.addEventListener('click', () => {
-  openModal(addCardModal);
-});
-
-//слушает кнопку сохранения в модалке add и при клике вызывает функцию
-addForm.addEventListener('submit', handlerSubmitAddCard);
-
-//слушает кнопку-крестик закрытия модалки add и при клике вызывает функцию с определенной модалкой
-buttonClosePopupAdd.addEventListener('click', () => {
-  closeModal(addCardModal);
-});
-
-// находит все наши формы и вызывает метод валидации
-document.querySelectorAll(dataForms.form).forEach(form => {
-	new FormValidator(dataForms, form).enableValidation();
-})

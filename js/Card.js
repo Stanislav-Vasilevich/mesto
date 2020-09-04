@@ -6,18 +6,29 @@ const imageModal = document.querySelector('.popup_type_img');
 const imgModalTitle = imageModal.querySelector('.popup__title-img');
 const imgModalImg = imageModal.querySelector('.popup__img');
 
+// в "модальное окно из grid-секции" добавляет класс, который откроет popup
+function handleOpenPopup() {
+  imageModal.classList.add('popup_opened');
+}
+
+// функция закрытия popup с картинкой(путем удаления класса)
+function handleClosePopup() {
+  imageModal.classList.remove('popup_opened');
+}
+
 // класс для секции grid
 export default class Card {
-  constructor(name, link) {
+  constructor(name, link, cardSelector) {
     this._name = name;
     this._link = link;
+    this._cardSelector = cardSelector;
   }
 
   // возвращает разметку из html
   _getTemplate() {
     // нашел класс template_а в html разметке, далее нашел внутри его контента класс элемента и записал в константу
     const gridElementCard = document
-      .querySelector('.grid__elements')
+      .querySelector(this._cardSelector)
       .content
       .querySelector('.element')
       .cloneNode(true);
@@ -32,11 +43,13 @@ export default class Card {
     this._element = this._getTemplate();
     this._setEventListeners();
 
-    // в этом приватном поле нахожу класс картинки, далее ее ссылку и вставляю в нее ссылки из конструктора, который принимает их из объекта
-    // в этом приватном поле нахожу класс картинки, далее ее альтернативное название изображения и вставляю в нее заголовок из конструктора
-    // в этом приватном поле нахожу класс заголовка, далее его текст и вставляю в него текст из конструктора, который принимает их из объекта
-    this._element.querySelector('.element__img').src = this._link;
-    this._element.querySelector('.element__img').alt = this._name;
+    // 1) в этом приватном поле нахожу класс картинки и записываю в константу
+    // 2) в ее атрибут src вставляю ссылки из конструктора, который принимает их из объекта
+    // 3) в ее атрибут alt вставляю текст из конструктора, который принимает его из объекта
+    // 4) в этом приватном поле нахожу класс заголовка, далее его текст и вставляю в него текст из конструктора, который принимает их из объекта
+    const classImg = this._element.querySelector('.element__img');
+    classImg.src = this._link;
+    classImg.alt = this._name;
     this._element.querySelector('.element__title').textContent = this._name;
 
     // возвращает DOM-элемент(клонируемую карточку с подставленными данными) наружу
@@ -55,25 +68,28 @@ export default class Card {
       this._likeCard();
     });
 
-    // находит картинку в template по классу и записавает в переменную
-    // прослушивает картинки и по клику вызывает функцию открытия popup
-    const elementCardImg = this._element.querySelector('.element__img');
-    elementCardImg.addEventListener('click', () => {
-      this._handleOpenPopup();
+    // в приватном элементе находит картинку в template по классу, далее слушает и 
+    // по клику вызывает функцию открытия popup
+    this._element.querySelector('.element__img').addEventListener('click', () => {
+      // this._handleOpenPopup();
+      handleOpenPopup();
+      this._fillCardBigImg();
     });
 
-    // находит крестик в открытом модальном окне Img
-    // прослушивает крестик и по клику вызывает функцию закрытия popup с картинкой
+    // 1) находит крестик в открытом модальном окне Img
+    // 2) прослушивает крестик и по клику вызывает функцию закрытия popup с картинкой
     const buttonClosePopupImg = imageModal.querySelector('.popup__close-icon');
     buttonClosePopupImg.addEventListener('click', () => {
-      this._handleClosePopup();
+      // this._handleClosePopup();
+      handleClosePopup();
     });
 
     // 1) слушает документ на нажатие клавиш клавиатуры
     // 2) если нажали клавишу Esc, тогда вызывает функцию
     document.addEventListener('keydown', (evt) => {
       if (evt.key === 'Escape') {
-        this._handleClosePopup();
+        // this._handleClosePopup();
+        handleClosePopup();
       }
     });
 
@@ -81,7 +97,8 @@ export default class Card {
     // 2) если кликнули по элементу с классом 'popup__overlay', тогда вызывает функцию
     document.addEventListener('click', (evt) => {
       if (evt.target.classList.contains('popup__overlay')) {
-        this._handleClosePopup();
+        // this._handleClosePopup();
+        handleClosePopup();
       }
     });
   }
@@ -96,20 +113,11 @@ export default class Card {
     this._element.querySelector('.element__button-like').classList.toggle('element__button-like_focus');
   }
 
-  // в "модальное окно из grid-секции" добавляет класс, который откроет popup
-  // к src картинки в "модальном окне из grid-секции" подставляет путь из конструктора, которые берет этот путь из объекта
-  // к alt картинки в "модальном окне из grid-секции" подставляет путь из конструктора, которые берет этот путь из объекта
-   // к тексту заголовка в "модальном окне из grid-секции" подставляет текст из конструктора, который берет этот текст из объекта
-  _handleOpenPopup() {
-    imageModal.classList.add('popup_opened');
+  //подставляет данные в модальное окно при нажатии на картинку
+  _fillCardBigImg() {
     imgModalImg.src = this._link;
     imgModalImg.alt = this._name;
     imgModalTitle.textContent = this._name;
-  }
-
-  // функция закрытия popup с картинкой(путем удаления класса)
-  _handleClosePopup() {
-    imageModal.classList.remove('popup_opened');
   }
 }
 
