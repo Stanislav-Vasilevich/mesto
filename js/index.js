@@ -1,6 +1,9 @@
 import Card from './Card.js';
 import FormValidator from './FormValidator.js';
 
+// нашел в документе класс модального окна из grid-секции и записал в константу
+const imageModal = document.querySelector('.popup_type_img');
+
 // объект с содержимым для карточек в grid секцию
 const initialCards = [
   {
@@ -105,6 +108,22 @@ buttonClosePopupAdd.addEventListener('click', () => {
   closeModal(addCardModal);
 });
 
+// 1) слушает документ на нажатие клавиш клавиатуры
+// 2) если нажали клавишу Esc, тогда вызывает функцию
+document.addEventListener('keydown', (evt) => {
+  if (evt.key === 'Escape') {
+    handleClosePopup();
+  }
+});
+
+// 1) слушает документ на клик
+// 2) если кликнули по элементу с классом 'popup__overlay', тогда вызывает функцию
+document.addEventListener('click', (evt) => {
+  if (evt.target.classList.contains('popup__overlay')) {
+    handleClosePopup();
+  }
+});
+
 // находит все наши формы и вызывает метод валидации
 document.querySelectorAll(dataForms.form).forEach(form => {
 	new FormValidator(dataForms, form).enableValidation();
@@ -178,4 +197,21 @@ function closePopupByEscape(evt) {
     closeModal(popup);
   }
 }
+
+// в "модальное окно из grid-секции" добавляет класс, который откроет popup
+export function handleOpenPopup() {
+  imageModal.classList.add('popup_opened');
+}
+
+// функция закрытия popup с картинкой(путем удаления класса)
+function handleClosePopup() {
+  imageModal.classList.remove('popup_opened');
+}
+
+// 1) находит крестик в открытом модальном окне Img
+// 2) прослушивает крестик и по клику вызывает функцию закрытия popup с картинкой
+const buttonClosePopupImg = imageModal.querySelector('.popup__close-icon');
+buttonClosePopupImg.addEventListener('click', () => {
+  handleClosePopup();
+});
 

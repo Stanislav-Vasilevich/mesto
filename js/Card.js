@@ -1,3 +1,5 @@
+import { handleOpenPopup } from './index.js';
+
 // нашел в документе класс модального окна из grid-секции и записал в константу
 const imageModal = document.querySelector('.popup_type_img');
 
@@ -5,16 +7,6 @@ const imageModal = document.querySelector('.popup_type_img');
 // нашел в "модальном окне из grid-секции" класс картинки и записал в константу
 const imgModalTitle = imageModal.querySelector('.popup__title-img');
 const imgModalImg = imageModal.querySelector('.popup__img');
-
-// в "модальное окно из grid-секции" добавляет класс, который откроет popup
-function handleOpenPopup() {
-  imageModal.classList.add('popup_opened');
-}
-
-// функция закрытия popup с картинкой(путем удаления класса)
-function handleClosePopup() {
-  imageModal.classList.remove('popup_opened');
-}
 
 // класс для секции grid
 export default class Card {
@@ -71,35 +63,8 @@ export default class Card {
     // в приватном элементе находит картинку в template по классу, далее слушает и 
     // по клику вызывает функцию открытия popup
     this._element.querySelector('.element__img').addEventListener('click', () => {
-      // this._handleOpenPopup();
       handleOpenPopup();
       this._fillCardBigImg();
-    });
-
-    // 1) находит крестик в открытом модальном окне Img
-    // 2) прослушивает крестик и по клику вызывает функцию закрытия popup с картинкой
-    const buttonClosePopupImg = imageModal.querySelector('.popup__close-icon');
-    buttonClosePopupImg.addEventListener('click', () => {
-      // this._handleClosePopup();
-      handleClosePopup();
-    });
-
-    // 1) слушает документ на нажатие клавиш клавиатуры
-    // 2) если нажали клавишу Esc, тогда вызывает функцию
-    document.addEventListener('keydown', (evt) => {
-      if (evt.key === 'Escape') {
-        // this._handleClosePopup();
-        handleClosePopup();
-      }
-    });
-
-    // 1) слушает документ на клик
-    // 2) если кликнули по элементу с классом 'popup__overlay', тогда вызывает функцию
-    document.addEventListener('click', (evt) => {
-      if (evt.target.classList.contains('popup__overlay')) {
-        // this._handleClosePopup();
-        handleClosePopup();
-      }
     });
   }
 

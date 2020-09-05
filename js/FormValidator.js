@@ -19,6 +19,8 @@ class FormValidator {
 	enableValidation() {
 		this.form.addEventListener('submit', (evt) => {
 			evt.preventDefault();
+			this._activeButtonsPopups();
+			this._toggleButtonState();
 		});
     this._setEventListeners(); // вешает новые события
 	};
@@ -36,10 +38,10 @@ class FormValidator {
 	  });
 	};
 	
-	// что если имеет недопустимый ввод?
+	// 1) если хотя бы один input в массиве не валидный, тогда возвращает ошибку
 	_hasInvalidInput() {
 	  return this.inputList.some((input) => {
-		return !input.validity.valid;
+			return !input.validity.valid;
 	  })
 	};
 	
