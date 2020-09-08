@@ -158,4 +158,3 @@ const buttonClosePopupImg = imageModal.querySelector('.popup__close-icon')
 buttonClosePopupImg.addEventListener('click', () => {
   handleClosePopup() 
 }) 
-
