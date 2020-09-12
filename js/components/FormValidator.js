@@ -7,31 +7,31 @@ class FormValidator {
 		  invalidInput
 	}, formElem)
 	{	
-		this.input = input
-		this.submit = submit
-		this.inactiveButton = inactiveButton
-		this.errorMsg = errorMsg
-		this.invalidInput = invalidInput
-		this.form = formElem
+		this.input = input;
+		this.submit = submit;
+		this.inactiveButton = inactiveButton;
+		this.errorMsg = errorMsg;
+		this.invalidInput = invalidInput;
+		this.form = formElem;
 	}
 	
 	enableValidation() {
 		this.form.addEventListener('submit', (evt) => {
-			evt.preventDefault()
-			this._activeButtonsPopups()
-			this._toggleButtonState()
+			evt.preventDefault();
+			this._activeButtonsPopups();
+			this._toggleButtonState();
 		})
-    this._setEventListeners() // вешает новые события
-	}  // публичный метод
+		this._setEventListeners();
+	} 
 	
 	_setEventListeners() {
-	  this.inputList = Array.from(this.form.querySelectorAll(this.input)) // Выбирает все инпуты из формы
-		this.button = this.form.querySelector(this.submit) // и кнопку из неё
-		this._toggleButtonState() // при первом открытии модальных окон кнопки делает неактивными
+	  this.inputList = Array.from(this.form.querySelectorAll(this.input)) // выбирает все инпуты из формы
+		this.button = this.form.querySelector(this.submit); // и кнопку из неё
+		this._toggleButtonState(); // при первом открытии модальных окон кнопки делает неактивными
 	  this.inputList.forEach((input) => { // для каждого инпута
 			input.addEventListener('input', () => { // вешает валидацию?
-		  	this._toggleInputState(input) // разбирается с тем, как выглядят инпуты и отображаются ли ошибки.
-				this._toggleButtonState() // проверяет и изменяет класс, а так же свойство дизейбл у кнопки
+		  	this._toggleInputState(input); // разбирается с тем, как выглядят инпуты и отображаются ли ошибки.
+				this._toggleButtonState(); // проверяет и изменяет класс, а так же свойство дизейбл у кнопки
 			})
 	  })
 	}  // слушает элементы формы

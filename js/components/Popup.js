@@ -1,22 +1,31 @@
 export default class Popup {
-  constructor( popupSelector ) { // кладем нужный нам popup
-    this._popupSelector = popupSelector
+  constructor( popupSelector ) {
+    this._elem = document.querySelector(popupSelector);
+	  this.setEventListeners();
   }
   
-  open() {
-    this._popupSelector.classList.add('popup_opened')
+  open = () => {
+    this._elem.classList.add('popup_opened')
   }
 
-  close() {
-    this._popupSelector.classList.remove('popup_opened')
+  close = () => {
+    this._elem.classList.remove('popup_opened')
   }
-
-  _handleEscClose() {
-    // содержит логику закрытия попапа клавишей Esc
+  
+  _handleEscClose = (evt) => {
+  if (evt.key === 'Escape') {
+    this.close() 
   }
+}
 
-  setEventListeners() {
-    // добавляет слушатель клика иконке закрытия попапа
+  setEventListeners = () => {
+    this._elem.querySelector('.popup__close-icon').addEventListener('click', this.close);
+    document.addEventListener('keydown', this._handleEscClose);
+	  this._elem.addEventListener('click', (evt) => {
+      if (evt.target.classList.contains('popup__overlay')) {
+        this.close();
+        }
+	  }) 
   }
 
 }

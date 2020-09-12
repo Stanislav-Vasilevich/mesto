@@ -1,13 +1,14 @@
 class UserInfo {
-  constructor( { userName, UserInfo } ) {
-    this._userName = userName
-    this._UserInfo = UserInfo
+  constructor( { userName, userInfo } ) {
+    this._userName = document.querySelector(userName);
+    this._UserInfo = document.querySelector(userInfo);
   }
-  getUserInfo() {
-    // возвращает объект с данными пользователя. Этот метод пригодится когда данные пользователя нужно будет подставить в форму при открытии
+  getUserInfo = () => {
+    return {'name': this._userName.innerHTML, 'info': this._userInfo.innerHTML};
   }
 
-  setUserInfo() {
-    // принимает новые данные пользователя и добавляет их на страницу
+  setUserInfo = ({name, info}) => {
+    this._userName.innerHTML = name;
+	this._userInfo.innerHTML = info;
   }
 }
