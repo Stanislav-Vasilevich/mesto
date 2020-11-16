@@ -45,13 +45,13 @@ const handlerSubmitForm = (field_data) => {
   profileSubtitle.textContent = field_data['form-subtitle'];
 }
 
-// слушает модальное окно Edit и при клике вызывает функцию
+// слушает кнопку открытия модального окна Edit
 const editUserPopup = new PopupWithForm('.popup_type_edit-profile', handlerSubmitForm);
 buttonProfileEdit.addEventListener('click', () => {
   editUserPopup.open();
 }); 
 
-// слушает кнопку редактирования данных в profile и при клике вызывает функцию с определенной модалкой
+// слушает кнопку открытия модального окна Add
 const addCardPopup = new PopupWithForm('.popup_type_add-cards', handlerSubmitAddCard);
 buttonOpenAddPopup.addEventListener('click', () => {
 	addCardPopup.open();
@@ -74,6 +74,7 @@ function handleCardClick(evt) {
 function renderCard({name, link}, container) {
   const card = new Card(arguments[0].name, arguments[0].link, '.grid__elements', handleCardClick);
   const cardElement = card.generateCard();
+  console.log('хай');
 
   container.prepend(cardElement);
 }

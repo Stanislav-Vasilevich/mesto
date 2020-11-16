@@ -20,6 +20,7 @@ class FormValidator {
 			evt.preventDefault();
 			this._activeButtonsPopups();
 			this._toggleButtonState();
+			console.log('привет');
 		})
 		this._setEventListeners();
 	} 

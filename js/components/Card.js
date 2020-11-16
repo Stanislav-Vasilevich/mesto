@@ -1,13 +1,13 @@
 // константы
-import { imgModalTitle, imgModalImg } from '../utils/constants.js'
-import PopupWithImage from './PopupWithImage.js'
+import { imgModalTitle, imgModalImg } from '../utils/constants.js';
+import PopupWithImage from './PopupWithImage.js';
 
 // класс создает карточки для секции grid и заполняет их данными
 export default class Card {
   constructor(name, link, cardSelector, handleCardClick) {  // передаем заголовки и ссылки из объекта для карточек и селектор нужной секции тега template
-    this._name = name
-    this._link = link
-    this._cardSelector = cardSelector
+    this._name = name;
+    this._link = link;
+    this._cardSelector = cardSelector;
 	  this.handleCardClick = handleCardClick;
   }
 
@@ -16,9 +16,9 @@ export default class Card {
       .querySelector(this._cardSelector)
       .content
       .querySelector('.element')
-      .cloneNode(true)
+      .cloneNode(true);
 
-    return gridElementCard
+    return gridElementCard;
   }
 
   generateCard() {
@@ -29,6 +29,7 @@ export default class Card {
     classImg.src = this._link 
     classImg.alt = this._name
     this._element.querySelector('.element__title').textContent = this._name
+    console.log('привет');
 
     this.card = this._element 
 	  return this._element;
