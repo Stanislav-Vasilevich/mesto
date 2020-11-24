@@ -34,6 +34,14 @@ import PopupWithImage from './components/PopupWithImage.js'
 const cardsSection = new Section({'items': initialCards, 'renderer': renderCard}, '.elements');
 cardsSection.render();
 
+// рендерит карточки в нужный нам контейнер
+function renderCard({name, link}, container) {
+  const card = new Card(arguments[0].name, arguments[0].link, '.grid__elements', handleCardClick);
+  const cardElement = card.generateCard();
+
+  container.prepend(cardElement);
+}
+
 // функция добавления новой карточки в grid(сбрасывает дефолтное поведенин кнопки)
 const handlerSubmitAddCard = (field_data) => {
   cardsSection.addItem({'name': field_data['form-title'], 'link': field_data['form-subtitle']}) 
@@ -68,12 +76,4 @@ function handleCardClick(evt) {
   const img = evt.target;
   const cardPopup = new PopupWithImage('.popup_type_img', {'src': img.src, 'alt': img.alt});
   cardPopup.open();
-}
-
-// рендерит карточки в нужный нам контейнер
-function renderCard({name, link}, container) {
-  const card = new Card(arguments[0].name, arguments[0].link, '.grid__elements', handleCardClick);
-  const cardElement = card.generateCard();
-
-  container.prepend(cardElement);
 }
