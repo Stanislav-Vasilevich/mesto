@@ -59,6 +59,7 @@ export default class Card {
     this._element.querySelector('.element__button-like').classList.toggle('element__button-like_focus');
   }
 
+  //подставляет данные в модальное окно при нажатии на картинку
   _replaceDataInPopupImg() {
     imageInPopupImg.src = this._link;
     imageInPopupImg.alt = this._name;

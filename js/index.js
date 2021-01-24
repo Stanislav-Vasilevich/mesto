@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import Card from './Card.js';
 import FormValidator from './FormValidator.js';
 
@@ -68,62 +67,6 @@ buttonOpenPopupEdit.addEventListener('click', () => {
 buttonOpenPopupAdd.addEventListener('click', () => {
   openPopup(popupAdd);
 });
-=======
-// константы
-import { 
-  imageModal, 
-  initialCards, 
-  dataForms, 
-  gridElements, 
-  profileTitle, 
-  profileSubtitle, 
-  editProfileModal, 
-  addCardModal, 
-  editForm, 
-  addForm, 
-  formInputName, 
-  formInputJob, 
-  formInputPlace, 
-  formInputUrl, 
-  buttonProfileEdit, 
-  buttonOpenAddPopup, 
-  buttonCloseModal, 
-  buttonClosePopupAdd 
-} 
-from './utils/constants.js'
-
-// классы js
-import Card from './components/Card.js'
-import FormValidator from './components/FormValidator.js'
-import Section from './components/Section.js'
-import Popup from './components/Popup.js'
-import PopupWithForm from './components/PopupWithForm.js'
-import PopupWithImage from './components/PopupWithImage.js'
-
-
-// отрисовка изначально присутствующих карточек 
-const cardsSection = new Section({'items': initialCards, 'renderer': renderCard}, '.elements');
-cardsSection.render();
-
-// рендерит карточки в нужный нам контейнер
-function renderCard({name, link}, container) {
-  const card = new Card(arguments[0].name, arguments[0].link, '.grid__elements', handleCardClick);
-  const cardElement = card.generateCard();
-
-  container.prepend(cardElement);
-}
-
-// функция добавления новой карточки в grid(сбрасывает дефолтное поведенин кнопки)
-const handlerSubmitAddCard = (field_data) => {
-  cardsSection.addItem({'name': field_data['form-title'], 'link': field_data['form-subtitle']}) 
-} 
-
-// обработчик отправки формы edit
-const handlerSubmitForm = (field_data) => {
-  proficonstitle.textContent = field_data['form-title']; 
-  profileSubtitle.textContent = field_data['form-subtitle'];
-}
->>>>>>> 966cc67ef36bdfd9dd5f2749df94668e9c0ddb80
 
 // listen form in popup Edit by event 'submit'
 // listen form in popup Add by event 'submit'
@@ -201,7 +144,6 @@ function closePopup(popup) {
   document.removeEventListener('keydown', closePopupByEscape);
   popup.removeEventListener('click', closePopupsByOverlay);
 }
-<<<<<<< HEAD
 
 // close popup by overlay
 function closePopupsByOverlay(evt) {
@@ -234,5 +176,3 @@ buttonClosePopupImg.addEventListener('click', () => {
   closePopupImage();
 });
 
-=======
->>>>>>> 966cc67ef36bdfd9dd5f2749df94668e9c0ddb80
