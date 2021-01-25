@@ -62,9 +62,7 @@ HTML, CSS и JS-файлы должны быть в папке ```src```. Ито
 - В файле ```index.js``` должно остаться только создание классов и добавление некоторых обработчиков.
 
 ## Чеклист
-```text
 Не забудьте проверить себя по чеклисту: [https://code.s3.yandex.net/web-developer/checklists/new-program/checklist-8/index.html](https://code.s3.yandex.net/web-developer/checklists/new-program/checklist-8/index.html)
-```
 
 # Проект 4 - 5 - 6 - 7 - 8 (текущий): Mesto
 
