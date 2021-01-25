@@ -1,178 +1,202 @@
-import Card from './Card.js';
-import FormValidator from './FormValidator.js';
+import {
+  popupImage,
+  dataCards,
+  dataForms,
+  blockForTemplateCards,
+  titleEdit,
+  subtitleEdit,
+  popupEdit,
+  popupAdd,
+  formEdit,
+  formAdd,
+  inputTitleFormEdit,
+  inputSubtitleFormEdit,
+  inputNamePlaceFormAdd,
+  inputUrlFormAdd,
+  buttonOpenPopupEdit,
+  buttonOpenPopupAdd,
+  buttonClosePopupEdit,
+  buttonClosePopupAdd,
+  buttonClosePopupImg,
+  titleInPopupImg,
+  imageInPopupImg
+} from './utils/constants';
 
-// object with data for Cards
-const dataCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-];
+// Class js
+import Card from './components/Card.js';
+import FormValidator from './components/FormValidator.js';
+import Section from './components/Section.js';
+import Popup from './components/Popup.js';
+import PopupWithForm from './components/PopupWithForm.js';
+import PopupWithImage from './components/PopupWithImage.js';
 
-// config for Card.js
-const dataForms = {
-  form: '.form',
-  input: '.form__input',
-  submit: '.form__submit',
-  inactiveButton: 'form__submit_active',
-  errorMsg: 'form__input-error_active',
-  invalidInput: 'form__input_type_error'
-};
-const popupImage = document.querySelector('.popup_type_img');
-const blockForTemplateCards = document.querySelector('.elements');
-const titleEdit = document.querySelector('.profile__title');
-const subtitleEdit = document.querySelector('.profile__subtitle');
-const popupEdit = document.querySelector('.popup_type_edit-profile');
-const popupAdd = document.querySelector('.popup_type_add-cards');
-const formEdit = popupEdit.querySelector('.form');
-const formAdd = popupAdd.querySelector('.form');
-const inputTitleFormEdit = formEdit.querySelector('.form__input_name');
-const inputSubtitleFormEdit = formEdit.querySelector('.form__input_job');
-const inputNamePlaceFormAdd = formAdd.querySelector('.form__input_place');
-const inputUrlFormAdd = formAdd.querySelector('.form__input_url');
-const buttonOpenPopupEdit = document.querySelector('.profile__edit-button');
-const buttonOpenPopupAdd = document.querySelector('.profile__add');
-const buttonClosePopupEdit = popupEdit.querySelector('.popup__close-icon');
-const buttonClosePopupAdd = popupAdd.querySelector('.popup__close-icon');
-const buttonClosePopupImg = popupImage.querySelector('.popup__close-icon');
+// // listen button open popup Edit
+// buttonOpenPopupEdit.addEventListener('click', () => {
+//   inputTitleFormEdit.value = titleEdit.textContent;
+//   inputSubtitleFormEdit.value = subtitleEdit.textContent;
+//   openPopup(popupEdit);
+// });
+//
+// // listen button open popup Add
+// buttonOpenPopupAdd.addEventListener('click', () => {
+//   openPopup(popupAdd);
+// });
+//
+// // listen form in popup Edit by event 'submit'
+// // listen form in popup Add by event 'submit'
+// formEdit.addEventListener('submit', handlerSubmitFormEdit);
+// formAdd.addEventListener('submit', handlerSubmitAddCard);
+//
+// // listen button close in popup Edit
+// buttonClosePopupEdit.addEventListener('click', () => {
+//   closePopup(popupEdit);
+// });
+//
+// // listen button close in popup Add
+// buttonClosePopupAdd.addEventListener('click', () => {
+//   closePopup(popupAdd);
+// });
+//
+// // listen document by event 'keydown' for close popupImage
+// document.addEventListener('keydown', (evt) => {
+//   if (evt.key === 'Escape') {
+//     closePopupImage();
+//   }
+// });
+//
+// // listen overlay and by click close popupImage
+// document.addEventListener('click', (evt) => {
+//   if (evt.target.classList.contains('popup__overlay')) {
+//     closePopupImage();
+//   }
+// });
+//
+// // listen all forms in document by config and call Class validation
+// document.querySelectorAll(dataForms.form).forEach(form => {
+//   new FormValidator(dataForms, form).enableValidation(); // тут нужно разобраться
+// })
+//
+// // handler submit form Edit
+// function handlerSubmitFormEdit(evt) {
+//   evt.preventDefault();
+//   titleEdit.textContent = inputTitleFormEdit.value;
+//   subtitleEdit.textContent = inputSubtitleFormEdit.value;
+//   closePopup(popupEdit);
+// }
+//
+// // create new array with data cards
+// dataCards.forEach(({name, link}) => {
+//   renderCard(name, link);
+// });
+//
+// // create new Card and add in block for template Cards
+// function renderCard(name, link) {
+//   const card = new Card(name, link, '.grid__elements');
+//   const cardElement = card.generateCard(); // разобраться
+//
+//   blockForTemplateCards.prepend(cardElement);
+// }
+//
+// // handler submit form Edit
+// function handlerSubmitAddCard(evt) {
+//   evt.preventDefault();
+//   renderCard(inputNamePlaceFormAdd.value, inputUrlFormAdd.value);
+//   formAdd.reset();
+//   closePopup(popupAdd);
+// }
+//
+// // open popup and listen event keydown and click by overlay
+// function openPopup(popup) {
+//   popup.classList.add('popup_opened');
+//   document.addEventListener('keydown', closePopupByEscape);
+//   popup.addEventListener('click', closePopupsByOverlay);
+// }
+//
+// // close all popups
+// function closePopup(popup) {
+//   popup.classList.remove('popup_opened');
+//   document.removeEventListener('keydown', closePopupByEscape);
+//   popup.removeEventListener('click', closePopupsByOverlay);
+// }
+//
+// // close popup by overlay
+// function closePopupsByOverlay(evt) {
+//   const popup = document.querySelector('.popup_opened');
+//   if (evt.target.classList.contains('popup__overlay')) {
+//     closePopup(popup);
+//   }
+// }
+//
+// // close popup by escape
+// function closePopupByEscape(evt) {
+//   const popup = document.querySelector('.popup_opened');
+//   if (evt.key === 'Escape') {
+//     closePopup(popup);
+//   }
+// }
+//
+// // open popup Image
+// export function openPopupImage() {
+//   popupImage.classList.add('popup_opened');
+// }
+//
+// // close popup Image
+// function closePopupImage() {
+//   popupImage.classList.remove('popup_opened');
+// }
+//
+// // listen button close popup Image by click
+// buttonClosePopupImg.addEventListener('click', () => {
+//   closePopupImage();
+// });
 
-// listen button open popup Edit
+/////////////////////////////////////////////////////////////////////
+
+// отрисовка изначально присутствующих карточек
+const cardsSection = new Section({'items': dataCards, 'renderer': renderCard}, '.elements');
+cardsSection.render();
+
+// функция добавления новой карточки в grid(сбрасывает дефолтное поведенин кнопки)
+const handlerSubmitAddCard = (field_data) => {
+  cardsSection.addItem({'name': field_data['form-title'], 'link': field_data['form-subtitle']})
+}
+
+// обработчик отправки формы edit
+const handlerSubmitForm = (field_data) => {
+  titleEdit.textContent = field_data['form-title'];
+  subtitleEdit.textContent = field_data['form-subtitle'];
+}
+
+// слушает модальное окно Edit и при клике вызывает функцию
+const editUserPopup = new PopupWithForm('.popup_type_edit-profile', handlerSubmitForm);
 buttonOpenPopupEdit.addEventListener('click', () => {
-  inputTitleFormEdit.value = titleEdit.textContent;
-  inputSubtitleFormEdit.value = subtitleEdit.textContent;
-  openPopup(popupEdit);
+  editUserPopup.open();
 });
 
-// listen button open popup Add
+// слушает кнопку редактирования данных в profile и при клике вызывает функцию с определенной модалкой
+const addCardPopup = new PopupWithForm('.popup_type_add-cards', handlerSubmitAddCard);
 buttonOpenPopupAdd.addEventListener('click', () => {
-  openPopup(popupAdd);
+  addCardPopup.open();
 });
 
-// listen form in popup Edit by event 'submit'
-// listen form in popup Add by event 'submit'
-formEdit.addEventListener('submit', handlerSubmitFormEdit);
-formAdd.addEventListener('submit', handlerSubmitAddCard);
-
-// listen button close in popup Edit
-buttonClosePopupEdit.addEventListener('click', () => {
-  closePopup(popupEdit);
-});
-
-// listen button close in popup Add
-buttonClosePopupAdd.addEventListener('click', () => {
-  closePopup(popupAdd);
-});
-
-// listen document by event 'keydown' for close popupImage
-document.addEventListener('keydown', (evt) => {
-  if (evt.key === 'Escape') {
-    closePopupImage();
-  }
-});
-
-// listen overlay and by click close popupImage
-document.addEventListener('click', (evt) => {
-  if (evt.target.classList.contains('popup__overlay')) {
-    closePopupImage();
-  }
-});
-
-// listen all forms in document by config and call Class validation
+// находит все наши формы и вызывает новый экземпляр с методом валидации
 document.querySelectorAll(dataForms.form).forEach(form => {
-  new FormValidator(dataForms, form).enableValidation(); // тут нужно разобраться
-})
-
-// handler submit form Edit
-function handlerSubmitFormEdit(evt) {
-  evt.preventDefault();
-  titleEdit.textContent = inputTitleFormEdit.value;
-  subtitleEdit.textContent = inputSubtitleFormEdit.value;
-  closePopup(popupEdit);
-}
-
-// create new array with data cards
-dataCards.forEach(({name, link}) => {
-  renderCard(name, link);
+  new FormValidator(dataForms, form).enableValidation();
 });
 
-// create new Card and add in block for template Cards
-function renderCard(name, link) {
-  const card = new Card(name, link, '.grid__elements');
-  const cardElement = card.generateCard(); // разобраться
 
-  blockForTemplateCards.prepend(cardElement);
+// открывает модальное окно с большой картинкой и заголовком
+function handleCardClick(evt) {
+  const img = evt.target;
+  const cardPopup = new PopupWithImage('.popup_type_img', {'src': img.src, 'alt': img.alt});
+  cardPopup.open();
 }
 
-// handler submit form Edit
-function handlerSubmitAddCard(evt) {
-  evt.preventDefault();
-  renderCard(inputNamePlaceFormAdd.value, inputUrlFormAdd.value);
-  formAdd.reset();
-  closePopup(popupAdd);
-}
+// рендерит карточки в нужный нам контейнер
+function renderCard({name, link}, container) {
+  const card = new Card(arguments[0].name, arguments[0].link, '.grid__elements', handleCardClick);
+  const cardElement = card.generateCard();
 
-// open popup and listen event keydown and click by overlay
-function openPopup(popup) {
-  popup.classList.add('popup_opened');
-  document.addEventListener('keydown', closePopupByEscape);
-  popup.addEventListener('click', closePopupsByOverlay);
+  container.prepend(cardElement);
 }
-
-// close all popups
-function closePopup(popup) {
-  popup.classList.remove('popup_opened');
-  document.removeEventListener('keydown', closePopupByEscape);
-  popup.removeEventListener('click', closePopupsByOverlay);
-}
-
-// close popup by overlay
-function closePopupsByOverlay(evt) {
-  const popup = document.querySelector('.popup_opened');
-  if (evt.target.classList.contains('popup__overlay')) {
-    closePopup(popup);
-  }
-}
-
-// close popup by escape
-function closePopupByEscape(evt) {
-  const popup = document.querySelector('.popup_opened');
-  if (evt.key === 'Escape') {
-    closePopup(popup);
-  }
-}
-
-// open popup Image
-export function openPopupImage() {
-  popupImage.classList.add('popup_opened');
-}
-
-// close popup Image
-function closePopupImage() {
-  popupImage.classList.remove('popup_opened');
-}
-
-// listen button close popup Image by click
-buttonClosePopupImg.addEventListener('click', () => {
-  closePopupImage();
-});
 

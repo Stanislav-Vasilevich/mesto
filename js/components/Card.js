@@ -1,8 +1,10 @@
-import {openPopupImage} from './index.js';
+// constants
+import { titleInPopupImg, imageInPopupImg } from '../utils/constants.js';
+// import PopupWithImage from './PopupWithImage.js'; // разобраться
+
+import {openPopupImage} from '../index.js';
 
 const popupImage = document.querySelector('.popup_type_img');
-const titleInPopupImg = popupImage.querySelector('.popup__title-img');
-const imageInPopupImg = popupImage.querySelector('.popup__img');
 
 // Class for grid-section
 export default class Card {
