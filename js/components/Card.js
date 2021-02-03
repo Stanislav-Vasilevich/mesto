@@ -2,7 +2,7 @@
 import { titleInPopupImg, imageInPopupImg } from '../utils/constants.js';
 // import PopupWithImage from './PopupWithImage.js'; // разобраться
 
-import {openPopupImage} from '../index.js';
+import {openPopupImage} from '../../pages';
 
 const popupImage = document.querySelector('.popup_type_img');
 

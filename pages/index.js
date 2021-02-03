@@ -20,15 +20,15 @@ import {
   buttonClosePopupImg,
   titleInPopupImg,
   imageInPopupImg
-} from './utils/constants';
+} from '../js/utils/constants';
 
 // Class js
-import Card from './components/Card.js';
-import FormValidator from './components/FormValidator.js';
-import Section from './components/Section.js';
-import Popup from './components/Popup.js';
-import PopupWithForm from './components/PopupWithForm.js';
-import PopupWithImage from './components/PopupWithImage.js';
+import Card from '../js/components/Card.js';
+import FormValidator from '../js/components/FormValidator.js';
+import Section from '../js/components/Section.js';
+import Popup from '../js/components/Popup.js';
+import PopupWithForm from '../js/components/PopupWithForm.js';
+import PopupWithImage from '../js/components/PopupWithImage.js';
 
 // listen button open popup Edit
 buttonOpenPopupEdit.addEventListener('click', () => {
