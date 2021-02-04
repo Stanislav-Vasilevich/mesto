@@ -1,3 +1,5 @@
+import Card from "./Card.js";
+
 export default class Section {
   constructor({items, renderer}, containerSelector) {
     this._items = items;
@@ -7,30 +9,14 @@ export default class Section {
 
   renderSection = () => {
     this._items.forEach(function() {
+      const card = new Card({name, link}, '.grid__elements');
+      const cardElement = card.generateCard(); // разобраться
 
+      this.addItem(cardElement);
     })
   }
 
-  addItem = (item) => {
-    const templateElem = document.querySelector()
+  addItem = (data) => {
+    this._container.append(data);
   }
 }
-
-/* export default class Section {
-  constructor({items, renderer}, containerSelector) {
-    this.items = arguments[0]['items'];
-    this._renderer = arguments[0]['renderer'];
-    this.container = document.querySelector(containerSelector);
-  }
-
-  render = () => {
-    for (let i in this.items) {
-      this._renderer(this.items[i], this.container);
-    }
-  }
-
-  addItem = (item) => {
-    this.items.push(item);
-    this.render();
-  }
-}; */

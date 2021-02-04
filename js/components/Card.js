@@ -1,8 +1,8 @@
 // constants
-import { titleInPopupImg, imageInPopupImg } from '../utils/constants.js';
+import {titleInPopupImg, imageInPopupImg} from '../utils/constants.js';
 // import PopupWithImage from './PopupWithImage.js'; // разобраться
 
-import {openPopupImage} from '../../pages';
+import {openPopupImage} from '../../pages/index.js';
 
 const popupImage = document.querySelector('.popup_type_img');
 
@@ -27,6 +27,7 @@ export default class Card {
   generateCard() {
     this._element = this._getTemplate();
     this._setEventListeners();
+
     const tegImage = this._element.querySelector('.element__img');
     tegImage.src = this._link;
     tegImage.alt = this._name;

@@ -20,15 +20,17 @@ import {
   buttonClosePopupImg,
   titleInPopupImg,
   imageInPopupImg
-} from '../js/utils/constants';
+} from '../js/utils/constants.js';
+
+import {renderCard} from '../js/utils/utils.js';
 
 // Class js
 import Card from '../js/components/Card.js';
 import FormValidator from '../js/components/FormValidator.js';
-import Section from '../js/components/Section.js';
-import Popup from '../js/components/Popup.js';
-import PopupWithForm from '../js/components/PopupWithForm.js';
-import PopupWithImage from '../js/components/PopupWithImage.js';
+//import Section from '../js/components/Section.js';
+//import Popup from '../js/components/Popup.js';
+//import PopupWithForm from '../js/components/PopupWithForm.js';
+//import PopupWithImage from '../js/components/PopupWithImage.js';
 
 // listen button open popup Edit
 buttonOpenPopupEdit.addEventListener('click', () => {
@@ -84,18 +86,22 @@ function handlerSubmitFormEdit(evt) {
   closePopup(popupEdit);
 }
 
+///////////////////////////////////////////////////////////////////
 // create new array with data cards
-dataCards.forEach(({name, link}) => {
+/* dataCards.forEach(({name, link}) => {
   renderCard(name, link);
 });
 
 // create new Card and add in block for template Cards
 function renderCard(name, link) {
   const card = new Card(name, link, '.grid__elements');
-  const cardElement = card.generateCard(); // разобраться
+  const cardElement = card.generateCard();
 
   blockForTemplateCards.prepend(cardElement);
-}
+} */
+
+// renderCard(name, link);
+///////////////////////////////////////////////////////////////////
 
 // handler submit form Edit
 function handlerSubmitAddCard(evt) {
