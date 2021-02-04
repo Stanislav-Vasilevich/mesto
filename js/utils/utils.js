@@ -1,4 +1,7 @@
+// constants
 import {dataCards, blockForTemplateCards} from './constants.js';
+
+// Class
 import Card from '../components/Card.js';
 
 dataCards.forEach(({name, link}) => {

@@ -1,9 +1,7 @@
 // constants
 import {titleInPopupImg, imageInPopupImg} from '../utils/constants.js';
 // import PopupWithImage from './PopupWithImage.js'; // разобраться
-
 import {openPopupImage} from '../../pages/index.js';
-
 const popupImage = document.querySelector('.popup_type_img');
 
 // Class for grid-section

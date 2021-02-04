@@ -1,3 +1,4 @@
+// constants
 import {
   popupImage,
   dataCards,
@@ -22,15 +23,26 @@ import {
   imageInPopupImg
 } from '../js/utils/constants.js';
 
-import {renderCard} from '../js/utils/utils.js';
-
 // Class js
-import Card from '../js/components/Card.js';
 import FormValidator from '../js/components/FormValidator.js';
-//import Section from '../js/components/Section.js';
-//import Popup from '../js/components/Popup.js';
-//import PopupWithForm from '../js/components/PopupWithForm.js';
-//import PopupWithImage from '../js/components/PopupWithImage.js';
+import Section from '../js/components/Section.js';
+import Card from "../js/components/Card";
+
+console.log(dataCards)
+
+/////////////////////////////////////////////////////////////////
+const cardList = new Section({
+  items: dataCards,
+  renderer: () => {
+    const card = new Card(name, link, '.grid__elements');
+    const readyCard = card.generateCard();
+
+    cardList.addItem(readyCard);
+  },
+}, blockForTemplateCards);
+
+cardList.renderItems();
+/////////////////////////////////////////////////////////////////
 
 // listen button open popup Edit
 buttonOpenPopupEdit.addEventListener('click', () => {
@@ -86,27 +98,10 @@ function handlerSubmitFormEdit(evt) {
   closePopup(popupEdit);
 }
 
-///////////////////////////////////////////////////////////////////
-// create new array with data cards
-/* dataCards.forEach(({name, link}) => {
-  renderCard(name, link);
-});
-
-// create new Card and add in block for template Cards
-function renderCard(name, link) {
-  const card = new Card(name, link, '.grid__elements');
-  const cardElement = card.generateCard();
-
-  blockForTemplateCards.prepend(cardElement);
-} */
-
-// renderCard(name, link);
-///////////////////////////////////////////////////////////////////
-
 // handler submit form Edit
 function handlerSubmitAddCard(evt) {
   evt.preventDefault();
-  renderCard(inputNamePlaceFormAdd.value, inputUrlFormAdd.value);
+  // renderCard(inputNamePlaceFormAdd.value, inputUrlFormAdd.value);
   formAdd.reset();
   closePopup(popupAdd);
 }
@@ -155,54 +150,4 @@ function closePopupImage() {
 buttonClosePopupImg.addEventListener('click', () => {
   closePopupImage();
 });
-
-/////////////////////////////////////////////////////////////////////
-
-/* отрисовка изначально присутствующих карточек
-const cardsSection = new Section({'items': dataCards, 'renderer': renderCard}, '.elements');
-cardsSection.render();
-
-// функция добавления новой карточки в grid(сбрасывает дефолтное поведенин кнопки)
-const handlerSubmitAddCard = (field_data) => {
-  cardsSection.addItem({'name': field_data['form-title'], 'link': field_data['form-subtitle']})
-}
-
-// обработчик отправки формы edit
-const handlerSubmitForm = (field_data) => {
-  titleEdit.textContent = field_data['form-title'];
-  subtitleEdit.textContent = field_data['form-subtitle'];
-}
-
-// слушает модальное окно Edit и при клике вызывает функцию
-const editUserPopup = new PopupWithForm('.popup_type_edit-profile', handlerSubmitForm);
-buttonOpenPopupEdit.addEventListener('click', () => {
-  editUserPopup.open();
-});
-
-// слушает кнопку редактирования данных в profile и при клике вызывает функцию с определенной модалкой
-const addCardPopup = new PopupWithForm('.popup_type_add-cards', handlerSubmitAddCard);
-buttonOpenPopupAdd.addEventListener('click', () => {
-  addCardPopup.open();
-});
-
-// находит все наши формы и вызывает новый экземпляр с методом валидации
-document.querySelectorAll(dataForms.form).forEach(form => {
-  new FormValidator(dataForms, form).enableValidation();
-});
-
-
-// открывает модальное окно с большой картинкой и заголовком
-function handleCardClick(evt) {
-  const img = evt.target;
-  const cardPopup = new PopupWithImage('.popup_type_img', {'src': img.src, 'alt': img.alt});
-  cardPopup.open();
-}
-
-// рендерит карточки в нужный нам контейнер
-function renderCard({name, link}, container) {
-  const card = new Card(arguments[0].name, arguments[0].link, '.grid__elements', handleCardClick);
-  const cardElement = card.generateCard();
-
-  container.prepend(cardElement);
-} */
 
