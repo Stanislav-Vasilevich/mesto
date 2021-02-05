@@ -1,6 +1,6 @@
 export default class Popup {
-  constructor(popupElem) {
-    this._elem = document.querySelector(popupElem);
+  constructor(popupSelector) {
+    this._elem = document.querySelector(popupSelector);
     this.setEventListeners();
   }
 
@@ -10,6 +10,7 @@ export default class Popup {
 
   close = () => {
     this._elem.classList.remove('popup_opened');
+    console.log('Это функция закрытия из класса Popup');
   }
 
   _handleEscClose = (evt) => {
@@ -19,8 +20,11 @@ export default class Popup {
   }
 
   setEventListeners = () => {
-    this._elem.querySelector('.popup__close-icon').addEventListener('click', this.close);
+    this._elem.querySelector('.popup__close-icon')
+    .addEventListener('click', this.close);
+
     document.addEventListener('keydown', this._handleEscClose);
+
     this._elem.addEventListener('click', (evt) => {
       if (evt.target.classList.contains('popup__overlay')) {
         this.close();

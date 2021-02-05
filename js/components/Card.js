@@ -1,6 +1,6 @@
 // constants
 import {titleInPopupImg, imageInPopupImg} from '../utils/constants.js';
-import {openPopupImage} from '../../pages/index.js';
+// import {openPopupImage} from '../../pages/index.js';
 
 // const popupImage = document.querySelector('.popup_type_img');
 
