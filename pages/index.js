@@ -26,21 +26,18 @@ import {
 // Class js
 import FormValidator from '../js/components/FormValidator.js';
 import Section from '../js/components/Section.js';
-import Card from "../js/components/Card";
-
-console.log(dataCards)
+import Card from '../js/components/Card.js';
 
 /////////////////////////////////////////////////////////////////
 const cardList = new Section({
-  items: dataCards,
-  renderer: () => {
-    const card = new Card(name, link, '.grid__elements');
-    const readyCard = card.generateCard();
-
-    cardList.addItem(readyCard);
-  },
-}, blockForTemplateCards);
-
+  items:dataCards, 
+  renderer: (item) => {
+    const card = new Card(item.name, item.link, '.grid__elements');
+    const cardElement = card.generateCard();
+    
+    cardList.addItem(cardElement);
+  }
+}, '.elements');
 cardList.renderItems();
 /////////////////////////////////////////////////////////////////
 

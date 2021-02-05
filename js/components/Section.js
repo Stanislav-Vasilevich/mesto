@@ -6,7 +6,7 @@ export default class Section {
   }
 
   addItem = (data) => {
-    this._container.append(data);
+    this._container.prepend(data);
   }
 
   renderItems = () => {
