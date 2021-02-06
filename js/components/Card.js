@@ -1,4 +1,3 @@
-// Class for grid-section
 export default class Card {
   constructor(name, link, templateCard, handleCardClick) {
     this._handleCardClick = handleCardClick;
@@ -55,10 +54,3 @@ export default class Card {
     this._element.querySelector('.element__button-like').classList.toggle('element__button-like_focus');
   }
 }
-
-
-
-
-
-
-

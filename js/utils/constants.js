@@ -1,26 +1,12 @@
 export {
-  popupImage,
   dataCards,
   dataForms,
-  blockForTemplateCards,
-  titleEdit,
-  subtitleEdit,
-  popupEdit,
-  popupAdd,
-  formEdit,
-  formAdd,
   inputTitleFormEdit,
   inputSubtitleFormEdit,
   inputNamePlaceFormAdd,
   inputUrlFormAdd,
   buttonOpenPopupEdit,
-  buttonOpenPopupAdd,
-  elemOpenPopupImg,
-  buttonClosePopupEdit,
-  buttonClosePopupAdd,
-  buttonClosePopupImg,
-  titleInPopupImg,
-  imageInPopupImg
+  buttonOpenPopupAdd
 };
 
 // object with data for Cards
@@ -62,12 +48,8 @@ const dataForms = {
 };
 
 // for index.js
-const blockForTemplateCards = document.querySelector('.elements');
-const titleEdit = document.querySelector('.profile__title');
-const subtitleEdit = document.querySelector('.profile__subtitle');
 const popupEdit = document.querySelector('.popup_type_edit-profile');
 const popupAdd = document.querySelector('.popup_type_add-cards');
-const popupImage = document.querySelector('.popup_type_img');
 const formEdit = popupEdit.querySelector('.form');
 const formAdd = popupAdd.querySelector('.form');
 const inputTitleFormEdit = formEdit.querySelector('.form__input_name');
@@ -76,11 +58,3 @@ const inputNamePlaceFormAdd = formAdd.querySelector('.form__input_place');
 const inputUrlFormAdd = formAdd.querySelector('.form__input_url');
 const buttonOpenPopupEdit = document.querySelector('.profile__edit-button');
 const buttonOpenPopupAdd = document.querySelector('.profile__add');
-const elemOpenPopupImg = document.querySelector('.element__img');
-const buttonClosePopupEdit = popupEdit.querySelector('.popup__close-icon');
-const buttonClosePopupAdd = popupAdd.querySelector('.popup__close-icon');
-const buttonClosePopupImg = popupImage.querySelector('.popup__close-icon');
-
-// for Card.js
-const titleInPopupImg = popupImage.querySelector('.popup__title-img');
-const imageInPopupImg = popupImage.querySelector('.popup__img');
