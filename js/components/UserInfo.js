@@ -1,8 +1,9 @@
-class UserInfo {
-  constructor( { userName, userInfo } ) {
-    this._userName = document.querySelector(userName);
-    this._UserInfo = document.querySelector(userInfo);
+export default class UserInfo {
+  constructor( { elemName, elemInfo } ) {
+    this._userName = document.querySelector(elemName);
+    this._userInfo = document.querySelector(elemInfo);
   }
+
   getUserInfo = () => {
     return {'name': this._userName.innerHTML, 'info': this._userInfo.innerHTML};
   }

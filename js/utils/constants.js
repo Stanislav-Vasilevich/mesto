@@ -84,4 +84,3 @@ const buttonClosePopupImg = popupImage.querySelector('.popup__close-icon');
 // for Card.js
 const titleInPopupImg = popupImage.querySelector('.popup__title-img');
 const imageInPopupImg = popupImage.querySelector('.popup__img');
-

@@ -1,6 +1,3 @@
-// constants
-import {titleInPopupImg, imageInPopupImg} from '../utils/constants.js';
-
 // Class for grid-section
 export default class Card {
   constructor(name, link, templateCard, handleCardClick) {
@@ -57,13 +54,6 @@ export default class Card {
   _likeCard = () => {
     this._element.querySelector('.element__button-like').classList.toggle('element__button-like_focus');
   }
-
-  // //подставляет данные в модальное окно при нажатии на картинку
-  // _replaceDataInPopupImg() {
-  //   imageInPopupImg.src = this._link;
-  //   imageInPopupImg.alt = this._name;
-  //   titleInPopupImg.textContent = this._name;
-  // }
 }
 
 
