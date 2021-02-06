@@ -15,6 +15,7 @@ export {
   inputUrlFormAdd,
   buttonOpenPopupEdit,
   buttonOpenPopupAdd,
+  elemOpenPopupImg,
   buttonClosePopupEdit,
   buttonClosePopupAdd,
   buttonClosePopupImg,
@@ -75,6 +76,7 @@ const inputNamePlaceFormAdd = formAdd.querySelector('.form__input_place');
 const inputUrlFormAdd = formAdd.querySelector('.form__input_url');
 const buttonOpenPopupEdit = document.querySelector('.profile__edit-button');
 const buttonOpenPopupAdd = document.querySelector('.profile__add');
+const elemOpenPopupImg = document.querySelector('.element__img');
 const buttonClosePopupEdit = popupEdit.querySelector('.popup__close-icon');
 const buttonClosePopupAdd = popupAdd.querySelector('.popup__close-icon');
 const buttonClosePopupImg = popupImage.querySelector('.popup__close-icon');

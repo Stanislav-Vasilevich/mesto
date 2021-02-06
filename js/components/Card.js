@@ -1,12 +1,10 @@
 // constants
 import {titleInPopupImg, imageInPopupImg} from '../utils/constants.js';
-// import {openPopupImage} from '../../pages/index.js';
-
-// const popupImage = document.querySelector('.popup_type_img');
 
 // Class for grid-section
 export default class Card {
-  constructor(name, link, templateCard) {
+  constructor(name, link, templateCard, handleCardClick) {
+    this._handleCardClick = handleCardClick;
     this._name = name;
     this._link = link;
     this._templateCard = templateCard;
@@ -36,18 +34,18 @@ export default class Card {
   }
 
   _setEventListeners() {
-    this._element.querySelector('.element__button-delete').addEventListener('click', () => {
+    this._element.querySelector('.element__button-delete')
+    .addEventListener('click', () => {
       this._deleteCard();
     });
 
-    this._element.querySelector('.element__button-like').addEventListener('click', () => {
+    this._element.querySelector('.element__button-like')
+    .addEventListener('click', () => {
       this._likeCard();
     });
 
-    this._element.querySelector('.element__img').addEventListener('click', () => {
-      openPopupImage();
-      this._replaceDataInPopupImg();
-    });
+    this._element.querySelector('.element__img')
+    .addEventListener('click', this._handleCardClick);
   }
 
   // delete template element
@@ -60,12 +58,12 @@ export default class Card {
     this._element.querySelector('.element__button-like').classList.toggle('element__button-like_focus');
   }
 
-  //подставляет данные в модальное окно при нажатии на картинку
-  _replaceDataInPopupImg() {
-    imageInPopupImg.src = this._link;
-    imageInPopupImg.alt = this._name;
-    titleInPopupImg.textContent = this._name;
-  }
+  // //подставляет данные в модальное окно при нажатии на картинку
+  // _replaceDataInPopupImg() {
+  //   imageInPopupImg.src = this._link;
+  //   imageInPopupImg.alt = this._name;
+  //   titleInPopupImg.textContent = this._name;
+  // }
 }
 
 

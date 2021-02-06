@@ -10,7 +10,6 @@ export default class Popup {
 
   close = () => {
     this._elem.classList.remove('popup_opened');
-    console.log('Это функция закрытия из класса Popup');
   }
 
   _handleEscClose = (evt) => {
@@ -20,8 +19,8 @@ export default class Popup {
   }
 
   setEventListeners = () => {
-    this._elem.querySelector('.popup__close-icon')
-    .addEventListener('click', this.close);
+    const popupCloseIcon = this._elem.querySelector('.popup__close-icon');
+    popupCloseIcon.addEventListener('click', this.close);
 
     document.addEventListener('keydown', this._handleEscClose);
 

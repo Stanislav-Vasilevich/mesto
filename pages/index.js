@@ -16,6 +16,7 @@ import {
   inputUrlFormAdd,
   buttonOpenPopupEdit,
   buttonOpenPopupAdd,
+  elemOpenPopupImg,
   buttonClosePopupEdit,
   buttonClosePopupAdd,
   buttonClosePopupImg,
@@ -28,6 +29,7 @@ import FormValidator from '../js/components/FormValidator.js';
 import Section from '../js/components/Section.js';
 import Card from '../js/components/Card.js';
 import Popup from '../js/components/Popup.js';
+import PopupWithImage from '../js/components/PopupWithImage.js';
 
 /////////////////////////////////////////////////////////////////
 // Class Section
@@ -35,7 +37,7 @@ import Popup from '../js/components/Popup.js';
 const cardList = new Section({
   items:dataCards, 
   renderer: (item) => {
-    const card = new Card(item.name, item.link, '.grid__elements');
+    const card = new Card(item.name, item.link, '.grid__elements', handleCardClick);
     const cardElement = card.generateCard();
     
     cardList.addItem(cardElement);
@@ -49,7 +51,7 @@ cardList.renderItems();
 /////////////////////////////////////////////////////////////////
 const openAndClosePopupEdit = new Popup('.popup_type_edit-profile');
 const openAndClosePopupAdd = new Popup('.popup_type_add-cards');
-const openAndClosePopupImage = new Popup('.popup_type_img');
+//const openAndClosePopupImage = new PopupWithImage('.popup_type_img');
 
 // open and close popup Edit
 buttonOpenPopupEdit.addEventListener('click', () => {
@@ -62,45 +64,19 @@ buttonOpenPopupEdit.addEventListener('click', () => {
 buttonOpenPopupAdd.addEventListener('click', () => {
   openAndClosePopupAdd.open();
 });
+
+// open popup image and push data
+function handleCardClick(evt) {
+  const img = evt.target;
+  const popupImage = new PopupWithImage({'src': img.src, 'alt': img.alt}, '.popup_type_img');
+  popupImage.open();
+}
 /////////////////////////////////////////////////////////////////
-// open popup Image
-function openPopupImage() {
-  popupImage.classList.add('popup_opened');
-}
-
-// // open popup Image
-// export function openPopupImage() {
-//   popupImage.classList.add('popup_opened');
-// }
-
-// close popup Image
-function closePopupImage() {
-  popupImage.classList.remove('popup_opened');
-}
-
-// listen button close popup Image by click
-buttonClosePopupImg.addEventListener('click', () => {
-  closePopupImage();
-});
 
 // listen form in popup Edit by event 'submit'
 // listen form in popup Add by event 'submit'
 formEdit.addEventListener('submit', handlerSubmitFormEdit);
 formAdd.addEventListener('submit', handlerSubmitAddCard);
-
-// listen document by event 'keydown' for close popupImage
-document.addEventListener('keydown', (evt) => {
-  if (evt.key === 'Escape') {
-    closePopupImage();
-  }
-});
-
-// listen overlay and by click close popupImage
-document.addEventListener('click', (evt) => {
-  if (evt.target.classList.contains('popup__overlay')) {
-    closePopupImage();
-  }
-});
 
 // listen all forms in document by config and call Class validation
 document.querySelectorAll(dataForms.form).forEach(form => {
@@ -163,4 +139,38 @@ function handlerSubmitAddCard(evt) {
 //   if (evt.key === 'Escape') {
 //     closePopup(popup);
 //   }
+// }
+
+// // open popup Image
+// function openPopupImage() {
+//   popupImage.classList.add('popup_opened');
+// }
+
+// // open popup Image
+// export function openPopupImage() {
+//   popupImage.classList.add('popup_opened');
+// }
+
+// // listen button close popup Image by click
+// buttonClosePopupImg.addEventListener('click', () => {
+//   closePopupImage();
+// });
+
+// // listen document by event 'keydown' for close popupImage
+// document.addEventListener('keydown', (evt) => {
+//   if (evt.key === 'Escape') {
+//     closePopupImage();
+//   }
+// });
+
+// // listen overlay and by click close popupImage
+// document.addEventListener('click', (evt) => {
+//   if (evt.target.classList.contains('popup__overlay')) {
+//     closePopupImage();
+//   }
+// });
+
+// // close popup Image
+// function closePopupImage() {
+//   popupImage.classList.remove('popup_opened');
 // }
