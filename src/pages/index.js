@@ -1,3 +1,5 @@
+import './index.css';
+
 // constants
 import {
   dataCards,
@@ -89,7 +91,6 @@ const openAndClosePopupAdd = new PopupWidthForm(
 
 // handler submit form Edit
 function handlerSubmitFormAdd(fieldData) {
-  console.log(fieldData);
   const card = new Card(
     fieldData['form-title'],
     fieldData['form-subtitle'],
