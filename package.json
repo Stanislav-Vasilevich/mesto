@@ -4,7 +4,8 @@
   "description": "\"Проект Яндекс Практикума\" - mesto\"",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "webpack --mode production",
+    "dev": "webpack serve"
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/Stanislav-Vasilevich/mesto/issues"
   },
-  "homepage": "https://github.com/Stanislav-Vasilevich/mesto#readme"
+  "homepage": "https://github.com/Stanislav-Vasilevich/mesto#readme",
+  "devDependencies": {
+    "webpack": "^5.21.1",
+    "webpack-cli": "^4.5.0"
+  }
 }
