@@ -7,16 +7,16 @@ class FormValidator {
 		  invalidInput
 	}, formElem)
 	{
-		this.input = input;
-		this.submit = submit;
-		this.inactiveButton = inactiveButton;
-		this.errorMsg = errorMsg;
-		this.invalidInput = invalidInput;
-		this.form = formElem;
+		this._input = input;
+		this._submit = submit;
+		this._nactiveButton = inactiveButton;
+		this._errorMsg = errorMsg;
+		this._invalidInput = invalidInput;
+		this._form = formElem;
 	}
 
 	enableValidation() {
-		this.form.addEventListener('submit', (evt) => {
+		this._form.addEventListener('submit', (evt) => {
 			evt.preventDefault();
 			this._toggleButtonState();
 			this._inactiveButtonInPopup(); // default button not active
@@ -26,10 +26,10 @@ class FormValidator {
 	
 	// listen elements forms
 	_setEventListeners() {
-	  this.inputList = Array.from(this.form.querySelectorAll(this.input));
-		this.button = this.form.querySelector(this.submit);
+	  this._inputList = Array.from(this._form.querySelectorAll(this._input));
+		this.button = this._form.querySelector(this._submit);
 		this._toggleButtonState();
-	  this.inputList.forEach((input) => {
+	  this._inputList.forEach((input) => {
 			input.addEventListener('input', () => {
 		  	this._toggleInputState(input);
 		  	this._toggleButtonState();
@@ -39,7 +39,7 @@ class FormValidator {
 	
 	// if input not valid return error
 	_hasInvalidInput() {
-	  return this.inputList.some((input) => {
+	  return this._inputList.some((input) => {
 			return !input.validity.valid;
 	  })
 	};
@@ -55,28 +55,28 @@ class FormValidator {
 	
 	// show error
 	_showInputError(input) {
-		const errorElem = this.form.querySelector(`#${input.id}-error`);
-		input.classList.add(this.invalidInput);
+		const errorElem = this._form.querySelector(`#${input.id}-error`);
+		input.classList.add(this._invalidInput);
 		errorElem.textContent = input.validationMessage;
-		errorElem.classList.add(this.errorMsg);
+		errorElem.classList.add(this._errorMsg);
 	};
 	
 	// delete error
 	_hideInputError(input) {
-		const errorElem = this.form.querySelector(`#${input.id}-error`);
+		const errorElem = this._form.querySelector(`#${input.id}-error`);
 
-		input.classList.remove(this.invalidInput);
-		errorElem.classList.remove(this.errorMsg);
+		input.classList.remove(this._invalidInput);
+		errorElem.classList.remove(this._errorMsg);
 		errorElem.textContent = '';
 	};
 
 	// status button
 	_toggleButtonState() {
-		if (this._hasInvalidInput(this.inputList)) {
-			this.button.classList.add(this.inactiveButton);
+		if (this._hasInvalidInput(this._inputList)) {
+			this.button.classList.add(this._nactiveButton);
 			this._inactiveButtonInPopup();
 		} else {
-			this.button.classList.remove(this.inactiveButton);
+			this.button.classList.remove(this._nactiveButton);
 			this._activeButtonInPopup();  // всё ок? включаем
 		}
 	}
