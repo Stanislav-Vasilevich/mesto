@@ -4,12 +4,14 @@ export default class Popup {
     this.setEventListeners();
   }
 
-  open = () => {
+  open() {
     this._elem.classList.add('popup_opened');
+    document.addEventListener('keydown', this._handleEscClose);
   }
 
-  close = () => {
+  close() {
     this._elem.classList.remove('popup_opened');
+    document.removeEventListener('keydown', this._handleEscClose);
   }
 
   _handleEscClose = (evt) => {
@@ -21,8 +23,6 @@ export default class Popup {
   setEventListeners = () => {
     const popupCloseIcon = this._elem.querySelector('.popup__close-icon');
     popupCloseIcon.addEventListener('click', this.close);
-
-    document.addEventListener('keydown', this._handleEscClose);
 
     this._elem.addEventListener('click', (evt) => {
       if (evt.target.classList.contains('popup__overlay')) {
