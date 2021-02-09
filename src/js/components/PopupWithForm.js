@@ -18,14 +18,6 @@ export default class PopupWithForm extends Popup {
   }
 
   _setEventListeners = () => {
-    this._elem.querySelector('.popup__close-icon').addEventListener('click', this.close);
-    document.addEventListener('keydown', this._handleEscClose);
-    this._elem.addEventListener('click', (evt) => {
-      if (evt.target.classList.contains('popup__overlay')) {
-        this.close();
-      }
-    });
-
     this._submitForm.addEventListener('submit', (evt) => {
       evt.preventDefault();
       this._handleFormSubmit(this._getInputValues());
@@ -35,6 +27,6 @@ export default class PopupWithForm extends Popup {
 
   close = () => {
     this._submitForm.reset();
-    this._elem.classList.remove('popup_opened');
+    super.close();
   }
 };
