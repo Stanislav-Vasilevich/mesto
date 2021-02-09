@@ -9,7 +9,7 @@ import {
   inputNamePlaceFormAdd,
   inputUrlFormAdd,
   buttonOpenPopupEdit,
-  buttonOpenPopupAdd
+  buttonOpenPopupAdd,
 } from '../js/utils/constants.js';
 
 // Class js
@@ -20,24 +20,29 @@ import PopupWithImage from '../js/components/PopupWithImage.js';
 import PopupWidthForm from '../js/components/PopupWithForm.js';
 import UserInfo from '../js/components/UserInfo.js';
 
+function createCard(data) {
+  const card = new Card(
+    data.name,
+    data.link,
+    '.grid__elements',
+    handleCardClick
+  );
+
+  return card;
+}
 
 const cardList = new Section(
   {
     items: dataCards,
     renderer: (item) => {
-      const card = new Card(
-        item.name,
-        item.link,
-        '.grid__elements',
-        handleCardClick
-      );
+      const card = createCard(item);
       const cardElement = card.generateCard();
-
       cardList.addItem(cardElement);
     },
   },
   '.elements'
 );
+
 cardList.renderItems();
 
 // open popup image and push data
@@ -91,14 +96,19 @@ const openAndClosePopupAdd = new PopupWidthForm(
 
 // handler submit form Edit
 function handlerSubmitFormAdd(fieldData) {
-  const card = new Card(
+  // const card = new Card(
+  //   fieldData['form-title'],
+  //   fieldData['form-subtitle'],
+  //   '.grid__elements',
+  //   handleCardClick
+  // );
+
+  const newCard = createCard(
     fieldData['form-title'],
     fieldData['form-subtitle'],
     '.grid__elements',
     handleCardClick
   );
-
-  const newCard = card.generateCard();
 
   cardList.addItem(newCard);
 }
