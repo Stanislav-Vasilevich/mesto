@@ -20,6 +20,7 @@ import PopupWithImage from '../js/components/PopupWithImage.js';
 import PopupWidthForm from '../js/components/PopupWithForm.js';
 import UserInfo from '../js/components/UserInfo.js';
 
+// initialization Сlass Card
 function createCard(data) {
   const card = new Card(
     data.name,
@@ -31,6 +32,21 @@ function createCard(data) {
   return card;
 }
 
+// initialization Сlass PopupWithImage
+function createPopupWithImage() {
+  const popupImage = new PopupWithImage('.popup_type_img');
+
+  return popupImage;
+}
+
+// initialization Сlass UserInfo
+function createUserInfo({ elemName, elemInfo }) {
+  const userInfo = new UserInfo({ elemName, elemInfo });
+
+  return userInfo;
+}
+
+// initialization Сlass Section
 const cardList = new Section(
   {
     items: dataCards,
@@ -48,27 +64,24 @@ cardList.renderItems();
 // open popup image and push data
 function handleCardClick(evt) {
   const img = evt.target;
-  const popupImage = new PopupWithImage(
-    { src: img.src, alt: img.alt },
-    '.popup_type_img'
-  );
-  popupImage.open();
+  const popupImage = createPopupWithImage();
+  popupImage.open(img.src, img.alt);
 }
 
 // Class PopupWidthForm for replace UserInfo
-const openAndClosePopupEdit = new PopupWidthForm(
+const openPopupEdit = new PopupWidthForm(
   '.popup_type_edit-profile',
   handlerSubmitFormEdit
 );
 
 // handler submit form Edit
 function handlerSubmitFormEdit(fieldData) {
-  const infoUser = new UserInfo({
+  const userInfo = createUserInfo({
     elemName: '.profile__title',
     elemInfo: '.profile__subtitle',
   });
 
-  infoUser.setUserInfo({
+  userInfo.setUserInfo({
     name: fieldData['form-title'],
     info: fieldData['form-subtitle'],
   });
@@ -76,9 +89,9 @@ function handlerSubmitFormEdit(fieldData) {
 
 // open and close popup Edit
 buttonOpenPopupEdit.addEventListener('click', () => {
-  openAndClosePopupEdit.open();
+  openPopupEdit.open();
 
-  const infoUser = new UserInfo({
+  const infoUser = createUserInfo({
     elemName: '.profile__title',
     elemInfo: '.profile__subtitle',
   });
@@ -89,20 +102,13 @@ buttonOpenPopupEdit.addEventListener('click', () => {
 });
 
 // Class PopupWidthForm for Add Card
-const openAndClosePopupAdd = new PopupWidthForm(
+const openPopupAdd = new PopupWidthForm(
   '.popup_type_add-cards',
   handlerSubmitFormAdd
 );
 
 // handler submit form Edit
 function handlerSubmitFormAdd(fieldData) {
-  // const card = new Card(
-  //   fieldData['form-title'],
-  //   fieldData['form-subtitle'],
-  //   '.grid__elements',
-  //   handleCardClick
-  // );
-
   const newCard = createCard(
     fieldData['form-title'],
     fieldData['form-subtitle'],
@@ -115,7 +121,7 @@ function handlerSubmitFormAdd(fieldData) {
 
 // open and close popup Edit
 buttonOpenPopupAdd.addEventListener('click', () => {
-  openAndClosePopupAdd.open();
+  openPopupAdd.open();
 
   inputNamePlaceFormAdd.value = '';
   inputUrlFormAdd.value = '';
@@ -123,10 +129,10 @@ buttonOpenPopupAdd.addEventListener('click', () => {
 
 // open and close popup Add
 buttonOpenPopupAdd.addEventListener('click', () => {
-  openAndClosePopupAdd.open();
+  openPopupAdd.open();
 });
 
 // listen all forms in document by config and call Class validation
 document.querySelectorAll(dataForms.form).forEach((form) => {
-  new FormValidator(dataForms, form).enableValidation(); // тут нужно разобраться
+  new FormValidator(dataForms, form).enableValidation();
 });
