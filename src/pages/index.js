@@ -87,20 +87,6 @@ function handlerSubmitFormEdit(fieldData) {
   });
 }
 
-// open and close popup Edit
-buttonOpenPopupEdit.addEventListener('click', () => {
-  openPopupEdit.open();
-
-  const infoUser = createUserInfo({
-    elemName: '.profile__title',
-    elemInfo: '.profile__subtitle',
-  });
-  const dataUser = infoUser.getUserInfo();
-
-  inputTitleFormEdit.value = dataUser.name;
-  inputSubtitleFormEdit.value = dataUser.info;
-});
-
 // Class PopupWidthForm for Add Card
 const openPopupAdd = new PopupWidthForm(
   '.popup_type_add-cards',
@@ -119,7 +105,7 @@ function handlerSubmitFormAdd(fieldData) {
   cardList.addItem(cardElement);
 }
 
-// open and close popup Edit
+// open popup Add
 buttonOpenPopupAdd.addEventListener('click', () => {
   openPopupAdd.open();
 
@@ -127,9 +113,18 @@ buttonOpenPopupAdd.addEventListener('click', () => {
   inputUrlFormAdd.value = '';
 });
 
-// open and close popup Add
-buttonOpenPopupAdd.addEventListener('click', () => {
-  openPopupAdd.open();
+// open popup Edit
+buttonOpenPopupEdit.addEventListener('click', () => {
+  openPopupEdit.open();
+
+  const infoUser = createUserInfo({
+    elemName: '.profile__title',
+    elemInfo: '.profile__subtitle',
+  });
+  const dataUser = infoUser.getUserInfo();
+
+  inputTitleFormEdit.value = dataUser.name;
+  inputSubtitleFormEdit.value = dataUser.info;
 });
 
 // listen all forms in document by config and call Class validation
