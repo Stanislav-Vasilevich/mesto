@@ -21,13 +21,8 @@ import PopupWidthForm from '../js/components/PopupWithForm.js';
 import UserInfo from '../js/components/UserInfo.js';
 
 // initialization Сlass Card
-function createCard(data) {
-  const card = new Card(
-    data.name,
-    data.link,
-    '.grid__elements',
-    handleCardClick
-  );
+function createCard(name, link, templateCard, handleCardClick) {
+  const card = new Card(name, link, templateCard, handleCardClick);
 
   return card;
 }
@@ -51,7 +46,12 @@ const cardList = new Section(
   {
     items: dataCards,
     renderer: (item) => {
-      const card = createCard(item);
+      const card = createCard(
+        item.name,
+        item.link,
+        '.grid__elements',
+        handleCardClick
+      );
       const cardElement = card.generateCard();
       cardList.addItem(cardElement);
     },
@@ -115,8 +115,8 @@ function handlerSubmitFormAdd(fieldData) {
     '.grid__elements',
     handleCardClick
   );
-
-  cardList.addItem(newCard);
+  const cardElement = newCard.generateCard(); 
+  cardList.addItem(cardElement);
 }
 
 // open and close popup Edit
