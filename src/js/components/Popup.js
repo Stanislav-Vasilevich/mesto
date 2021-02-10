@@ -20,9 +20,11 @@ export default class Popup {
     }
   }
 
-  setEventListeners() {
+  setEventListeners = () => {
     const popupCloseIcon = this._elem.querySelector('.popup__close-icon');
-    popupCloseIcon.addEventListener('click', this.close);
+    popupCloseIcon.addEventListener('click', () => {
+      this.close();
+    });
 
     this._elem.addEventListener('click', (evt) => {
       if (evt.target.classList.contains('popup__overlay')) {
