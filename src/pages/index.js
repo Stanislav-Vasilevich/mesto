@@ -28,11 +28,7 @@ function createCard(name, link, templateCard, handleCardClick) {
 }
 
 // initialization Сlass PopupWithImage
-function createPopupWithImage() {
-  const popupImage = new PopupWithImage('.popup_type_img');
-
-  return popupImage;
-}
+const classPopupWithImage = new PopupWithImage('.popup_type_img');
 
 // initialization Сlass UserInfo
 function createUserInfo({ elemName, elemInfo }) {
@@ -64,8 +60,7 @@ cardList.renderItems();
 // open popup image and push data
 function handleCardClick(evt) {
   const img = evt.target;
-  const popupImage = createPopupWithImage();
-  popupImage.open(img.src, img.alt);
+  classPopupWithImage.open(img.src, img.alt);
 }
 
 // Class PopupWidthForm for replace UserInfo
@@ -101,7 +96,7 @@ function handlerSubmitFormAdd(fieldData) {
     '.grid__elements',
     handleCardClick
   );
-  const cardElement = newCard.generateCard(); 
+  const cardElement = newCard.generateCard();
   cardList.addItem(cardElement);
 }
 
