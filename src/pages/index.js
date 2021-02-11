@@ -31,11 +31,10 @@ function createCard(name, link, templateCard, handleCardClick) {
 const classPopupWithImage = new PopupWithImage('.popup_type_img');
 
 // initialization Сlass UserInfo
-function createUserInfo({ elemName, elemInfo }) {
-  const userInfo = new UserInfo({ elemName, elemInfo });
-
-  return userInfo;
-}
+const userInfo = new UserInfo({
+  elemName: '.profile__title',
+  elemInfo: '.profile__subtitle',
+});
 
 // initialization Сlass Section
 const cardList = new Section(
@@ -71,11 +70,6 @@ const openPopupEdit = new PopupWidthForm(
 
 // handler submit form Edit
 function handlerSubmitFormEdit(fieldData) {
-  const userInfo = createUserInfo({
-    elemName: '.profile__title',
-    elemInfo: '.profile__subtitle',
-  });
-
   userInfo.setUserInfo({
     name: fieldData['form-title'],
     info: fieldData['form-subtitle'],
@@ -109,11 +103,7 @@ buttonOpenPopupAdd.addEventListener('click', () => {
 buttonOpenPopupEdit.addEventListener('click', () => {
   openPopupEdit.open();
 
-  const infoUser = createUserInfo({
-    elemName: '.profile__title',
-    elemInfo: '.profile__subtitle',
-  });
-  const dataUser = infoUser.getUserInfo();
+  const dataUser = userInfo.getUserInfo();
 
   inputTitleFormEdit.value = dataUser.name;
   inputSubtitleFormEdit.value = dataUser.info;
