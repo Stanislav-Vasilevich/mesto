@@ -103,9 +103,6 @@ function handlerSubmitFormAdd(fieldData) {
 // open popup Add
 buttonOpenPopupAdd.addEventListener('click', () => {
   openPopupAdd.open();
-
-  inputNamePlaceFormAdd.value = '';
-  inputUrlFormAdd.value = '';
 });
 
 // open popup Edit
