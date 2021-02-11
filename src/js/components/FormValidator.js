@@ -25,7 +25,6 @@ class FormValidator {
 		this._form.addEventListener('reset', () => {
 			this._inputList.forEach((inputElem) => {
 				this._hideInputError(inputElem);
-				this._toggleInputState(inputElem);
 			})
 		});
 
