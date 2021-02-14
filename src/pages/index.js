@@ -10,6 +10,9 @@ import {
   inputUrlFormAdd,
   buttonOpenPopupEdit,
   buttonOpenPopupAdd,
+  userAvatar,
+  userName,
+  userDescription,
 } from '../js/utils/constants.js';
 
 // Class js
@@ -113,3 +116,19 @@ buttonOpenPopupEdit.addEventListener('click', () => {
 document.querySelectorAll(dataForms.form).forEach((form) => {
   new FormValidator(dataForms, form).enableValidation();
 });
+
+// data user from server
+fetch('https://mesto.nomoreparties.co/v1/cohort-20/users/me', {
+  headers: {
+    authorization: '5ba9e6d0-bea2-43fd-97e6-f314993d4839',
+  },
+})
+  .then((res) => res.json())
+  .then((result) => {
+    userAvatar.src = result.avatar;
+    userName.textContent = result.name;
+    userDescription.textContent = result.about;
+  })
+  .catch(() => {
+    console.log('Ошибка подключения к серверу!');
+  });

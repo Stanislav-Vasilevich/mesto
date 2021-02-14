@@ -6,7 +6,10 @@ export {
   inputNamePlaceFormAdd,
   inputUrlFormAdd,
   buttonOpenPopupEdit,
-  buttonOpenPopupAdd
+  buttonOpenPopupAdd,
+  userAvatar,
+  userName,
+  userDescription
 };
 
 // object with data for Cards
@@ -59,3 +62,6 @@ const inputNamePlaceFormAdd = formAdd.querySelector('.form__input_place');
 const inputUrlFormAdd = formAdd.querySelector('.form__input_url');
 const buttonOpenPopupEdit = document.querySelector('.profile__edit-button');
 const buttonOpenPopupAdd = document.querySelector('.profile__add');
+const userAvatar = document.querySelector('.profile__avatar');
+const userName = document.querySelector('.profile__title');
+const userDescription = document.querySelector('.profile__subtitle');
