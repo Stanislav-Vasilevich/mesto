@@ -24,21 +24,54 @@ import PopupWidthForm from '../js/components/PopupWithForm.js';
 import UserInfo from '../js/components/UserInfo.js';
 import Api from '../js/components/Api.js';
 
-// initialization Сlass Api
-const api = new Api({
-  url: 'https://mesto.nomoreparties.co/v1/cohort-20/users/me',
-  headers: {
-    authorization: '5ba9e6d0-bea2-43fd-97e6-f314993d4839',
-    'Content-Type': 'application/json',
-  },
-});
+function initialApi(url, token) {
+  const api = new Api({
+    url: url,
+    headers: {
+      authorization: token,
+      "Content-Type": "application/json"
+    }
+  })
 
-api.getUserInfo().then((data) => {
+  return api;
+}
+
+const apiUserInfo = initialApi("https://mesto.nomoreparties.co/v1/cohort-20/users/me", "5ba9e6d0-bea2-43fd-97e6-f314993d4839");
+
+const apiCards = initialApi("https://mesto.nomoreparties.co/v1/cohort-20/cards/", "5ba9e6d0-bea2-43fd-97e6-f314993d4839");
+
+// data for userInfo
+apiUserInfo.getUserInfo().then((data) => {
   userAvatar.src = data.avatar;
   userName.textContent = data.name;
   userDescription.textContent = data.about;
-}).catch(() => {
-  console.log('Ошибка сервера!');
+}).catch((err) => {
+  console.log(err);
+})
+
+// data for Cards
+apiCards.getDataCards().then((data) => {
+  // initialization Сlass Section
+const cardList = new Section(
+  {
+    items: data,
+    renderer: (item) => {
+      const card = createCard(
+        item.name,
+        item.link,
+        '.grid__elements',
+        handleCardClick
+      );
+      const cardElement = card.generateCard();
+      cardList.addItem(cardElement);
+    },
+  },
+  '.elements'
+);
+
+cardList.renderItems();
+}).catch((err) => {
+  console.log(err);
 })
 
 // initialization Сlass PopupWithImage
@@ -56,26 +89,6 @@ function createCard(name, link, templateCard, handleCardClick) {
 
   return card;
 }
-
-// initialization Сlass Section
-const cardList = new Section(
-  {
-    items: dataCards,
-    renderer: (item) => {
-      const card = createCard(
-        item.name,
-        item.link,
-        '.grid__elements',
-        handleCardClick
-      );
-      const cardElement = card.generateCard();
-      cardList.addItem(cardElement);
-    },
-  },
-  '.elements'
-);
-
-cardList.renderItems();
 
 // open popup image and push data
 function handleCardClick(evt) {
