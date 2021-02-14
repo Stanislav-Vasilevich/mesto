@@ -22,13 +22,24 @@ import Card from '../js/components/Card.js';
 import PopupWithImage from '../js/components/PopupWithImage.js';
 import PopupWidthForm from '../js/components/PopupWithForm.js';
 import UserInfo from '../js/components/UserInfo.js';
+import Api from '../js/components/Api.js';
 
-// initialization Сlass Card
-function createCard(name, link, templateCard, handleCardClick) {
-  const card = new Card(name, link, templateCard, handleCardClick);
+// initialization Сlass Api
+const api = new Api({
+  url: 'https://mesto.nomoreparties.co/v1/cohort-20/users/me',
+  headers: {
+    authorization: '5ba9e6d0-bea2-43fd-97e6-f314993d4839',
+    'Content-Type': 'application/json',
+  },
+});
 
-  return card;
-}
+api.getUserInfo().then((data) => {
+  userAvatar.src = data.avatar;
+  userName.textContent = data.name;
+  userDescription.textContent = data.about;
+}).catch(() => {
+  console.log('Ошибка сервера!');
+})
 
 // initialization Сlass PopupWithImage
 const classPopupWithImage = new PopupWithImage('.popup_type_img');
@@ -38,6 +49,13 @@ const userInfo = new UserInfo({
   elemName: '.profile__title',
   elemInfo: '.profile__subtitle',
 });
+
+// initialization Сlass Card
+function createCard(name, link, templateCard, handleCardClick) {
+  const card = new Card(name, link, templateCard, handleCardClick);
+
+  return card;
+}
 
 // initialization Сlass Section
 const cardList = new Section(
@@ -116,19 +134,3 @@ buttonOpenPopupEdit.addEventListener('click', () => {
 document.querySelectorAll(dataForms.form).forEach((form) => {
   new FormValidator(dataForms, form).enableValidation();
 });
-
-// data user from server
-fetch('https://mesto.nomoreparties.co/v1/cohort-20/users/me', {
-  headers: {
-    authorization: '5ba9e6d0-bea2-43fd-97e6-f314993d4839',
-  },
-})
-  .then((res) => res.json())
-  .then((result) => {
-    userAvatar.src = result.avatar;
-    userName.textContent = result.name;
-    userDescription.textContent = result.about;
-  })
-  .catch(() => {
-    console.log('Ошибка подключения к серверу!');
-  });
