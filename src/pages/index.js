@@ -24,55 +24,70 @@ import PopupWidthForm from '../js/components/PopupWithForm.js';
 import UserInfo from '../js/components/UserInfo.js';
 import Api from '../js/components/Api.js';
 
-function initialApi(url, token) {
+// initialize Сlass Card
+function createCard(name, link, templateCard, handleCardClick) {
+  const card = new Card(name, link, templateCard, handleCardClick);
+
+  return card;
+}
+
+// initialize Class Api
+function initialApi(url) {
   const api = new Api({
-    url: url,
-    headers: {
-      authorization: token,
-      "Content-Type": "application/json"
-    }
-  })
+    url: url
+  });
 
   return api;
 }
 
-const apiUserInfo = initialApi("https://mesto.nomoreparties.co/v1/cohort-20/users/me", "5ba9e6d0-bea2-43fd-97e6-f314993d4839");
+// get api user info
+const apiUserInfo = initialApi(
+  'https://mesto.nomoreparties.co/v1/cohort-20/users/me');
 
-const apiCards = initialApi("https://mesto.nomoreparties.co/v1/cohort-20/cards/", "5ba9e6d0-bea2-43fd-97e6-f314993d4839");
+// get api cards
+const apiCards = initialApi(
+  'https://mesto.nomoreparties.co/v1/cohort-20/cards/');
 
 // data for userInfo
-apiUserInfo.getUserInfo().then((data) => {
-  userAvatar.src = data.avatar;
-  userName.textContent = data.name;
-  userDescription.textContent = data.about;
-}).catch((err) => {
-  console.log(err);
-})
+apiUserInfo
+  .getUserInfo()
+  .then((data) => {
+    userAvatar.src = data.avatar;
+    userName.textContent = data.name;
+    userDescription.textContent = data.about;
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 // data for Cards
-apiCards.getDataCards().then((data) => {
-  // initialization Сlass Section
-const cardList = new Section(
-  {
-    items: data,
-    renderer: (item) => {
-      const card = createCard(
-        item.name,
-        item.link,
-        '.grid__elements',
-        handleCardClick
-      );
-      const cardElement = card.generateCard();
-      cardList.addItem(cardElement);
-    },
-  },
-  '.elements'
-);
+apiCards
+  .getDataCards()
+  .then((data) => {
+    // initialization Сlass Section
+    const cardList = new Section(
+      {
+        items: data,
+        renderer: (item) => {
+          const card = createCard(
+            item.name,
+            item.link,
+            '.grid__elements',
+            handleCardClick,
+            apiCards
+          );
+          const cardElement = card.generateCard();
+          cardList.addItem(cardElement);
+        },
+      },
+      '.elements'
+    );
 
-cardList.renderItems();
-}).catch((err) => {
-  console.log(err);
-})
+    cardList.renderItems();
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 // initialization Сlass PopupWithImage
 const classPopupWithImage = new PopupWithImage('.popup_type_img');
@@ -82,13 +97,6 @@ const userInfo = new UserInfo({
   elemName: '.profile__title',
   elemInfo: '.profile__subtitle',
 });
-
-// initialization Сlass Card
-function createCard(name, link, templateCard, handleCardClick) {
-  const card = new Card(name, link, templateCard, handleCardClick);
-
-  return card;
-}
 
 // open popup image and push data
 function handleCardClick(evt) {
@@ -110,19 +118,19 @@ function handlerSubmitFormEdit(fieldData) {
   });
 }
 
-// Class PopupWidthForm for Add Card
+// initial Class PopupWidthForm for Add Card
 const openPopupAdd = new PopupWidthForm(
   '.popup_type_add-cards',
   handlerSubmitFormAdd
 );
 
-// handler submit form Edit
+// handler submit form Add
 function handlerSubmitFormAdd(fieldData) {
   const newCard = createCard(
     fieldData['form-title'],
     fieldData['form-subtitle'],
     '.grid__elements',
-    handleCardClick
+    handleCardClick,
   );
   const cardElement = newCard.generateCard();
   cardList.addItem(cardElement);
