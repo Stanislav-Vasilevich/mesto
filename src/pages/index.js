@@ -34,7 +34,7 @@ function createCard(name, link, templateCard, handleCardClick) {
 // initialize Class Api
 function initialApi(url) {
   const api = new Api({
-    url: url
+    url: url,
   });
 
   return api;
@@ -42,11 +42,13 @@ function initialApi(url) {
 
 // get api user info
 const apiUserInfo = initialApi(
-  'https://mesto.nomoreparties.co/v1/cohort-20/users/me');
+  'https://mesto.nomoreparties.co/v1/cohort-20/users/me'
+);
 
 // get api cards
 const apiCards = initialApi(
-  'https://mesto.nomoreparties.co/v1/cohort-20/cards/');
+  'https://mesto.nomoreparties.co/v1/cohort-20/cards/'
+);
 
 // data for userInfo
 apiUserInfo
@@ -60,12 +62,17 @@ apiUserInfo
     console.log(err);
   });
 
-// data for Cards
+function initialSection({ items, renderer }, containerSelector) {
+  const cardList = new Section({ items, renderer }, containerSelector);
+
+  return cardList;
+}
+
 apiCards
   .getDataCards()
   .then((data) => {
     // initialization Сlass Section
-    const cardList = new Section(
+    const cardList = initialSection(
       {
         items: data,
         renderer: (item) => {
@@ -73,8 +80,7 @@ apiCards
             item.name,
             item.link,
             '.grid__elements',
-            handleCardClick,
-            apiCards
+            handleCardClick
           );
           const cardElement = card.generateCard();
           cardList.addItem(cardElement);
@@ -86,8 +92,39 @@ apiCards
     cardList.renderItems();
   })
   .catch((err) => {
-    console.log(err);
+    console.log(`Ошибка сервера: ${err}`);
   });
+
+// handler submit form Add
+function handlerSubmitFormAdd(fieldData) {
+  const newCard = createCard(
+    fieldData['form-title'],
+    fieldData['form-subtitle'],
+    '.grid__elements',
+    handleCardClick
+  );
+  const cardElement = newCard.generateCard();
+
+  apiCards.postDataCard(fieldData).then((data) => {
+    const newCardList = initialSection(
+      {
+        items: data,
+        renderer: (item) => {
+          const card = createCard(
+            item.name,
+            item.link,
+            '.grid__elements',
+            handleCardClick
+          );
+          const cardElement = card.generateCard();
+          cardList.addItem(cardElement);
+        },
+      },
+      '.elements'
+    );
+    newCardList.addItem(cardElement);
+  });
+}
 
 // initialization Сlass PopupWithImage
 const classPopupWithImage = new PopupWithImage('.popup_type_img');
@@ -123,18 +160,6 @@ const openPopupAdd = new PopupWidthForm(
   '.popup_type_add-cards',
   handlerSubmitFormAdd
 );
-
-// handler submit form Add
-function handlerSubmitFormAdd(fieldData) {
-  const newCard = createCard(
-    fieldData['form-title'],
-    fieldData['form-subtitle'],
-    '.grid__elements',
-    handleCardClick,
-  );
-  const cardElement = newCard.generateCard();
-  cardList.addItem(cardElement);
-}
 
 // open popup Add
 buttonOpenPopupAdd.addEventListener('click', () => {
