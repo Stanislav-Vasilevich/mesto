@@ -105,25 +105,30 @@ function handlerSubmitFormAdd(fieldData) {
   );
   const cardElement = newCard.generateCard();
 
-  apiCards.postDataCard(fieldData).then((data) => {
-    const newCardList = initialSection(
-      {
-        items: data,
-        renderer: (item) => {
-          const card = createCard(
-            item.name,
-            item.link,
-            '.grid__elements',
-            handleCardClick
-          );
-          const cardElement = card.generateCard();
-          cardList.addItem(cardElement);
+  apiCards
+    .postDataCard(fieldData)
+    .then((data) => {
+      const newCardList = initialSection(
+        {
+          items: data,
+          renderer: (item) => {
+            const card = createCard(
+              item.name,
+              item.link,
+              '.grid__elements',
+              handleCardClick
+            );
+            const cardElement = card.generateCard();
+            cardList.addItem(cardElement);
+          },
         },
-      },
-      '.elements'
-    );
-    newCardList.addItem(cardElement);
-  });
+        '.elements'
+      );
+      newCardList.addItem(cardElement);
+    })
+    .catch((err) => {
+      console.log(`Ошибка сервера: ${err.status} - ${err.statusText}`);
+    });
 }
 
 // initialization Сlass PopupWithImage
@@ -149,10 +154,17 @@ const openPopupEdit = new PopupWidthForm(
 
 // handler submit form Edit
 function handlerSubmitFormEdit(fieldData) {
-  userInfo.setUserInfo({
-    name: fieldData['form-title'],
-    info: fieldData['form-subtitle'],
-  });
+  apiUserInfo
+    .patchUserInfo(fieldData)
+    .then((data) => {
+      userInfo.setUserInfo({
+        name: data['name'],
+        info: data['about'],
+      });
+    })
+    .catch((err) => {
+      console.log(`Ошибка сервера: ${err.status} - ${err.statusText}`);
+    });
 }
 
 // initial Class PopupWidthForm for Add Card
