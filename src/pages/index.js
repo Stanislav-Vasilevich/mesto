@@ -21,8 +21,21 @@ import Section from '../js/components/Section.js';
 import Card from '../js/components/Card.js';
 import PopupWithImage from '../js/components/PopupWithImage.js';
 import PopupWidthForm from '../js/components/PopupWithForm.js';
+import PicturePopup from '../js/components/PicturePopup.js';
 import UserInfo from '../js/components/UserInfo.js';
 import Api from '../js/components/Api.js';
+
+// initialization class PopupWithImage
+const classPopupWithImage = new PopupWithImage('.popup_type_img');
+
+// initialization class PicturePopup
+const classPicturePopup = new PicturePopup('.popup_type_delete-img');
+
+// initialization Сlass UserInfo
+const userInfo = new UserInfo({
+  elemName: '.profile__title',
+  elemInfo: '.profile__subtitle',
+});
 
 // initialize Сlass Card
 function createCard(
@@ -81,7 +94,6 @@ apiCards
   .getDataCards()
   .then((data) => {
     // initialization Сlass Section
-    // console.log(data);
     const arrayObjectsDataCards = initialSection(
       {
         items: data,
@@ -103,13 +115,23 @@ apiCards
               },
               handleLikeClick: (card) => {
                 //...что должно произойти при клике на лайк
-                card
-                  .querySelector('.element__button-like')
-                  .classList.toggle('element__button-like_focus');
-                console.log(card);
+                const likeCard = card.querySelector('.element__button-like');
+
+                const numberLike = card.querySelector('.element__number-like');
+
+                if (
+                  !likeCard.classList.contains('element__button-like_focus')
+                ) {
+                  likeCard.classList.add('element__button-like_focus');
+                  numberLike.textContent = parseInt(numberLike.textContent) + 1;
+                } else {
+                  likeCard.classList.remove('element__button-like_focus');
+                  numberLike.textContent = parseInt(numberLike.textContent) - 1;
+                }
               },
               handleDeleteIconClick: (card) => {
                 //...что должно произойти при клике на удаление
+                // classPicturePopup.open()
                 card.remove();
               },
             },
@@ -118,7 +140,7 @@ apiCards
           // console.log(card);
           const cardElement = card.generateCard();
 
-          // сюда вставить логику колличества лайков
+          // колличество лайков
           const numberLike = cardElement.querySelector('.element__number-like');
           numberLike.textContent = item.likes.length;
 
@@ -151,10 +173,19 @@ function handlerSubmitFormAdd(fieldData) {
       },
       handleLikeClick: (card) => {
         //...что должно произойти при клике на лайк
-        card
-          .querySelector('.element__button-like')
-          .classList.toggle('element__button-like_focus');
-        console.log(card);
+        const likeCard = card.querySelector('.element__button-like');
+
+                const numberLike = card.querySelector('.element__number-like');
+
+                if (
+                  !likeCard.classList.contains('element__button-like_focus')
+                ) {
+                  likeCard.classList.add('element__button-like_focus');
+                  numberLike.textContent = parseInt(numberLike.textContent) + 1;
+                } else {
+                  likeCard.classList.remove('element__button-like_focus');
+                  numberLike.textContent = parseInt(numberLike.textContent) - 1;
+                }
       },
       handleDeleteIconClick: (card) => {
         //...что должно произойти при клике на удаление
@@ -191,15 +222,6 @@ function handlerSubmitFormAdd(fieldData) {
       console.log(`Ошибка сервера: ${err.status} - ${err.statusText}`);
     });
 }
-
-// initialization Сlass PopupWithImage
-const classPopupWithImage = new PopupWithImage('.popup_type_img');
-
-// initialization Сlass UserInfo
-const userInfo = new UserInfo({
-  elemName: '.profile__title',
-  elemInfo: '.profile__subtitle',
-});
 
 // Class PopupWidthForm for replace UserInfo
 const openPopupEdit = new PopupWidthForm(

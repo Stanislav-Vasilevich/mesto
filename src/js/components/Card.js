@@ -54,7 +54,7 @@ export default class Card {
 
   // delete template element
   _deleteCard = () => {
-    this._handleDeleteIconClick(this._element);
+    const deleteCard = this._handleDeleteIconClick(this._element);
   };
 
   // like card
