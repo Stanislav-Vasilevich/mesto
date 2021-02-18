@@ -25,8 +25,14 @@ import UserInfo from '../js/components/UserInfo.js';
 import Api from '../js/components/Api.js';
 
 // initialize Сlass Card
-function createCard(name, link, templateCard, handleCardClick) {
-  const card = new Card(name, link, templateCard, handleCardClick);
+function createCard(
+  { data, handleCardClick, handleLikeClick, handleDeleteIconClick },
+  templateCard
+) {
+  const card = new Card(
+    { data, handleCardClick, handleLikeClick, handleDeleteIconClick },
+    templateCard
+  );
 
   return card;
 }
@@ -59,56 +65,111 @@ apiUserInfo
     userDescription.textContent = data.about;
   })
   .catch((err) => {
-    console.log(err);
+    console.log(`Ошибка сервера: ${err.status} - ${err.statusText}`);
   });
 
 function initialSection({ items, renderer }, containerSelector) {
-  const cardList = new Section({ items, renderer }, containerSelector);
+  const arrayObjectsDataCards = new Section(
+    { items, renderer },
+    containerSelector
+  );
 
-  return cardList;
+  return arrayObjectsDataCards;
 }
 
 apiCards
   .getDataCards()
   .then((data) => {
     // initialization Сlass Section
-    const cardList = initialSection(
+    // console.log(data);
+    const arrayObjectsDataCards = initialSection(
       {
         items: data,
         renderer: (item) => {
+          // console.log(item); // обошли объект с сервера и получили его объекты
           const card = createCard(
-            item.name,
-            item.link,
-            '.grid__elements',
-            handleCardClick
+            {
+              data: {
+                // ...данные карточки (включая информацию по лайкам)
+                link: item.link,
+                name: item.name,
+                likes: item.likes,
+                _id: item._id,
+              },
+              handleCardClick: (evt) => {
+                //...что должно произойти при клике на картинку
+                const img = evt.target;
+                classPopupWithImage.open(img.src, img.alt);
+              },
+              handleLikeClick: (card) => {
+                //...что должно произойти при клике на лайк
+                card
+                  .querySelector('.element__button-like')
+                  .classList.toggle('element__button-like_focus');
+                console.log(card);
+              },
+              handleDeleteIconClick: (card) => {
+                //...что должно произойти при клике на удаление
+                card.remove();
+              },
+            },
+            '.grid__elements'
           );
+          // console.log(card);
           const cardElement = card.generateCard();
-          cardList.addItem(cardElement);
+
+          // сюда вставить логику колличества лайков
+          const numberLike = cardElement.querySelector('.element__number-like');
+          numberLike.textContent = item.likes.length;
+
+          arrayObjectsDataCards.addItem(cardElement);
         },
       },
       '.elements'
     );
 
-    cardList.renderItems();
+    arrayObjectsDataCards.renderItems();
   })
   .catch((err) => {
-    console.log(`Ошибка сервера: ${err}`);
+    console.log(`Ошибка сервера: ${err.status} - ${err.statusText}`);
   });
 
 // handler submit form Add
 function handlerSubmitFormAdd(fieldData) {
+  // данные полей
   const newCard = createCard(
-    fieldData['form-title'],
-    fieldData['form-subtitle'],
-    '.grid__elements',
-    handleCardClick
+    {
+      data: {
+        // ...данные карточки (включая информацию по лайкам)
+        name: fieldData['form-title'],
+        link: fieldData['form-subtitle'],
+      },
+      handleCardClick: (evt) => {
+        //...что должно произойти при клике на картинку
+        const img = evt.target;
+        classPopupWithImage.open(img.src, img.alt);
+      },
+      handleLikeClick: (card) => {
+        //...что должно произойти при клике на лайк
+        card
+          .querySelector('.element__button-like')
+          .classList.toggle('element__button-like_focus');
+        console.log(card);
+      },
+      handleDeleteIconClick: (card) => {
+        //...что должно произойти при клике на удаление
+        card.remove();
+      },
+    },
+    '.grid__elements'
   );
+
   const cardElement = newCard.generateCard();
 
   apiCards
     .postDataCard(fieldData)
     .then((data) => {
-      const newCardList = initialSection(
+      const newArrayObjectsDataCards = initialSection(
         {
           items: data,
           renderer: (item) => {
@@ -119,12 +180,12 @@ function handlerSubmitFormAdd(fieldData) {
               handleCardClick
             );
             const cardElement = card.generateCard();
-            cardList.addItem(cardElement);
+            arrayObjectsDataCards.addItem(cardElement);
           },
         },
         '.elements'
       );
-      newCardList.addItem(cardElement);
+      newArrayObjectsDataCards.addItem(cardElement);
     })
     .catch((err) => {
       console.log(`Ошибка сервера: ${err.status} - ${err.statusText}`);
@@ -139,12 +200,6 @@ const userInfo = new UserInfo({
   elemName: '.profile__title',
   elemInfo: '.profile__subtitle',
 });
-
-// open popup image and push data
-function handleCardClick(evt) {
-  const img = evt.target;
-  classPopupWithImage.open(img.src, img.alt);
-}
 
 // Class PopupWidthForm for replace UserInfo
 const openPopupEdit = new PopupWidthForm(
