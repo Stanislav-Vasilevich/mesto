@@ -90,15 +90,14 @@ function initialSection({ items, renderer }, containerSelector) {
   return arrayObjectsDataCards;
 }
 
+// add Cards by page
 apiCards
   .getDataCards()
   .then((data) => {
-    // initialization Сlass Section
     const arrayObjectsDataCards = initialSection(
       {
         items: data,
         renderer: (item) => {
-          // console.log(item); // обошли объект с сервера и получили его объекты
           const card = createCard(
             {
               data: {
@@ -106,7 +105,7 @@ apiCards
                 link: item.link,
                 name: item.name,
                 likes: item.likes,
-                _id: item._id,
+                owner: item.owner._id
               },
               handleCardClick: (evt) => {
                 //...что должно произойти при клике на картинку
@@ -131,8 +130,10 @@ apiCards
               },
               handleDeleteIconClick: (card) => {
                 //...что должно произойти при клике на удаление
-                // classPicturePopup.open()
-                card.remove();
+                classPicturePopup.open();
+                console.log(card);
+                // card.remove();
+                
               },
             },
             '.grid__elements'
@@ -140,9 +141,16 @@ apiCards
           // console.log(card);
           const cardElement = card.generateCard();
 
-          // колличество лайков
+          // add sum likes
           const numberLike = cardElement.querySelector('.element__number-like');
           numberLike.textContent = item.likes.length;
+          //console.log();
+          
+          // add button cart
+          const buttonCart = cardElement.querySelector('.element__button-delete');
+          if(item.owner._id !== '30ef6c61b529fca018d777f9') {
+            buttonCart.classList.add('element__button-delete_inactive');
+          }
 
           arrayObjectsDataCards.addItem(cardElement);
         },
@@ -175,17 +183,15 @@ function handlerSubmitFormAdd(fieldData) {
         //...что должно произойти при клике на лайк
         const likeCard = card.querySelector('.element__button-like');
 
-                const numberLike = card.querySelector('.element__number-like');
+        const numberLike = card.querySelector('.element__number-like');
 
-                if (
-                  !likeCard.classList.contains('element__button-like_focus')
-                ) {
-                  likeCard.classList.add('element__button-like_focus');
-                  numberLike.textContent = parseInt(numberLike.textContent) + 1;
-                } else {
-                  likeCard.classList.remove('element__button-like_focus');
-                  numberLike.textContent = parseInt(numberLike.textContent) - 1;
-                }
+        if (!likeCard.classList.contains('element__button-like_focus')) {
+          likeCard.classList.add('element__button-like_focus');
+          numberLike.textContent = parseInt(numberLike.textContent) + 1;
+        } else {
+          likeCard.classList.remove('element__button-like_focus');
+          numberLike.textContent = parseInt(numberLike.textContent) - 1;
+        }
       },
       handleDeleteIconClick: (card) => {
         //...что должно произойти при клике на удаление

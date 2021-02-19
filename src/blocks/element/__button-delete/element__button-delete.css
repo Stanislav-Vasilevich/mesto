@@ -1,3 +1,5 @@
+@import url('./_inactive/element__button-delete_inactive.css');
+
 .element__button-delete {
   box-sizing: border-box;
   background-color: transparent;
