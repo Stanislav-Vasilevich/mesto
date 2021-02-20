@@ -13,7 +13,6 @@ import {
   userAvatar,
   userName,
   userDescription,
-  userAvatar
 } from '../js/utils/constants.js';
 
 // Class js
@@ -51,11 +50,13 @@ const userInfo = new UserInfo({
 // initialize Сlass Card
 function createCard(
   { data, handleCardClick, handleLikeClick, handleDeleteIconClick },
-  templateCard, api
+  templateCard,
+  api
 ) {
   const card = new Card(
     { data, handleCardClick, handleLikeClick, handleDeleteIconClick },
-    templateCard, api
+    templateCard,
+    api
   );
 
   return card;
@@ -116,7 +117,6 @@ apiCards
               },
               handleLikeClick: (card) => {
                 //...что должно произойти при клике на лайк
-                
               },
               handleDeleteIconClick: (card) => {
                 const idCard = item._id;
@@ -178,9 +178,7 @@ function handlerSubmitFormAdd(fieldData) {
           numberLike.textContent = parseInt(numberLike.textContent) - 1;
         }
       },
-      handleDeleteIconClick: (card) => {
-
-      },
+      handleDeleteIconClick: (card) => {},
     },
     '.grid__elements'
   );
@@ -225,6 +223,11 @@ const openPopupAdd = new PopupWidthForm(
   handlerSubmitFormAdd
 );
 
+const openPopupUser = new PopupWidthForm(
+  '.popup_type_edit-avatar',
+  handleSubmitFormUser
+);
+
 // handler submit form Edit
 function handlerSubmitFormEdit(fieldData) {
   apiUserInfo
@@ -240,10 +243,18 @@ function handlerSubmitFormEdit(fieldData) {
     });
 }
 
-// open popup Add
-buttonOpenPopupAdd.addEventListener('click', () => {
-  openPopupAdd.open();
-});
+const avatarPhoto = document.querySelector('.profile__avatar-img');
+
+function handleSubmitFormUser(avatarLink) {
+  apiUserInfo
+  .patchUserAvatar(avatarLink)
+  .then((data) => {
+    avatarPhoto.src = data.avatar
+  })
+  .catch((err) => {
+    console.log(`Ошибка отправки аватара: ${err.status} - ${err.statusText}`);
+  })
+}
 
 // open popup Edit
 buttonOpenPopupEdit.addEventListener('click', () => {
@@ -255,11 +266,17 @@ buttonOpenPopupEdit.addEventListener('click', () => {
   inputSubtitleFormEdit.value = dataUser.info;
 });
 
+// open popup User
+userAvatar.addEventListener('click', () => {
+  openPopupUser.open();
+});
+
+// open popup Add
+buttonOpenPopupAdd.addEventListener('click', () => {
+  openPopupAdd.open();
+});
+
 // listen all forms in document by config and call Class validation
 document.querySelectorAll(dataForms.form).forEach((form) => {
   new FormValidator(dataForms, form).enableValidation();
 });
-
-userAvatar.addEventListener('click', () => {
-
-})
