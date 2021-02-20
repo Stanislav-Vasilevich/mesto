@@ -25,11 +25,21 @@ import PicturePopup from '../js/components/PicturePopup.js';
 import UserInfo from '../js/components/UserInfo.js';
 import Api from '../js/components/Api.js';
 
+// get api user info
+const apiUserInfo = initialApi(
+  'https://mesto.nomoreparties.co/v1/cohort-20/users/me/'
+);
+
+// get api cards
+const apiCards = initialApi(
+  'https://mesto.nomoreparties.co/v1/cohort-20/cards/'
+);
+
 // initialization class PopupWithImage
 const classPopupWithImage = new PopupWithImage('.popup_type_img');
 
 // initialization class PicturePopup
-const classPicturePopup = new PicturePopup('.popup_type_delete-img');
+const classPicturePopup = new PicturePopup('.popup_type_delete-img', apiCards);
 
 // initialization Сlass UserInfo
 const userInfo = new UserInfo({
@@ -59,15 +69,7 @@ function initialApi(url) {
   return api;
 }
 
-// get api user info
-const apiUserInfo = initialApi(
-  'https://mesto.nomoreparties.co/v1/cohort-20/users/me/'
-);
-
-// get api cards
-const apiCards = initialApi(
-  'https://mesto.nomoreparties.co/v1/cohort-20/cards/'
-);
+// console.log(apiCards);
 
 // data for userInfo
 apiUserInfo
@@ -106,7 +108,7 @@ apiCards
                 name: item.name,
                 likes: item.likes,
                 owner: item.owner._id,
-                id: item._id
+                id: item._id,
               },
               handleCardClick: (evt) => {
                 //...что должно произойти при клике на картинку
@@ -130,13 +132,8 @@ apiCards
                 }
               },
               handleDeleteIconClick: (card) => {
-                //...что должно произойти при клике на удаление
-                // удаление уже загруженных карточек со страницы
-                // удаление карточек с сервера пока не реализовано
-                classPicturePopup.open();
-                console.log(card); // <li class="element"></li>
-                // card.remove();
-                
+                const idCard = item._id;
+                classPicturePopup.open(idCard, card);
               },
             },
             '.grid__elements'
@@ -148,10 +145,12 @@ apiCards
           const numberLike = cardElement.querySelector('.element__number-like');
           numberLike.textContent = item.likes.length;
           //console.log();
-          
+
           // add button cart
-          const buttonCart = cardElement.querySelector('.element__button-delete');
-          if(item.owner._id !== '30ef6c61b529fca018d777f9') {
+          const buttonCart = cardElement.querySelector(
+            '.element__button-delete'
+          );
+          if (item.owner._id !== '30ef6c61b529fca018d777f9') {
             buttonCart.classList.add('element__button-delete_inactive');
           }
 
@@ -169,23 +168,18 @@ apiCards
 
 // handler submit form Add
 function handlerSubmitFormAdd(fieldData) {
-  // данные полей
   const newCard = createCard(
     {
       data: {
-        // ...данные карточки (включая информацию по лайкам)
         name: fieldData['form-title'],
         link: fieldData['form-subtitle'],
       },
       handleCardClick: (evt) => {
-        //...что должно произойти при клике на картинку
         const img = evt.target;
         classPopupWithImage.open(img.src, img.alt);
       },
       handleLikeClick: (card) => {
-        //...что должно произойти при клике на лайк
         const likeCard = card.querySelector('.element__button-like');
-
         const numberLike = card.querySelector('.element__number-like');
 
         if (!likeCard.classList.contains('element__button-like_focus')) {
@@ -197,14 +191,15 @@ function handlerSubmitFormAdd(fieldData) {
         }
       },
       handleDeleteIconClick: (card) => {
-        //...что должно произойти при клике на удаление
-        // card.remove();
-        // удаление только-что созданной карточки
-        classPicturePopup.open();
+        console.log(card);
+        // const idCard = item._id;
+        // classPicturePopup.open(idCard, card);
       },
     },
     '.grid__elements'
   );
+
+  console.log(newCard);
 
   const cardElement = newCard.generateCard();
 

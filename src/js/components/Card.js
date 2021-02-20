@@ -54,10 +54,13 @@ export default class Card {
 
   // delete template element
   _handleDeleteCard = () => {
-    // сюда попадает id, который нужен при удалении карточки на сервере
     this._handleDeleteIconClick(this._element);
-    console.log(this._data.id); // 871248871623478681234 - id
+    // console.log(this._data.id); // 871248871623478681234 - id
   };
+
+  deleteCard() {
+    this._element.remove();
+  }
 
   // like card
   _likeCard = () => {
@@ -70,61 +73,3 @@ export default class Card {
     // console.log(this._data.likes.length);
   }
 }
-
-// export default class Card {
-//   constructor(name, link, likes, templateCard, handleCardClick) {
-//     this._handleCardClick = handleCardClick;
-//     this._name = name;
-//     this._link = link;
-//     this._likes = likes;
-//     this._templateCard = templateCard;
-//   }
-
-//   _getTemplate() {
-//     const elemTemplateCard = document
-//       .querySelector(this._templateCard)
-//       .content
-//       .querySelector('.element')
-//       .cloneNode(true);
-
-//     return elemTemplateCard;
-//   }
-
-//   generateCard() {
-//     this._element = this._getTemplate();
-//     this._setEventListeners();
-
-//     const tegImage = this._element.querySelector('.element__img');
-//     tegImage.src = this._link;
-//     tegImage.alt = this._name;
-//     this._element.querySelector('.element__title').textContent = this._name;
-
-//     // return card with data
-//     return this._element;
-//   }
-
-//   _setEventListeners() {
-//     this._element.querySelector('.element__button-delete')
-//     .addEventListener('click', () => {
-//       this._deleteCard();
-//     });
-
-//     this._element.querySelector('.element__button-like')
-//     .addEventListener('click', () => {
-//       this._likeCard();
-//     });
-
-//     this._element.querySelector('.element__img')
-//     .addEventListener('click', this._handleCardClick);
-//   }
-
-//   // delete template element
-//   _deleteCard = () => {
-//     this._element.remove();
-//   }
-
-//   // like card
-//   _likeCard = () => {
-//     this._element.querySelector('.element__button-like').classList.toggle('element__button-like_focus');
-//   }
-// }
