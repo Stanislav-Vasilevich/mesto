@@ -50,11 +50,11 @@ const userInfo = new UserInfo({
 // initialize Сlass Card
 function createCard(
   { data, handleCardClick, handleLikeClick, handleDeleteIconClick },
-  templateCard
+  templateCard, api
 ) {
   const card = new Card(
     { data, handleCardClick, handleLikeClick, handleDeleteIconClick },
-    templateCard
+    templateCard, api
   );
 
   return card;
@@ -68,8 +68,6 @@ function initialApi(url) {
 
   return api;
 }
-
-// console.log(apiCards);
 
 // data for userInfo
 apiUserInfo
@@ -117,26 +115,15 @@ apiCards
               },
               handleLikeClick: (card) => {
                 //...что должно произойти при клике на лайк
-                const likeCard = card.querySelector('.element__button-like');
-
-                const numberLike = card.querySelector('.element__number-like');
-
-                if (
-                  !likeCard.classList.contains('element__button-like_focus')
-                ) {
-                  likeCard.classList.add('element__button-like_focus');
-                  numberLike.textContent = parseInt(numberLike.textContent) + 1;
-                } else {
-                  likeCard.classList.remove('element__button-like_focus');
-                  numberLike.textContent = parseInt(numberLike.textContent) - 1;
-                }
+                
               },
               handleDeleteIconClick: (card) => {
                 const idCard = item._id;
                 classPicturePopup.open(idCard, card);
               },
             },
-            '.grid__elements'
+            '.grid__elements',
+            apiCards
           );
           // console.log(card);
           const cardElement = card.generateCard();
@@ -191,15 +178,11 @@ function handlerSubmitFormAdd(fieldData) {
         }
       },
       handleDeleteIconClick: (card) => {
-        console.log(card);
-        // const idCard = item._id;
-        // classPicturePopup.open(idCard, card);
+
       },
     },
     '.grid__elements'
   );
-
-  console.log(newCard);
 
   const cardElement = newCard.generateCard();
 

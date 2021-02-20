@@ -1,13 +1,16 @@
 export default class Card {
   constructor(
     { data, handleCardClick, handleLikeClick, handleDeleteIconClick },
-    templateCard
+    templateCard,
+    api
   ) {
     this._data = data;
+    this._id = this._data.id;
     this._handleCardClick = handleCardClick;
     this._handleLikeClick = handleLikeClick;
     this._handleDeleteIconClick = handleDeleteIconClick;
     this._templateCard = templateCard;
+    this._api = api;
   }
 
   _getTemplate() {
@@ -65,11 +68,32 @@ export default class Card {
   // like card
   _likeCard = () => {
     this._handleLikeClick(this._element);
-    this.getDataLikes();
+    this._dataLikes();
   };
 
-  getDataLikes() {
-    // здесь логика добавления лайка 
-    // console.log(this._data.likes.length);
+  _dataLikes() {
+    const likeCard = this._element.querySelector('.element__button-like');
+    const numberLike = this._element.querySelector('.element__number-like');
+
+    if (!likeCard.classList.contains('element__button-like_focus')) {
+      likeCard.classList.add('element__button-like_focus');
+      numberLike.textContent = parseInt(numberLike.textContent) + 1;
+      this._api.putLikeCard(this._id)
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((err) => {
+        console.log(`Ошибка отправки данных при постановке лайка: ${err}`);
+      })
+    } else {
+      likeCard.classList.remove('element__button-like_focus');
+      numberLike.textContent = parseInt(numberLike.textContent) - 1;
+      this._api.deleteLikeCard(this._id).then((data) => {
+        console.log(data);
+      })
+      .catch((err) => {
+        console.log(`Ошибка отправки данных при снятии лайка: ${err}`);
+      })
+    }
   }
 }
