@@ -19,8 +19,12 @@
 
       <section class="profile">
         <div class="profile__info">
-          <img src="<%=require('./images/profile/__avatar/сousteau.jpg')%>" class="profile__avatar"
+          <div class="profile__avatar">
+            <img src="<%=require('./images/profile/__avatar/сousteau.jpg')%>" class="profile__avatar-img"
             alt="Фото Жак-Ив Кусто">
+            <div class="profile__overlay">
+            </div>
+          </div>
           <div class="profile__edit">
             <div class="profile__title-edit">
               <h1 class="profile__title">Жак-Ив Кусто</h1>
@@ -64,6 +68,24 @@
               поле</span>
           </label>
           <button type="submit" class="form__submit">Сохранить</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- popup Edit Avatar -->
+    <div class="popup popup_type_edit-avatar popup_delete">
+      <div class="popup__overlay"></div>
+      <div class="popup__container popup__container_form popup__container_form-edit-avatar">
+        <button type="button" class="popup__close-icon"></button>
+        <h3 class="popup__title">Обновить аватар</h3>
+        <form action="#" class="form" novalidate>
+          <label class="form__label">
+            <input type="url" name="form-subtitle" id="description-input" class="form__input form__input_url-avatar" value=""
+              placeholder="Ссылка на картинку" autocomplete="off" required>
+            <span id="description-input-error" class="form__input-error form__input-error_avatar">Необходимо заполнить
+              данное поле</span>
+          </label>
+          <button type="submit" class="form__submit " disabled>Создать</button>
         </form>
       </div>
     </div>

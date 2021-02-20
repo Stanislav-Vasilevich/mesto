@@ -13,6 +13,7 @@ import {
   userAvatar,
   userName,
   userDescription,
+  userAvatar
 } from '../js/utils/constants.js';
 
 // Class js
@@ -218,6 +219,12 @@ const openPopupEdit = new PopupWidthForm(
   handlerSubmitFormEdit
 );
 
+// initial Class PopupWidthForm for Add Card
+const openPopupAdd = new PopupWidthForm(
+  '.popup_type_add-cards',
+  handlerSubmitFormAdd
+);
+
 // handler submit form Edit
 function handlerSubmitFormEdit(fieldData) {
   apiUserInfo
@@ -232,12 +239,6 @@ function handlerSubmitFormEdit(fieldData) {
       console.log(`Ошибка сервера: ${err.status} - ${err.statusText}`);
     });
 }
-
-// initial Class PopupWidthForm for Add Card
-const openPopupAdd = new PopupWidthForm(
-  '.popup_type_add-cards',
-  handlerSubmitFormAdd
-);
 
 // open popup Add
 buttonOpenPopupAdd.addEventListener('click', () => {
@@ -258,3 +259,7 @@ buttonOpenPopupEdit.addEventListener('click', () => {
 document.querySelectorAll(dataForms.form).forEach((form) => {
   new FormValidator(dataForms, form).enableValidation();
 });
+
+userAvatar.addEventListener('click', () => {
+
+})

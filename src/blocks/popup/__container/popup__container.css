@@ -1,4 +1,5 @@
 @import url('./_form/popup__container_form.css');
+@import url('./_form/popup__container_form-edit-avatar.css');
 @import url('./_form/popup__container_delete-img.css');
 
 .popup__container {
