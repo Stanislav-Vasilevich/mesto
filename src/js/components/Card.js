@@ -38,7 +38,7 @@ export default class Card {
     this._element
       .querySelector('.element__button-delete')
       .addEventListener('click', () => {
-        this._deleteCard();
+        this._handleDeleteCard();
       });
 
     this._element
@@ -53,9 +53,10 @@ export default class Card {
   }
 
   // delete template element
-  _deleteCard = () => {
+  _handleDeleteCard = () => {
+    // сюда попадает id, который нужен при удалении карточки на сервере
     this._handleDeleteIconClick(this._element);
-    console.log(this._data.owner);
+    console.log(this._data.id); // 871248871623478681234 - id
   };
 
   // like card

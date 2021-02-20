@@ -61,7 +61,7 @@ function initialApi(url) {
 
 // get api user info
 const apiUserInfo = initialApi(
-  'https://mesto.nomoreparties.co/v1/cohort-20/users/me'
+  'https://mesto.nomoreparties.co/v1/cohort-20/users/me/'
 );
 
 // get api cards
@@ -105,7 +105,8 @@ apiCards
                 link: item.link,
                 name: item.name,
                 likes: item.likes,
-                owner: item.owner._id
+                owner: item.owner._id,
+                id: item._id
               },
               handleCardClick: (evt) => {
                 //...что должно произойти при клике на картинку
@@ -130,8 +131,10 @@ apiCards
               },
               handleDeleteIconClick: (card) => {
                 //...что должно произойти при клике на удаление
+                // удаление уже загруженных карточек со страницы
+                // удаление карточек с сервера пока не реализовано
                 classPicturePopup.open();
-                console.log(card);
+                console.log(card); // <li class="element"></li>
                 // card.remove();
                 
               },
@@ -195,7 +198,9 @@ function handlerSubmitFormAdd(fieldData) {
       },
       handleDeleteIconClick: (card) => {
         //...что должно произойти при клике на удаление
-        card.remove();
+        // card.remove();
+        // удаление только-что созданной карточки
+        classPicturePopup.open();
       },
     },
     '.grid__elements'
