@@ -24,16 +24,6 @@ import PicturePopup from '../js/components/PicturePopup.js';
 import UserInfo from '../js/components/UserInfo.js';
 import Api from '../js/components/Api.js';
 
-// get api user info
-const apiUserInfo = initialApi(
-  'https://mesto.nomoreparties.co/v1/cohort-20/users/me/'
-);
-
-// get api cards
-const apiCards = initialApi(
-  'https://mesto.nomoreparties.co/v1/cohort-20/cards/'
-);
-
 // initialize Class Api
 function initialApi(url) {
   const api = new Api({
@@ -43,8 +33,13 @@ function initialApi(url) {
   return api;
 }
 
+// api
+const api = initialApi(
+  'https://mesto.nomoreparties.co/v1/cohort-20/'
+);
+
 // initialization class PicturePopup
-const classPicturePopup = new PicturePopup('.popup_type_delete-img', apiCards);
+const classPicturePopup = new PicturePopup('.popup_type_delete-img', api);
 
 // initialization Сlass UserInfo
 const userInfo = new UserInfo({
@@ -96,7 +91,7 @@ const openPopupUser = new initialClassPopupWithForm(
 );
 
 // get data for userInfo
-apiUserInfo
+api
   .getUserInfo()
   .then((data) => {
     userAvatar.src = data.avatar;
@@ -117,7 +112,7 @@ function initialSection({ items, renderer }, containerSelector) {
 }
 
 // get Cards from server
-apiCards
+api
   .getDataCards()
   .then((data) => {
     const arrayObjectsDataCards = initialSection(
@@ -145,7 +140,7 @@ apiCards
               },
             },
             '.grid__elements',
-            apiCards
+            api
           );
           const cardElement = card.generateCard();
 
@@ -175,7 +170,7 @@ apiCards
 
 // handler submit form Add
 function handlerSubmitFormAdd(fieldData ) {
-  apiCards
+  api
     .postDataCard(
       fieldData
     ) 
@@ -200,7 +195,7 @@ function handlerSubmitFormAdd(fieldData ) {
           },
         },
         '.grid__elements',
-        apiCards
+        api
       );
       const elemCard = newCard.generateCard();
       sectionCards.prepend(elemCard);
@@ -216,7 +211,7 @@ function handlerSubmitFormAdd(fieldData ) {
 
 // handler submit form Edit
 function handlerSubmitFormEdit(fieldData) {
-  apiUserInfo
+  api
     .patchUserInfo(fieldData)
     .then((data) => {
       userInfo.setUserInfo({
@@ -235,7 +230,7 @@ function handlerSubmitFormEdit(fieldData) {
 
 // handler submit form User
 function handleSubmitFormUser(avatarLink) {
-  apiUserInfo
+  api
     .patchUserAvatar(avatarLink)
     .then((data) => {
       avatarPhoto.src = data.avatar;
