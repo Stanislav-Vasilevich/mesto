@@ -11,7 +11,8 @@ export {
   userName,
   userDescription,
   avatarPhoto,
-  buttonsForms
+  buttonsForms,
+  sectionCards
 };
 
 // object with data for Cards
@@ -69,3 +70,4 @@ const userDescription = document.querySelector('.profile__subtitle');
 const userAvatar = document.querySelector('.profile__overlay');
 const avatarPhoto = document.querySelector('.profile__avatar-img');
 const buttonsForms = document.querySelectorAll('.form__submit');
+const sectionCards = document.querySelector('.elements');

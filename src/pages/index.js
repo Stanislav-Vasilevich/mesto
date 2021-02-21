@@ -14,7 +14,8 @@ import {
   userName,
   userDescription,
   avatarPhoto,
-  buttonsForms
+  buttonsForms,
+  sectionCards,
 } from '../js/utils/constants.js';
 
 // Class js
@@ -42,6 +43,24 @@ const classPopupWithImage = new PopupWithImage('.popup_type_img');
 
 // initialization class PicturePopup
 const classPicturePopup = new PicturePopup('.popup_type_delete-img', apiCards);
+
+// Class PopupWidthForm for replace UserInfo
+const openPopupEdit = new PopupWidthForm(
+  '.popup_type_edit-profile',
+  handlerSubmitFormEdit
+);
+
+// initial Class PopupWidthForm for Add Card
+const openPopupAdd = new PopupWidthForm(
+  '.popup_type_add-cards',
+  handlerSubmitFormAdd
+);
+
+// initial Class PopupWidthForm for user avatar
+const openPopupUser = new PopupWidthForm(
+  '.popup_type_edit-avatar',
+  handleSubmitFormUser
+);
 
 // initialization Сlass UserInfo
 const userInfo = new UserInfo({
@@ -102,6 +121,7 @@ apiCards
       {
         items: data,
         renderer: (item) => {
+          // console.log(item);
           const card = createCard(
             {
               data: {
@@ -157,83 +177,47 @@ apiCards
   });
 
 // handler submit form Add
-function handlerSubmitFormAdd(fieldData) {
-  const newCard = createCard(
-    {
-      data: {
-        name: fieldData['form-title'],
-        link: fieldData['form-subtitle'],
-      },
-      handleCardClick: (evt) => {
-        const img = evt.target;
-        classPopupWithImage.open(img.src, img.alt);
-      },
-      handleLikeClick: (card) => {
-        const likeCard = card.querySelector('.element__button-like');
-        const numberLike = card.querySelector('.element__number-like');
-
-        if (!likeCard.classList.contains('element__button-like_focus')) {
-          likeCard.classList.add('element__button-like_focus');
-          numberLike.textContent = parseInt(numberLike.textContent) + 1;
-        } else {
-          likeCard.classList.remove('element__button-like_focus');
-          numberLike.textContent = parseInt(numberLike.textContent) - 1;
-        }
-      },
-      handleDeleteIconClick: (card) => {},
-    },
-    '.grid__elements'
-  );
-
-  const cardElement = newCard.generateCard();
-
+function handlerSubmitFormAdd(fieldData /* это объект с введенными данными*/) {
   apiCards
-    .postDataCard(fieldData)
+    .postDataCard(
+      fieldData
+    ) /* 1. Отправили данные методом POST с введенными полями */
     .then((data) => {
-      openPopupUser.close();
-      const newArrayObjectsDataCards = initialSection(
+      console.log(data);
+      const newCard = createCard(
         {
-          items: data,
-          renderer: (item) => {
-            const card = createCard(
-              item.name,
-              item.link,
-              '.grid__elements',
-              handleCardClick
-            );
-            const cardElement = card.generateCard();
-            arrayObjectsDataCards.addItem(cardElement);
+          data: {
+            link: data.link,
+            name: data.name,
+            likes: data.likes,
+            owner: data.owner._id,
+            id: data._id,
+          },
+          handleCardClick: () => {
+            //...что должно произойти при клике на картинку
+            const img = evt.target;
+            classPopupWithImage.open(img.src, img.alt);
+          },
+          handleLikeClick: (card) => {},
+          handleDeleteIconClick: (card) => {
+            const idCard = item._id;
+            classPicturePopup.open(idCard, card);
           },
         },
-        '.elements'
+        '.grid__elements',
+        apiCards
       );
-      newArrayObjectsDataCards.addItem(cardElement);
+      const elemCard = newCard.generateCard();
+      sectionCards.prepend(elemCard);
+      openPopupAdd.close();
     })
     .catch((err) => {
       console.log(`Ошибка сервера: ${err.status} - ${err.statusText}`);
     })
     .finally(() => {
       this.isLoad(false);
-      console.log('Как дела?');
-    })
+    });
 }
-
-// Class PopupWidthForm for replace UserInfo
-const openPopupEdit = new PopupWidthForm(
-  '.popup_type_edit-profile',
-  handlerSubmitFormEdit
-);
-
-// initial Class PopupWidthForm for Add Card
-const openPopupAdd = new PopupWidthForm(
-  '.popup_type_add-cards',
-  handlerSubmitFormAdd
-);
-
-const openPopupUser = new PopupWidthForm(
-  '.popup_type_edit-avatar',
-  handleSubmitFormUser
-);
 
 // handler submit form Edit
 function handlerSubmitFormEdit(fieldData) {
@@ -251,22 +235,22 @@ function handlerSubmitFormEdit(fieldData) {
     })
     .finally(() => {
       this.isLoad(false);
-    })
+    });
 }
 
-function handleSubmitFormUser(avatarLink) { 
+function handleSubmitFormUser(avatarLink /* это объект с введенными данными*/) {
   apiUserInfo
-  .patchUserAvatar(avatarLink)
-  .then((data) => {
-    avatarPhoto.src = data.avatar;
-    openPopupUser.close();
-  })
-  .catch((err) => {
-    console.log(`Ошибка отправки аватара: ${err.status} - ${err.statusText}`);
-  })
-  .finally(() => {
-    this.isLoad(false);
-  })
+    .patchUserAvatar(avatarLink)
+    .then((data) => {
+      avatarPhoto.src = data.avatar;
+      openPopupUser.close();
+    })
+    .catch((err) => {
+      console.log(`Ошибка отправки аватара: ${err.status} - ${err.statusText}`);
+    })
+    .finally(() => {
+      this.isLoad(false);
+    });
 }
 
 // open popup Edit
@@ -292,3 +276,49 @@ buttonOpenPopupAdd.addEventListener('click', () => {
 document.querySelectorAll(dataForms.form).forEach((form) => {
   new FormValidator(dataForms, form).enableValidation();
 });
+
+// const newCard = createCard(
+//   {
+//     data: {
+//       name: fieldData['form-title'],
+//       link: fieldData['form-subtitle'],
+//     },
+//     handleCardClick: (evt) => {
+//       const img = evt.target;
+//       classPopupWithImage.open(img.src, img.alt);
+//     },
+//     handleLikeClick: (card) => {
+//       const likeCard = card.querySelector('.element__button-like');
+//       const numberLike = card.querySelector('.element__number-like');
+
+//       if (!likeCard.classList.contains('element__button-like_focus')) {
+//         likeCard.classList.add('element__button-like_focus');
+//         numberLike.textContent = parseInt(numberLike.textContent) + 1;
+//       } else {
+//         likeCard.classList.remove('element__button-like_focus');
+//         numberLike.textContent = parseInt(numberLike.textContent) - 1;
+//       }
+//     },
+//     handleDeleteIconClick: (card) => {},
+//   },
+//   '.grid__elements'
+// );
+
+// const cardElement = newCard.generateCard();
+
+// const newCard = initialSection(
+//   {
+//     items: data,
+//     renderer: (item) => {
+//       const card = createCard(
+//         item.name,
+//         item.link,
+//         '.grid__elements',
+//         handleCardClick
+//       );
+//       const cardElement = card.generateCard();
+//       arrayObjectsDataCards.addItem(cardElement);
+//     },
+//   },
+//   '.elements'
+// );
