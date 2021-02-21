@@ -34,35 +34,30 @@ const apiCards = initialApi(
   'https://mesto.nomoreparties.co/v1/cohort-20/cards/'
 );
 
-// initialization class PopupWithImage
-const classPopupWithImage = new PopupWithImage('.popup_type_img');
+// initialize Class Api
+function initialApi(url) {
+  const api = new Api({
+    url: url,
+  });
+
+  return api;
+}
 
 // initialization class PicturePopup
 const classPicturePopup = new PicturePopup('.popup_type_delete-img', apiCards);
-
-// Class PopupWidthForm for replace UserInfo
-const openPopupEdit = new PopupWidthForm(
-  '.popup_type_edit-profile',
-  handlerSubmitFormEdit
-);
-
-// initial Class PopupWidthForm for Add Card
-const openPopupAdd = new PopupWidthForm(
-  '.popup_type_add-cards',
-  handlerSubmitFormAdd
-);
-
-// initial Class PopupWidthForm for user avatar
-const openPopupUser = new PopupWidthForm(
-  '.popup_type_edit-avatar',
-  handleSubmitFormUser
-);
 
 // initialization Сlass UserInfo
 const userInfo = new UserInfo({
   elemName: '.profile__title',
   elemInfo: '.profile__subtitle',
 });
+
+// initialization class PopupWithForm
+function initialClassPopupWithForm(popupSelector, handleFormSubmit) {
+  const popupWithForm = new PopupWidthForm(popupSelector, handleFormSubmit);
+
+  return popupWithForm;
+}
 
 // initialize Сlass Card
 function createCard(
@@ -79,16 +74,28 @@ function createCard(
   return card;
 }
 
-// initialize Class Api
-function initialApi(url) {
-  const api = new Api({
-    url: url,
-  });
+// initialization class PopupWithImage
+const classPopupWithImage = new PopupWithImage('.popup_type_img');
 
-  return api;
-}
+// PopupWidthForm for replace UserInfo
+const openPopupEdit = new initialClassPopupWithForm(
+  '.popup_type_edit-profile',
+  handlerSubmitFormEdit
+);
 
-// data for userInfo
+// PopupWidthForm for Add Card
+const openPopupAdd = new initialClassPopupWithForm(
+  '.popup_type_add-cards',
+  handlerSubmitFormAdd
+);
+
+// PopupWidthForm for user Avatar
+const openPopupUser = new initialClassPopupWithForm(
+  '.popup_type_edit-avatar',
+  handleSubmitFormUser
+);
+
+// get data for userInfo
 apiUserInfo
   .getUserInfo()
   .then((data) => {
@@ -109,7 +116,7 @@ function initialSection({ items, renderer }, containerSelector) {
   return arrayObjectsDataCards;
 }
 
-// add Cards by page
+// get Cards from server
 apiCards
   .getDataCards()
   .then((data) => {
@@ -142,11 +149,11 @@ apiCards
           );
           const cardElement = card.generateCard();
 
-          // add sum likes
+          // show sum likes
           const numberLike = cardElement.querySelector('.element__number-like');
           numberLike.textContent = item.likes.length;
 
-          // add button cart
+          // show button cart
           const buttonCart = cardElement.querySelector(
             '.element__button-delete'
           );
@@ -173,7 +180,6 @@ function handlerSubmitFormAdd(fieldData ) {
       fieldData
     ) 
     .then((data) => {
-      console.log(data);
       const newCard = createCard(
         {
           data: {
@@ -228,7 +234,8 @@ function handlerSubmitFormEdit(fieldData) {
     });
 }
 
-function handleSubmitFormUser(avatarLink /* это объект с введенными данными*/) {
+// handler submit form User
+function handleSubmitFormUser(avatarLink) {
   apiUserInfo
     .patchUserAvatar(avatarLink)
     .then((data) => {
@@ -243,6 +250,11 @@ function handleSubmitFormUser(avatarLink /* это объект с введен�
     });
 }
 
+// open popup User
+userAvatar.addEventListener('click', () => {
+  openPopupUser.open();
+});
+
 // open popup Edit
 buttonOpenPopupEdit.addEventListener('click', () => {
   openPopupEdit.open();
@@ -252,17 +264,12 @@ buttonOpenPopupEdit.addEventListener('click', () => {
   inputSubtitleFormEdit.value = dataUser.info;
 });
 
-// open popup User
-userAvatar.addEventListener('click', () => {
-  openPopupUser.open();
-});
-
 // open popup Add
 buttonOpenPopupAdd.addEventListener('click', () => {
   openPopupAdd.open();
 });
 
-// listen all forms in document by config and call Class validation
+// enable validation
 document.querySelectorAll(dataForms.form).forEach((form) => {
   new FormValidator(dataForms, form).enableValidation();
 });

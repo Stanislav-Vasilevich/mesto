@@ -78,8 +78,7 @@ export default class Card {
       likeCard.classList.add('element__button-like_focus');
       numberLike.textContent = parseInt(numberLike.textContent) + 1;
       this._api.putLikeCard(this._id)
-      .then((data) => {
-        console.log(data);
+      .then(() => {
       })
       .catch((err) => {
         console.log(`Ошибка отправки данных при постановке лайка: ${err}`);
@@ -87,8 +86,7 @@ export default class Card {
     } else {
       likeCard.classList.remove('element__button-like_focus');
       numberLike.textContent = parseInt(numberLike.textContent) - 1;
-      this._api.deleteLikeCard(this._id).then((data) => {
-        console.log(data);
+      this._api.deleteLikeCard(this._id).then(() => {
       })
       .catch((err) => {
         console.log(`Ошибка отправки данных при снятии лайка: ${err}`);
