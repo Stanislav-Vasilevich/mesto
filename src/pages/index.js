@@ -2,19 +2,15 @@ import './index.css';
 
 // constants
 import {
-  dataCards,
   dataForms,
   inputTitleFormEdit,
   inputSubtitleFormEdit,
-  inputNamePlaceFormAdd,
-  inputUrlFormAdd,
   buttonOpenPopupEdit,
   buttonOpenPopupAdd,
   userAvatar,
   userName,
   userDescription,
   avatarPhoto,
-  buttonsForms,
   sectionCards,
 } from '../js/utils/constants.js';
 
@@ -121,11 +117,9 @@ apiCards
       {
         items: data,
         renderer: (item) => {
-          // console.log(item);
           const card = createCard(
             {
               data: {
-                // ...данные карточки (включая информацию по лайкам)
                 link: item.link,
                 name: item.name,
                 likes: item.likes,
@@ -133,12 +127,10 @@ apiCards
                 id: item._id,
               },
               handleCardClick: (evt) => {
-                //...что должно произойти при клике на картинку
                 const img = evt.target;
                 classPopupWithImage.open(img.src, img.alt);
               },
               handleLikeClick: (card) => {
-                //...что должно произойти при клике на лайк
               },
               handleDeleteIconClick: (card) => {
                 const idCard = item._id;
@@ -148,13 +140,11 @@ apiCards
             '.grid__elements',
             apiCards
           );
-          // console.log(card);
           const cardElement = card.generateCard();
 
           // add sum likes
           const numberLike = cardElement.querySelector('.element__number-like');
           numberLike.textContent = item.likes.length;
-          //console.log();
 
           // add button cart
           const buttonCart = cardElement.querySelector(
@@ -177,11 +167,11 @@ apiCards
   });
 
 // handler submit form Add
-function handlerSubmitFormAdd(fieldData /* это объект с введенными данными*/) {
+function handlerSubmitFormAdd(fieldData ) {
   apiCards
     .postDataCard(
       fieldData
-    ) /* 1. Отправили данные методом POST с введенными полями */
+    ) 
     .then((data) => {
       console.log(data);
       const newCard = createCard(
@@ -193,14 +183,14 @@ function handlerSubmitFormAdd(fieldData /* это объект с введенн
             owner: data.owner._id,
             id: data._id,
           },
-          handleCardClick: () => {
+          handleCardClick: (evt) => {
             //...что должно произойти при клике на картинку
             const img = evt.target;
             classPopupWithImage.open(img.src, img.alt);
           },
           handleLikeClick: (card) => {},
           handleDeleteIconClick: (card) => {
-            const idCard = item._id;
+            const idCard = data._id;
             classPicturePopup.open(idCard, card);
           },
         },
@@ -276,49 +266,3 @@ buttonOpenPopupAdd.addEventListener('click', () => {
 document.querySelectorAll(dataForms.form).forEach((form) => {
   new FormValidator(dataForms, form).enableValidation();
 });
-
-// const newCard = createCard(
-//   {
-//     data: {
-//       name: fieldData['form-title'],
-//       link: fieldData['form-subtitle'],
-//     },
-//     handleCardClick: (evt) => {
-//       const img = evt.target;
-//       classPopupWithImage.open(img.src, img.alt);
-//     },
-//     handleLikeClick: (card) => {
-//       const likeCard = card.querySelector('.element__button-like');
-//       const numberLike = card.querySelector('.element__number-like');
-
-//       if (!likeCard.classList.contains('element__button-like_focus')) {
-//         likeCard.classList.add('element__button-like_focus');
-//         numberLike.textContent = parseInt(numberLike.textContent) + 1;
-//       } else {
-//         likeCard.classList.remove('element__button-like_focus');
-//         numberLike.textContent = parseInt(numberLike.textContent) - 1;
-//       }
-//     },
-//     handleDeleteIconClick: (card) => {},
-//   },
-//   '.grid__elements'
-// );
-
-// const cardElement = newCard.generateCard();
-
-// const newCard = initialSection(
-//   {
-//     items: data,
-//     renderer: (item) => {
-//       const card = createCard(
-//         item.name,
-//         item.link,
-//         '.grid__elements',
-//         handleCardClick
-//       );
-//       const cardElement = card.generateCard();
-//       arrayObjectsDataCards.addItem(cardElement);
-//     },
-//   },
-//   '.elements'
-// );

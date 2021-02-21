@@ -1,10 +1,7 @@
 export {
-  dataCards,
   dataForms,
   inputTitleFormEdit,
   inputSubtitleFormEdit,
-  inputNamePlaceFormAdd,
-  inputUrlFormAdd,
   buttonOpenPopupEdit,
   buttonOpenPopupAdd,
   userAvatar,
@@ -14,35 +11,6 @@ export {
   buttonsForms,
   sectionCards
 };
-
-// object with data for Cards
-const dataCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  },
-  
-];
 
 // config for Card.js
 const dataForms = {
@@ -61,8 +29,6 @@ const formEdit = popupEdit.querySelector('.form');
 const formAdd = popupAdd.querySelector('.form');
 const inputTitleFormEdit = formEdit.querySelector('.form__input_name');
 const inputSubtitleFormEdit = formEdit.querySelector('.form__input_job');
-const inputNamePlaceFormAdd = formAdd.querySelector('.form__input_place');
-const inputUrlFormAdd = formAdd.querySelector('.form__input_url');
 const buttonOpenPopupEdit = document.querySelector('.profile__edit-button');
 const buttonOpenPopupAdd = document.querySelector('.profile__add');
 const userName = document.querySelector('.profile__title');

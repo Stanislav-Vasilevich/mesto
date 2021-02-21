@@ -58,7 +58,6 @@ export default class Card {
   // delete template element
   _handleDeleteCard = () => {
     this._handleDeleteIconClick(this._element);
-    // console.log(this._data.id); // 871248871623478681234 - id
   };
 
   deleteCard() {
