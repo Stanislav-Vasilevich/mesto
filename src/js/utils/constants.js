@@ -24,9 +24,7 @@ const dataForms = {
 
 // for index.js
 const popupEdit = document.querySelector('.popup_type_edit-profile');
-const popupAdd = document.querySelector('.popup_type_add-cards');
 const formEdit = popupEdit.querySelector('.form');
-const formAdd = popupAdd.querySelector('.form');
 const inputTitleFormEdit = formEdit.querySelector('.form__input_name');
 const inputSubtitleFormEdit = formEdit.querySelector('.form__input_job');
 const buttonOpenPopupEdit = document.querySelector('.profile__edit-button');

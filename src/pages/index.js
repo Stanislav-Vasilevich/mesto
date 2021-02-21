@@ -137,7 +137,7 @@ apiCards
                 const img = evt.target;
                 classPopupWithImage.open(img.src, img.alt);
               },
-              handleLikeClick: (card) => {
+              handleLikeClick: () => {
               },
               handleDeleteIconClick: (card) => {
                 const idCard = item._id;
@@ -190,11 +190,10 @@ function handlerSubmitFormAdd(fieldData ) {
             id: data._id,
           },
           handleCardClick: (evt) => {
-            //...что должно произойти при клике на картинку
             const img = evt.target;
             classPopupWithImage.open(img.src, img.alt);
           },
-          handleLikeClick: (card) => {},
+          handleLikeClick: () => {},
           handleDeleteIconClick: (card) => {
             const idCard = data._id;
             classPicturePopup.open(idCard, card);
