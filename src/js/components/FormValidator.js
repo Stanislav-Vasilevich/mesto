@@ -84,7 +84,7 @@ class FormValidator {
 			this._inactiveButtonInPopup();
 		} else {
 			this.button.classList.remove(this._nactiveButton);
-			this._activeButtonInPopup();  // всё ок? включаем
+			this._activeButtonInPopup(); 
 		}
 	}
 	

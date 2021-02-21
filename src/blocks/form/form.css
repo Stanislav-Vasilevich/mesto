@@ -4,6 +4,8 @@
 @import url('./__input-error/form__input-error.css');
 @import url('./__input-error/_active/form__input-error_active.css');
 @import url('./__submit/_active/form__submit_active.css');
+@import url('./__submit-save/form__submit-save.css');
+@import url('./__submit-retention/form__submit-retention.css');
 
 .form {
   max-width: 358px;

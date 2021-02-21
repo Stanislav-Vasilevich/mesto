@@ -13,6 +13,8 @@ import {
   userAvatar,
   userName,
   userDescription,
+  avatarPhoto,
+  buttonsForms
 } from '../js/utils/constants.js';
 
 // Class js
@@ -188,6 +190,7 @@ function handlerSubmitFormAdd(fieldData) {
   apiCards
     .postDataCard(fieldData)
     .then((data) => {
+      openPopupUser.close();
       const newArrayObjectsDataCards = initialSection(
         {
           items: data,
@@ -208,7 +211,11 @@ function handlerSubmitFormAdd(fieldData) {
     })
     .catch((err) => {
       console.log(`Ошибка сервера: ${err.status} - ${err.statusText}`);
-    });
+    })
+    .finally(() => {
+      this.isLoad(false);
+      console.log('Как дела?');
+    })
 }
 
 // Class PopupWidthForm for replace UserInfo
@@ -237,29 +244,34 @@ function handlerSubmitFormEdit(fieldData) {
         name: data['name'],
         info: data['about'],
       });
+      openPopupEdit.close();
     })
     .catch((err) => {
       console.log(`Ошибка сервера: ${err.status} - ${err.statusText}`);
-    });
+    })
+    .finally(() => {
+      this.isLoad(false);
+    })
 }
 
-const avatarPhoto = document.querySelector('.profile__avatar-img');
-
-function handleSubmitFormUser(avatarLink) {
+function handleSubmitFormUser(avatarLink) { 
   apiUserInfo
   .patchUserAvatar(avatarLink)
   .then((data) => {
-    avatarPhoto.src = data.avatar
+    avatarPhoto.src = data.avatar;
+    openPopupUser.close();
   })
   .catch((err) => {
     console.log(`Ошибка отправки аватара: ${err.status} - ${err.statusText}`);
+  })
+  .finally(() => {
+    this.isLoad(false);
   })
 }
 
 // open popup Edit
 buttonOpenPopupEdit.addEventListener('click', () => {
   openPopupEdit.open();
-
   const dataUser = userInfo.getUserInfo();
 
   inputTitleFormEdit.value = dataUser.name;

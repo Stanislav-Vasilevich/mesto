@@ -9,7 +9,9 @@ export {
   buttonOpenPopupAdd,
   userAvatar,
   userName,
-  userDescription
+  userDescription,
+  avatarPhoto,
+  buttonsForms
 };
 
 // object with data for Cards
@@ -65,3 +67,5 @@ const buttonOpenPopupAdd = document.querySelector('.profile__add');
 const userName = document.querySelector('.profile__title');
 const userDescription = document.querySelector('.profile__subtitle');
 const userAvatar = document.querySelector('.profile__overlay');
+const avatarPhoto = document.querySelector('.profile__avatar-img');
+const buttonsForms = document.querySelectorAll('.form__submit');
