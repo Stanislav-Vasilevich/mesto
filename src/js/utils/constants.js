@@ -9,7 +9,7 @@ export {
   userDescription,
   avatarPhoto,
   buttonsForms,
-  sectionCards
+  sectionCards,
 };
 
 // config for Card.js

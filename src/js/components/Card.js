@@ -76,17 +76,18 @@ export default class Card {
 
     if (!likeCard.classList.contains('element__button-like_focus')) {
       likeCard.classList.add('element__button-like_focus');
-      numberLike.textContent = parseInt(numberLike.textContent) + 1;
       this._api.putLikeCard(this._id)
-      .then(() => {
+      .then((data) => {
+        numberLike.textContent = data.likes.length;
       })
       .catch((err) => {
         console.log(`Ошибка отправки данных при постановке лайка: ${err}`);
       })
     } else {
       likeCard.classList.remove('element__button-like_focus');
-      numberLike.textContent = parseInt(numberLike.textContent) - 1;
-      this._api.deleteLikeCard(this._id).then(() => {
+      this._api.deleteLikeCard(this._id)
+      .then((data) => {
+        numberLike.textContent = data.likes.length;
       })
       .catch((err) => {
         console.log(`Ошибка отправки данных при снятии лайка: ${err}`);

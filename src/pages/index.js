@@ -1,3 +1,5 @@
+let userId;
+
 import './index.css';
 
 // constants
@@ -94,6 +96,7 @@ const openPopupUser = new initialClassPopupWithForm(
 api
   .getUserInfo()
   .then((data) => {
+    userId = data._id; // got your id
     userAvatar.src = data.avatar;
     userName.textContent = data.name;
     userDescription.textContent = data.about;
@@ -152,7 +155,7 @@ api
           const buttonCart = cardElement.querySelector(
             '.element__button-delete'
           );
-          if (item.owner._id !== '30ef6c61b529fca018d777f9') {
+          if (item.owner._id !== userId) {
             buttonCart.classList.add('element__button-delete_inactive');
           }
 
