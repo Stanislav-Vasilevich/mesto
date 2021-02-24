@@ -38,6 +38,26 @@ export default class Api {
     });
   }
 
+  // patch data user avatar from server
+  patchUserAvatar(data) {
+    return fetch(`${this._url}users/me/avatar`, {
+      method: 'PATCH',
+      headers: {
+        authorization: '5ba9e6d0-bea2-43fd-97e6-f314993d4839',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        avatar: data['form-avatar'],
+      }),
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+
+      return Promise.reject(`Ошибка: ${res.status} - ${res.statusText}`);
+    });
+  }
+
   // patch data user from server
   patchUserInfo(data) {
     return fetch(`${this._url}users/me/`, {
@@ -122,26 +142,6 @@ export default class Api {
         authorization: '5ba9e6d0-bea2-43fd-97e6-f314993d4839',
         'Content-Type': 'application/json',
       },
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-
-      return Promise.reject(`Ошибка: ${res.status} - ${res.statusText}`);
-    });
-  }
-
-  // patch data user from server
-  patchUserAvatar(data) {
-    return fetch(`${this._url}users/me/avatar`, {
-      method: 'PATCH',
-      headers: {
-        authorization: '5ba9e6d0-bea2-43fd-97e6-f314993d4839',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        avatar: data['form-subtitle']
-      }),
     }).then((res) => {
       if (res.ok) {
         return res.json();

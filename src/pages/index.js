@@ -10,6 +10,7 @@ import {
   buttonOpenPopupEdit,
   buttonOpenPopupAdd,
   userAvatar,
+  userAvatarOverlay,
   userName,
   userDescription,
   avatarPhoto,
@@ -36,9 +37,7 @@ function initialApi(url) {
 }
 
 // api
-const api = initialApi(
-  'https://mesto.nomoreparties.co/v1/cohort-20/'
-);
+const api = initialApi('https://mesto.nomoreparties.co/v1/cohort-20/');
 
 // initialization class PicturePopup
 const classPicturePopup = new PicturePopup('.popup_type_delete-img', api);
@@ -47,6 +46,7 @@ const classPicturePopup = new PicturePopup('.popup_type_delete-img', api);
 const userInfo = new UserInfo({
   elemName: '.profile__title',
   elemInfo: '.profile__subtitle',
+  elemAvatar: '.profile__avatar-img',
 });
 
 // initialization class PopupWithForm
@@ -89,7 +89,7 @@ const openPopupAdd = new initialClassPopupWithForm(
 // PopupWidthForm for user Avatar
 const openPopupUser = new initialClassPopupWithForm(
   '.popup_type_edit-avatar',
-  handleSubmitFormUser
+  handleSubmitFormUserAvatar
 );
 
 // get data for userInfo
@@ -135,8 +135,7 @@ api
                 const img = evt.target;
                 classPopupWithImage.open(img.src, img.alt);
               },
-              handleLikeClick: () => {
-              },
+              handleLikeClick: () => {},
               handleDeleteIconClick: (card) => {
                 const idCard = item._id;
                 classPicturePopup.open(idCard, card);
@@ -172,11 +171,9 @@ api
   });
 
 // handler submit form Add
-function handlerSubmitFormAdd(fieldData ) {
+function handlerSubmitFormAdd(fieldData) {
   api
-    .postDataCard(
-      fieldData
-    ) 
+    .postDataCard(fieldData)
     .then((data) => {
       const newCard = createCard(
         {
@@ -232,10 +229,13 @@ function handlerSubmitFormEdit(fieldData) {
 }
 
 // handler submit form User
-function handleSubmitFormUser(avatarLink) {
+function handleSubmitFormUserAvatar(avatarLink) {
   api
     .patchUserAvatar(avatarLink)
     .then((data) => {
+      userInfo.setUserAvatar({
+        avatar: data['avatar'],
+      });
       avatarPhoto.src = data.avatar;
       openPopupUser.close();
     })
@@ -248,7 +248,7 @@ function handleSubmitFormUser(avatarLink) {
 }
 
 // open popup User
-userAvatar.addEventListener('click', () => {
+userAvatarOverlay.addEventListener('click', () => {
   openPopupUser.open();
 });
 
