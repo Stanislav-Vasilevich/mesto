@@ -11,6 +11,7 @@ export default class Card {
     this._handleDeleteIconClick = handleDeleteIconClick;
     this._templateCard = templateCard;
     this._api = api;
+    // console.log(this._data.likes.length);
   }
 
   _getTemplate() {
@@ -55,6 +56,11 @@ export default class Card {
       .addEventListener('click', this._handleCardClick);
   }
 
+  // showSumLikes() {
+  //   const numberLike = this._element.querySelector('.element__number-like');
+  //   numberLike.textContent = item.likes.length;
+  // }
+
   // delete template element
   _handleDeleteCard = () => {
     this._handleDeleteIconClick(this._element);
@@ -73,25 +79,28 @@ export default class Card {
   _dataLikes() {
     const likeCard = this._element.querySelector('.element__button-like');
     const numberLike = this._element.querySelector('.element__number-like');
+    console.log(numberLike);
 
     if (!likeCard.classList.contains('element__button-like_focus')) {
       likeCard.classList.add('element__button-like_focus');
-      this._api.putLikeCard(this._id)
-      .then((data) => {
-        numberLike.textContent = data.likes.length;
-      })
-      .catch((err) => {
-        console.log(`Ошибка отправки данных при постановке лайка: ${err}`);
-      })
+      this._api
+        .putLikeCard(this._id)
+        .then((data) => {
+          numberLike.textContent = data.likes.length;
+        })
+        .catch((err) => {
+          console.log(`Ошибка отправки данных при постановке лайка: ${err}`);
+        });
     } else {
       likeCard.classList.remove('element__button-like_focus');
-      this._api.deleteLikeCard(this._id)
-      .then((data) => {
-        numberLike.textContent = data.likes.length;
-      })
-      .catch((err) => {
-        console.log(`Ошибка отправки данных при снятии лайка: ${err}`);
-      })
+      this._api
+        .deleteLikeCard(this._id)
+        .then((data) => {
+          numberLike.textContent = data.likes.length;
+        })
+        .catch((err) => {
+          console.log(`Ошибка отправки данных при снятии лайка: ${err}`);
+        });
     }
   }
 }

@@ -1,5 +1,3 @@
-let userId;
-
 import './index.css';
 
 // constants
@@ -26,6 +24,9 @@ import PopupWidthForm from '../js/components/PopupWithForm.js';
 import PicturePopup from '../js/components/PicturePopup.js';
 import UserInfo from '../js/components/UserInfo.js';
 import Api from '../js/components/Api.js';
+
+let userId;
+let cardsList;
 
 // initialize Class Api
 function initialApi(url) {
@@ -118,7 +119,8 @@ function initialSection({ items, renderer }, containerSelector) {
 api
   .getDataCards()
   .then((data) => {
-    const arrayObjectsDataCards = initialSection(
+    // console.log(data);
+    cardsList = initialSection(
       {
         items: data,
         renderer: (item) => {
@@ -147,8 +149,10 @@ api
           const cardElement = card.generateCard();
 
           // show sum likes
-          const numberLike = cardElement.querySelector('.element__number-like');
-          numberLike.textContent = item.likes.length;
+          // const numberLike = cardElement.querySelector('.element__number-like');
+          // numberLike.textContent = item.likes.length;
+
+          // card.showSumLikes();
 
           // show button cart
           const buttonCart = cardElement.querySelector(
@@ -158,13 +162,13 @@ api
             buttonCart.classList.add('element__button-delete_inactive');
           }
 
-          arrayObjectsDataCards.addItem(cardElement);
+          cardsList.addItem(cardElement);
         },
       },
       '.elements'
     );
 
-    arrayObjectsDataCards.renderItems();
+    cardsList.renderItems();
   })
   .catch((err) => {
     console.log(`Ошибка сервера: ${err.status} - ${err.statusText}`);
@@ -198,7 +202,7 @@ function handlerSubmitFormAdd(fieldData) {
         api
       );
       const elemCard = newCard.generateCard();
-      sectionCards.prepend(elemCard);
+      cardsList.addItem(elemCard);
       openPopupAdd.close();
     })
     .catch((err) => {
