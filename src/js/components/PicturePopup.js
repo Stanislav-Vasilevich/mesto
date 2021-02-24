@@ -4,27 +4,28 @@ export default class PicturePopup extends Popup {
   constructor(popupSelector, api) {
     super(popupSelector);
     this._api = api;
+    this.setEventListeners();
   }
 
   open(idCard, card) {
     super.open();
-    this.setEventListeners(idCard, card);
+    this._idCard = idCard;
+    this._card = card;
   }
 
-  setEventListeners = (id, card) => {
+  setEventListeners = () => {
     const buttonDeleteCard = this._elem.querySelector('.submit-delete-card');
     buttonDeleteCard.addEventListener('click', () => {
-      this._deleteCard(id);
-      card.remove(); 
-      console.log('нажал удалить');
+      this._deleteCard(this._idCard);
+      this._card.remove(); 
     });
   };
 
-  _deleteCard = (id) => {
+  _deleteCard = () => {
     this.close();
 
     this._api
-      .deleteCard(id)
+      .deleteCard(this._idCard)
       .then(() => {
       })
       .catch((err) => {
