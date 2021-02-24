@@ -1,4 +1,3 @@
-// import apiCards from '../../pages/index.js';
 import Popup from './Popup.js';
 
 export default class PicturePopup extends Popup {
@@ -18,12 +17,6 @@ export default class PicturePopup extends Popup {
       this._deleteCard(id);
       card.remove(); 
       console.log('нажал удалить');
-    });
-
-    this._elem.addEventListener('click', (evt) => {
-      if (evt.target.classList.contains('popup__overlay')) {
-        this.close();
-      }
     });
   };
 
