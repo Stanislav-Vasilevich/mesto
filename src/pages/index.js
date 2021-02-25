@@ -58,13 +58,13 @@ function initialClassPopupWithForm(popupSelector, handleFormSubmit) {
 
 // initialize Сlass Card
 function createCard(
-  { data, handleCardClick, handleDeleteIconClick },
+  { data, handleCardClick, handleLikeClick, handleDeleteIconClick },
   templateCard,
   api,
   id
 ) {
   const card = new Card(
-    { data, handleCardClick, handleDeleteIconClick },
+    { data, handleCardClick, handleLikeClick, handleDeleteIconClick },
     templateCard,
     api,
     id
@@ -137,6 +137,8 @@ api
                 const img = evt.target;
                 classPopupWithImage.open(img.src, img.alt);
               },
+              handleLikeClick: () => { 
+              },
               handleDeleteIconClick: (card) => {
                 const idCard = item._id;
                 classPicturePopup.open(idCard, card);
@@ -177,6 +179,8 @@ function handlerSubmitFormAdd(fieldData) {
           handleCardClick: (evt) => {
             const img = evt.target;
             classPopupWithImage.open(img.src, img.alt);
+          },
+          handleLikeClick: () => { 
           },
           handleDeleteIconClick: (card) => {
             const idCard = data._id;
