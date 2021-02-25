@@ -99,9 +99,11 @@ api
   .getUserInfo()
   .then((data) => {
     userId = data._id; // got your id
-    userAvatar.src = data.avatar;
-    userName.textContent = data.name;
-    userDescription.textContent = data.about;
+    userInfo.setUserInfo({
+      name: data['name'],
+      info: data['about'],
+      avatar: data['avatar'],
+    });
   })
   .catch((err) => {
     console.log(`Ошибка сервера: ${err.status} - ${err.statusText}`);
@@ -211,6 +213,7 @@ function handlerSubmitFormEdit(fieldData) {
       userInfo.setUserInfo({
         name: data['name'],
         info: data['about'],
+        avatar: data['avatar'],
       });
       openPopupEdit.close();
     })
@@ -227,10 +230,11 @@ function handleSubmitFormUserAvatar(avatarLink) {
   api
     .patchUserAvatar(avatarLink)
     .then((data) => {
-      userInfo.setUserAvatar({
+      userInfo.setUserInfo({
+        name: data['name'],
+        info: data['about'],
         avatar: data['avatar'],
       });
-      avatarPhoto.src = data.avatar;
       openPopupUser.close();
     })
     .catch((err) => {
