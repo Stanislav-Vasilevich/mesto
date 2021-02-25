@@ -11,8 +11,7 @@ import {
   userAvatarOverlay,
   userName,
   userDescription,
-  avatarPhoto,
-  sectionCards,
+  avatarPhoto
 } from '../js/utils/constants.js';
 
 // Class js
@@ -59,14 +58,16 @@ function initialClassPopupWithForm(popupSelector, handleFormSubmit) {
 
 // initialize Сlass Card
 function createCard(
-  { data, handleCardClick, handleLikeClick, handleDeleteIconClick },
+  { data, handleCardClick, handleDeleteIconClick },
   templateCard,
-  api
+  api,
+  id
 ) {
   const card = new Card(
-    { data, handleCardClick, handleLikeClick, handleDeleteIconClick },
+    { data, handleCardClick, handleDeleteIconClick },
     templateCard,
-    api
+    api,
+    id
   );
 
   return card;
@@ -119,7 +120,6 @@ function initialSection({ items, renderer }, containerSelector) {
 api
   .getDataCards()
   .then((data) => {
-    // console.log(data);
     cardsList = initialSection(
       {
         items: data,
@@ -137,30 +137,16 @@ api
                 const img = evt.target;
                 classPopupWithImage.open(img.src, img.alt);
               },
-              handleLikeClick: () => {},
               handleDeleteIconClick: (card) => {
                 const idCard = item._id;
                 classPicturePopup.open(idCard, card);
               },
             },
             '.grid__elements',
-            api
+            api,
+            userId
           );
           const cardElement = card.generateCard();
-
-          // show sum likes
-          // const numberLike = cardElement.querySelector('.element__number-like');
-          // numberLike.textContent = item.likes.length;
-
-          // card.showSumLikes();
-
-          // show button cart
-          const buttonCart = cardElement.querySelector(
-            '.element__button-delete'
-          );
-          if (item.owner._id !== userId) {
-            buttonCart.classList.add('element__button-delete_inactive');
-          }
 
           cardsList.addItem(cardElement);
         },
@@ -192,14 +178,14 @@ function handlerSubmitFormAdd(fieldData) {
             const img = evt.target;
             classPopupWithImage.open(img.src, img.alt);
           },
-          handleLikeClick: () => {},
           handleDeleteIconClick: (card) => {
             const idCard = data._id;
             classPicturePopup.open(idCard, card);
           },
         },
         '.grid__elements',
-        api
+        api,
+        userId
       );
       const elemCard = newCard.generateCard();
       cardsList.addItem(elemCard);

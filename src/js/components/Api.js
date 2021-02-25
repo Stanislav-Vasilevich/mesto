@@ -4,6 +4,13 @@ export default class Api {
     this._headers = options.headers;
   }
 
+  _checkResponse(res) {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка ${res.status}`);
+  }
+
   // get data from server
   getUserInfo() {
     return fetch(`${this._url}users/me/`, {
@@ -12,13 +19,7 @@ export default class Api {
         authorization: '5ba9e6d0-bea2-43fd-97e6-f314993d4839',
         'Content-Type': 'application/json',
       },
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-
-      return Promise.reject(`Ошибка: ${res.status} - ${res.statusText}`);
-    });
+    }).then(this._checkResponse);
   }
 
   // get data user from server
@@ -29,13 +30,7 @@ export default class Api {
         authorization: '5ba9e6d0-bea2-43fd-97e6-f314993d4839',
         'Content-Type': 'application/json',
       },
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-
-      return Promise.reject(`Ошибка: ${res.status} - ${res.statusText}`);
-    });
+    }).then(this._checkResponse);
   }
 
   // patch data user avatar from server
@@ -49,13 +44,7 @@ export default class Api {
       body: JSON.stringify({
         avatar: data['form-avatar'],
       }),
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-
-      return Promise.reject(`Ошибка: ${res.status} - ${res.statusText}`);
-    });
+    }).then(this._checkResponse);
   }
 
   // patch data user from server
@@ -70,13 +59,7 @@ export default class Api {
         name: data['form-title'],
         about: data['form-subtitle'],
       }),
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-
-      return Promise.reject(`Ошибка: ${res.status} - ${res.statusText}`);
-    });
+    }).then(this._checkResponse);
   }
 
   // post data user by server
@@ -91,13 +74,7 @@ export default class Api {
         name: data['form-title'],
         link: data['form-subtitle'],
       }),
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-
-      return Promise.reject(`Ошибка: ${res.status} - ${res.statusText}`);
-    });
+    }).then(this._checkResponse);
   }
 
   // delete card from server
@@ -108,13 +85,7 @@ export default class Api {
         authorization: '5ba9e6d0-bea2-43fd-97e6-f314993d4839',
         'Content-Type': 'application/json',
       },
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-
-      return Promise.reject(`Ошибка: ${res.status} - ${res.statusText}`);
-    });
+    }).then(this._checkResponse);
   }
 
   // put like by server
@@ -125,13 +96,7 @@ export default class Api {
         authorization: '5ba9e6d0-bea2-43fd-97e6-f314993d4839',
         'Content-Type': 'application/json',
       },
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-
-      return Promise.reject(`Ошибка: ${res.status} - ${res.statusText}`);
-    });
+    }).then(this._checkResponse);
   }
 
   // delete like from server
@@ -142,12 +107,6 @@ export default class Api {
         authorization: '5ba9e6d0-bea2-43fd-97e6-f314993d4839',
         'Content-Type': 'application/json',
       },
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-
-      return Promise.reject(`Ошибка: ${res.status} - ${res.statusText}`);
-    });
+    }).then(this._checkResponse);
   }
 }

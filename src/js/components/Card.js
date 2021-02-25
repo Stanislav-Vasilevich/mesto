@@ -1,8 +1,11 @@
+// import {userId} from '../../pages/index.js';
+
 export default class Card {
   constructor(
     { data, handleCardClick, handleLikeClick, handleDeleteIconClick },
     templateCard,
-    api
+    api,
+    id
   ) {
     this._data = data;
     this._id = this._data.id;
@@ -11,7 +14,7 @@ export default class Card {
     this._handleDeleteIconClick = handleDeleteIconClick;
     this._templateCard = templateCard;
     this._api = api;
-    // console.log(this._data.likes.length);
+    this._myId = id;
   }
 
   _getTemplate() {
@@ -39,6 +42,8 @@ export default class Card {
   }
 
   _setEventListeners() {
+    this._showLikes();
+    this._showButtonCart();
     this._element
       .querySelector('.element__button-delete')
       .addEventListener('click', () => {
@@ -56,10 +61,28 @@ export default class Card {
       .addEventListener('click', this._handleCardClick);
   }
 
-  // showSumLikes() {
-  //   const numberLike = this._element.querySelector('.element__number-like');
-  //   numberLike.textContent = item.likes.length;
-  // }
+  _showLikes() {
+    const numberLike = this._element.querySelector('.element__number-like');
+    numberLike.textContent = this._data.likes.length;
+
+    const likeCard = this._element.querySelector('.element__button-like');
+    const arrayLikes = this._data.likes;
+    arrayLikes.forEach((item) => {
+      if(item._id === this._myId) {
+        likeCard.classList.add('element__button-like_focus');
+      } else {
+        likeCard.classList.remove('element__button-like_focus');
+      }
+    })
+  }
+
+  _showButtonCart() {
+    const buttonCart = this._element.querySelector('.element__button-delete');
+
+    if (this._data.owner !== this._myId) {
+      buttonCart.classList.add('element__button-delete_inactive');
+    }
+  }
 
   // delete template element
   _handleDeleteCard = () => {
@@ -79,7 +102,6 @@ export default class Card {
   _dataLikes() {
     const likeCard = this._element.querySelector('.element__button-like');
     const numberLike = this._element.querySelector('.element__number-like');
-    console.log(numberLike);
 
     if (!likeCard.classList.contains('element__button-like_focus')) {
       likeCard.classList.add('element__button-like_focus');

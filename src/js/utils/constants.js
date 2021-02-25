@@ -9,8 +9,7 @@ export {
   userName,
   userDescription,
   avatarPhoto,
-  buttonsForms,
-  sectionCards,
+  buttonsForms
 };
 
 // config for Card.js
@@ -36,4 +35,3 @@ const userAvatarOverlay = document.querySelector('.profile__overlay');
 const userAvatar = document.querySelector('.profile__avatar-img');
 const avatarPhoto = document.querySelector('.profile__avatar-img');
 const buttonsForms = document.querySelectorAll('.form__submit');
-const sectionCards = document.querySelector('.elements');
